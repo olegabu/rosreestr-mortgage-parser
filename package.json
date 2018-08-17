@@ -2,7 +2,7 @@
   "name": "rosreestr-mortgage-parser",
   "version": "1.0.0",
   "description": "Parse electronic mortgage files from RosReestr",
-  "main": "index.js",
+  "main": "mortgage-parser.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
