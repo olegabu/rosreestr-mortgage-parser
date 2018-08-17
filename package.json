@@ -1,0 +1,19 @@
+{
+  "name": "rosreestr-mortgage-parser",
+  "version": "1.0.0",
+  "description": "Parse electronic mortgage files from RosReestr",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olegabu/rosreestr-mortgage-parser.git"
+  },
+  "author": "Oleg Abdrashitov <https://github.com/olegabu>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/olegabu/rosreestr-mortgage-parser/issues"
+  },
+  "homepage": "https://github.com/olegabu/rosreestr-mortgage-parser#readme"
+}
