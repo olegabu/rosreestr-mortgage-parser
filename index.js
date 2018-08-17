@@ -1,4 +1,4 @@
-import MortgageParser from './mortgage-parser';
-import MortgageValidator from './mortgage-validator';
+export {default as MortgageParser} from './mortgage-parser';
+export {default as MortgageValidator} from './mortgage-validator';
 
-module.exports = {MortgageParser, MortgageValidator};
+// module.exports = {MortgageParser, MortgageValidator};
