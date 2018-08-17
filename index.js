@@ -1,6 +1,6 @@
-module.exports = class MortgageParser {
+module.exports = class Index {
   constructor() {
-    this.msg = 'hello world';
+    this.msg = 'I am Index';
   }
 
 };
