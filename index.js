@@ -1,6 +1,6 @@
-module.exports = class MortgageValidator {
+module.exports = class MortgageParser {
   constructor() {
-    this.msg = 'I am MortgageValidator';
+    this.msg = 'I am MortgageParser';
   }
 
 };
