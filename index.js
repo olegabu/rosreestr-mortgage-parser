@@ -1,5 +1,5 @@
 
-module.exports = class MortgageParser {
+module.exports = class Index {
 
   constructor(parser, findFunction) {
     this.namespaceMap = {

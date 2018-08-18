@@ -1,4 +1,4 @@
-const MortgageParser = require('./mortgage-parser');
+const MortgageParser = require('./index');
 
 const parser = new (require('xmldom').DOMParser)();
 
