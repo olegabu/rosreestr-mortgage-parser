@@ -2,8 +2,9 @@
   "name": "rosreestr-mortgage-parser",
   "version": "1.0.0",
   "description": "Parse electronic mortgage files from RosReestr",
+  "main": "mortgage-parser-node",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./test.js"
   },
   "repository": {
     "type": "git",
@@ -14,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/olegabu/rosreestr-mortgage-parser/issues"
   },
-  "homepage": "https://github.com/olegabu/rosreestr-mortgage-parser#readme"
+  "homepage": "https://github.com/olegabu/rosreestr-mortgage-parser#readme",
+  "dependencies": {
+    "xmldom": "^0.1.27",
+    "xpath": "0.0.27"
+  }
 }
