@@ -16,7 +16,9 @@
   },
   "homepage": "https://github.com/olegabu/rosreestr-mortgage-parser#readme",
   "dependencies": {
+    "node-zip": "^1.1.1",
     "xmldom": "^0.1.27",
-    "xpath": "0.0.27"
+    "xpath": "0.0.27",
+    "zip-js": "0.0.2"
   }
 }

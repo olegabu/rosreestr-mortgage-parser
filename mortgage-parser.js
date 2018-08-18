@@ -3,6 +3,7 @@ module.exports = class MortgageParser {
 
   constructor(parser, findFunction) {
     this.namespaceMap = {
+      req: "urn://x-artefacts-rosreestr-gov-ru/virtual-services/electronic-mortgage/1.0.0",
       ns5: "http://rosreestr.ru/services/v0.1/commonsMortgage/Commons",
       ns6: "http://rosreestr.ru/services/v0.1/commonsMortgage/electronicMortgage",
       ns8: "http://rosreestr.ru/services/v0.1/commonsMortgage/TRequest",
@@ -41,6 +42,19 @@ module.exports = class MortgageParser {
     if(numberDeponent && sectionDeponent) {
       ret.deponentAccount = {id: numberDeponent, section: sectionDeponent};
     }
+
+    return ret;
+  }
+
+  parseRequest(text) {
+    const ret = {errors: []};
+
+    const d = this.parser.parseFromString(text, 'text/xml');
+
+    //ret.regNumber = this.find(d, ret.errors, 'req:Request/req:Operation/req:TransferElectronicMortgage/req:NoticeReleaseMortgage/req:MortgageNumber');
+    ret.regNumber = this.find(d, ret.errors, '//req:MortgageNumber');
+
+    // ret.fileName = this.find(d, ret.errors, '//req:FileName');
 
     return ret;
   }
