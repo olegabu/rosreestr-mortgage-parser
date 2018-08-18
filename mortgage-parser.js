@@ -1,7 +1,7 @@
 
 module.exports = class MortgageParser {
 
-  constructor() {
+  constructor(parser, findFunction) {
     this.namespaceMap = {
       ns5: "http://rosreestr.ru/services/v0.1/commonsMortgage/Commons",
       ns6: "http://rosreestr.ru/services/v0.1/commonsMortgage/electronicMortgage",
@@ -11,6 +11,9 @@ module.exports = class MortgageParser {
       ns4: "http://rosreestr.ru/services/v0.1/commonsMortgage/Documents",
       ns3: "http://rosreestr.ru/services/v0.1/commonsMortgage/Address"
     };
+
+    this.parser = parser;
+    this.find = findFunction;
   }
 
   find(d, errors, path) {

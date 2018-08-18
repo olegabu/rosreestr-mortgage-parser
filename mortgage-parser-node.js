@@ -5,11 +5,11 @@ module.exports = class MortgageParserNode extends MortgageParser {
   constructor() {
     super();
     this.parser = new (require('xmldom').DOMParser)();
-    this.xpath = require('xpath');
   }
 
   find(d, errors, path) {
-    const res = this.xpath.useNamespaces(this.namespaceMap)(path, d, true);
+    const xpath = require('xpath');
+    const res = xpath.useNamespaces(this.namespaceMap)(path, d, true);
 
     let content = res && res.textContent;
 
