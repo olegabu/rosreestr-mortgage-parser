@@ -3,6 +3,7 @@ module.exports = class MortgageParser {
 
   constructor(parser, findFunction) {
     this.namespaceMap = {
+      payloadReq: 'http://rosreestr.ru/services/v0.1/commonsMortgage/TRequest',
       req: "urn://x-artefacts-rosreestr-gov-ru/virtual-services/electronic-mortgage/1.0.0",
       ns5: "http://rosreestr.ru/services/v0.1/commonsMortgage/Commons",
       ns6: "http://rosreestr.ru/services/v0.1/commonsMortgage/electronicMortgage",
@@ -51,10 +52,25 @@ module.exports = class MortgageParser {
 
     const d = this.parser.parseFromString(text, 'text/xml');
 
+    const informationAddedEGRN = this.find(d, ret.errors, 'req:Request/req:Operation/req:TransferElectronicMortgage/req:NoticeReleaseMortgage/req:InformationAddedEGRN');
+
+    //TODO find a better way to determine it's an initial upload of mortgage
+    ret.isCreate = informationAddedEGRN !== 'undefined';
+
     //ret.regNumber = this.find(d, ret.errors, 'req:Request/req:Operation/req:TransferElectronicMortgage/req:NoticeReleaseMortgage/req:MortgageNumber');
     ret.regNumber = this.find(d, ret.errors, '//req:MortgageNumber');
 
-    // ret.fileName = this.find(d, ret.errors, '//req:FileName');
+    ret.fileName = this.find(d, ret.errors, '//req:FileName');
+
+    return ret;
+  }
+
+  parsePayloadRequest(text) {
+    const ret = {errors: []};
+
+    const d = this.parser.parseFromString(text, 'text/xml');
+
+    ret.fileName = this.find(d, ret.errors, '//payloadReq:fileName');
 
     return ret;
   }
