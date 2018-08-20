@@ -20,3 +20,7 @@ fs.readFile('mortgage_request.zip', (err, data) => {
 fs.readFile('mortgage_request.zip.dataUrl.txt', 'utf8', (err, text) => {
   console.log(zipParser.parseDataUrl(text));
 });
+
+fs.readFile('agreement_request.zip', (err, data) => {
+  console.log(zipParser.parse(data));
+});

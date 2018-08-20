@@ -55,7 +55,7 @@ module.exports = class MortgageParser {
     const informationAddedEGRN = this.find(d, ret.errors, 'req:Request/req:Operation/req:TransferElectronicMortgage/req:NoticeReleaseMortgage/req:InformationAddedEGRN');
 
     //TODO find a better way to determine it's an initial upload of mortgage
-    ret.isCreate = informationAddedEGRN !== 'undefined';
+    ret.isCreate = typeof(informationAddedEGRN) !== 'undefined';
 
     //ret.regNumber = this.find(d, ret.errors, 'req:Request/req:Operation/req:TransferElectronicMortgage/req:NoticeReleaseMortgage/req:MortgageNumber');
     ret.regNumber = this.find(d, ret.errors, '//req:MortgageNumber');

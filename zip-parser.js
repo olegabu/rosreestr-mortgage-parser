@@ -9,7 +9,7 @@ module.exports = class ZipParser {
 
   parseDataUrl(dataUrl) {
     const parts = dataUrl.split(',');
-    console.log(parts);
+    // console.log(parts);
 
     return this.parse(Buffer.from(parts[1], 'base64'));
   }
