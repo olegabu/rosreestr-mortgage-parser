@@ -1,4 +1,4 @@
-const MortgageParser = require('./index');
+const MortgageParser = require('./mortgage-parser-node');
 const NodeZip = require('node-zip');
 
 module.exports = class ZipParser {
