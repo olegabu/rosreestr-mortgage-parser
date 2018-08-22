@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:subj="http://rosreestr.ru/services/v0.1/commonsMortgage/Subjects"
+    xmlns:req="urn://x-artefacts-rosreestr-gov-ru/virtual-services/electronic-mortgage/1.0.0"
+    targetNamespace="urn://x-artefacts-rosreestr-gov-ru/virtual-services/electronic-mortgage/1.0.0"
+    elementFormDefault="qualified">
+
+
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commonsMortgage/Subjects"
+        schemaLocation="Commons/TSubject.xsd"/>
+
+    <xs:element name="Request" type="req:RequestType">
+        <xs:annotation>
+            <xs:documentation>Запрос по передаче сведений по электронным закладным в депозитарий</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="Response" type="req:ResponseType">
+        <xs:annotation>
+            <xs:documentation>Ответ от депозитария</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:complexType name="RequestType">
+        <xs:annotation>
+            <xs:documentation>Запрос по передаче сведений по электронным закладным в депозитарий</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="RoutingCode" type="req:s1000">
+                <xs:annotation>
+                    <xs:documentation>Код маршрутизации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CadastralNumbers" type="req:CadastralNumbersType">
+                <xs:annotation>
+                    <xs:documentation>Кадастровые номера</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Operation" type="req:OperationRequestType">
+                <xs:annotation>
+                    <xs:documentation>Тип операции</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="OperationRequestType">
+        <xs:annotation>
+            <xs:documentation>Тип операции запроса в депозитарий</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="TransferElectronicMortgage" type="req:TransferElectronicMortgageType">
+                <xs:annotation>
+                    <xs:documentation>Передача электронной закладной</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="TransferAgreement" type="req:TransferAgreementType">
+                <xs:annotation>
+                    <xs:documentation>Передача соглашения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="NoticeRedemption" type="req:NoticeRedemptionType">
+                <xs:annotation>
+                    <xs:documentation>Уведомление о погашении регистрационной записи об ипотеки</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="TransferElectronicMortgageType">
+        <xs:annotation>
+            <xs:documentation>Передача электронной закладной</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="TransferElectronicMortgageDepositary"
+                type="req:TransferElectronicMortgageDepositaryType">
+                <xs:annotation>
+                    <xs:documentation>Передача электронной закладной</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="NoticeReleaseMortgage" type="req:NoticeReleaseMortgageType">
+                <xs:annotation>
+                    <xs:documentation>Уведомление о внесении в регистрационную запись об ипотеке 
+в сведения о залогодержателе сведений о депозитарии, в который электронная закладная передана на хранение
+</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="TransferAgreementType">
+        <xs:annotation>
+            <xs:documentation>Передача соглашения</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="CheckingInformationOwner" type="req:CheckingInformationOwnerType">
+                <xs:annotation>
+                    <xs:documentation>Запрос о проверке информации о владельце электронной закладной или ином лице, осуществляющем права по электронной закладной</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="DirectionAgreement" type="req:DirectionAgreementType">
+                <xs:annotation>
+                    <xs:documentation>Направление соглашения </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="NoticeRedemptionType">
+        <xs:annotation>
+            <xs:documentation>Уведомление о погашении</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="MaturityDate" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Дата погашения регистрационной записи об ипотеке</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="MortgageNumber" type="req:s100">
+                <xs:annotation>
+                    <xs:documentation>Номер закладной</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TransferElectronicMortgageDepositaryType">
+        <xs:annotation>
+            <xs:documentation>Передача электронной закладной</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="ReceivedDate" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Дата получения закладной Росреестром</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="AttachmentDescription" type="req:AttachmentDescriptionType">
+                <xs:annotation>
+                    <xs:documentation>Описание вложений внутри бизнес-блока сообщения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="StructuredAttachmentFormatType">
+        <xs:annotation>
+            <xs:documentation>Описание формата вложения</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <!-- Обязательное и явное указание: является ли формат структурированным или не является -->
+            <xs:element name="IsUnstructuredFormat" type="xs:boolean" fixed="true">
+                <xs:annotation>
+                    <xs:documentation>Признак неструктурированного вложения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <!-- Обязательное и явное указание: будет ли содержимое вложения упаковываться Zip-алгоритмом -->
+            <xs:element name="IsZippedPacket" type="xs:boolean" fixed="true">
+                <xs:annotation>
+                    <xs:documentation>Признак передачи вложения в zip-архиве</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <!-- Если формат структурированный, то описываем его структуру -->
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AttachmentDescriptionType">
+        <xs:annotation>
+            <xs:documentation>Описание вложений внутри бизнес-блока сообщения</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <!-- Указание способа передачи вложения: через ФХ или методом MTOM-передачи -->
+            <xs:choice>
+                <!-- Ссылка на папку ФХ, в котором содержится передаваемое вложение-->
+                <xs:element name="AttachmentFSLink" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>Ссылка на папку ФХ, в котором содержится передаваемое вложение</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <!-- Признак передачи вложения методом MTOM-->
+                <xs:element name="IsMTOMAttachmentContent" type="xs:boolean">
+                    <xs:annotation>
+                        <xs:documentation>Признак передачи вложения методом MTOM</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+
+            <!-- Описание возможных форматов вложения -->
+            <xs:element name="AttachmentFormat" type="req:StructuredAttachmentFormatType">
+                <xs:annotation>
+                    <xs:documentation>Описание формата вложения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <!-- Блок передачи файла отсоединенной электронной подписи вложения -->
+            <xs:element name="AttachmentSignatureFSLink" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Блок передачи файла отсоединенной электронной подписи вложения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="FileName" type="req:s1000">
+                <xs:annotation>
+                    <xs:documentation>Путь до файла относительно корня архива</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="NoticeReleaseMortgageType">
+        <xs:annotation>
+            <xs:documentation>Уведомление о выпуске закладной </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element
+                fixed="в Единый государственный реестр недвижимости внесены сведения о депозитарии, осуществляющем хранение электронной закладной №"
+                name="InformationAddedEGRN" type="req:s1000">
+                <xs:annotation>
+                    <xs:documentation>в Единый государственный реестр недвижимости внесены сведения о депозитарии, осуществляющем хранение электронной закладной №</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="DateMortgage" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Дата внесения по закладной в запись об ипотеке</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="AttachmentDescription" type="req:AttachmentDescriptionType">
+                <xs:annotation>
+                    <xs:documentation>Описание вложений внутри бизнес-блока сообщения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="MortgageNumber" type="req:s100">
+                <xs:annotation>
+                    <xs:documentation>Номер закладной</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="DirectionAgreementType">
+        <xs:annotation>
+            <xs:documentation>Направление соглашения </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="DateMortgage" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Дата внесения в запись об ипотеке</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="AttachmentDescription" type="req:AttachmentDescriptionType">
+                <xs:annotation>
+                    <xs:documentation>Описание вложений внутри бизнес-блока сообщения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="MortgageNumber" type="req:s100">
+                <xs:annotation>
+                    <xs:documentation>Номер закладной</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CadastralNumbersType">
+        <xs:annotation>
+            <xs:documentation>Кадастровые номера объектов недвижимости</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="CadastralNumber" type="req:SCadastralNumber" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Кадастровый номер</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="OperationResponseType">
+        <xs:annotation>
+            <xs:documentation>Типы операций ответа от депозитария
+</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="TransferElectronicMortgage"
+                type="req:TransferElectronicMortgageResponseType">
+                <xs:annotation>
+                    <xs:documentation>Передача электронной закладной</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="TransferAgreement" type="req:TransferAgreementResponseType">
+                <xs:annotation>
+                    <xs:documentation>Передача соглашения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="NoticeRedemption" type="req:NoticeRedemptionResponseType">
+                <xs:annotation>
+                    <xs:documentation>Уведомление о погашении</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="ResponseType">
+        <xs:sequence>
+            <xs:element name="CadastralNumbers" type="req:CadastralNumbersType">
+                <xs:annotation>
+                    <xs:documentation>Кадастровые номера</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Operation" type="req:OperationResponseType">
+                <xs:annotation>
+                    <xs:documentation>Тип операции</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TransferElectronicMortgageResponseType">
+        <xs:annotation>
+            <xs:documentation>Передача электронной закладной</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="NoticeReceiptMortgage" type="req:NoticeReceiptMortgageBaseType">
+                <xs:annotation>
+                    <xs:documentation>Уведомление о получении электронной закладной</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ObtainingStatusNoticeReleaseMortgage"
+                type="req:ObtainingStatusNoticeReleaseMortgageResponseType">
+                <xs:annotation>
+                    <xs:documentation>Уведомление о внесении/невозможности внесения записи по счету депо первоначального владельца закладной или иного лица, осуществляющего права по электронной закладной, и дате ее внесения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="ObtainingStatusNoticeType">
+        <xs:annotation>
+            <xs:documentation>Получение статуса об уведомлении </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Status" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation>Статус:
+1) выполнено = true = 1; 
+2) отказано = false = 0.
+</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Comment" type="req:s1000" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Комментарий (в случае отказа указывается причина невозможности внесения записи)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TransferAgreementResponseType">
+        <xs:annotation>
+            <xs:documentation>Данные о передаче соглашения</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="NoticeOwner" type="req:NoticeOwnerType">
+                <xs:annotation>
+                    <xs:documentation>Уведомление о владельце электронной закладной или ином лице, осуществляющем права по электронной закладной</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ChangeNotification" type="req:ChangeNotificationType">
+                <xs:annotation>
+                    <xs:documentation>Уведомление о получении соглашения об изменении</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="ChangeNotificationType">
+        <xs:annotation>
+            <xs:documentation>Уведомление о получении соглашения об изменении</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="req:ObtainingStatusNoticeType">
+                <xs:sequence minOccurs="1">
+                    <xs:element name="MortgageNumber" type="req:s100">
+                        <xs:annotation>
+                            <xs:documentation>Номер закладной</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="DateReceiptAgreement" type="xs:date" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Дата получения соглашения о внесении изменений</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="NoticeReceiptMortgageBaseType">
+        <xs:complexContent>
+            <xs:extension base="req:ObtainingStatusNoticeType">
+                <xs:sequence minOccurs="0">
+                    <xs:element minOccurs="0" name="DateDepository" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>Дата внесения электронной закладной, незарегистрированной Росреестром, в депозитарий</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ObtainingStatusNoticeReleaseMortgageType">
+        <xs:complexContent>
+            <xs:restriction base="req:NoticeReceiptMortgageBaseType">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element name="Status" type="xs:boolean">
+                            <xs:annotation>
+                                <xs:documentation>Статус:
+1) выполнено = true = 1; 
+2) отказано = false = 0.
+</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="1" name="Comment" type="req:s1000">
+                            <xs:annotation>
+                                <xs:documentation>Комментарий (в случае отказа указывается причина невозможности внесения записи)</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence minOccurs="0">
+                        <xs:element minOccurs="0" name="DateDepository" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата внесения электронной закладной, зарегистрированной Росреестром, в депозитарий</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ObtainingStatusNoticeReleaseMortgageResponseType">
+        <xs:complexContent>
+            <xs:extension base="req:ObtainingStatusNoticeReleaseMortgageType">
+                <xs:sequence>
+                    <xs:element name="MortgageNumber" type="req:s100">
+                        <xs:annotation>
+                            <xs:documentation>Номер закладной</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="CheckingInformationOwnerType">
+        <xs:annotation>
+            <xs:documentation>Запрос о проверке информации о владельце электронной закладной или ином лице, осуществляющем права по электронной закладной</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="FirstOwners" type="subj:TFirstOwner">
+                <xs:annotation>
+                    <xs:documentation>Сведения о первоначальных владельцах </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="MortgageNumber" type="req:s100">
+                <xs:annotation>
+                    <xs:documentation>Номер закладной</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="NoticeOwnerType">
+        <xs:complexContent>
+            <xs:extension base="req:ObtainingStatusNoticeType">
+                <xs:sequence>
+                    <xs:element name="MortgageNumber" type="req:s100">
+                        <xs:annotation>
+                            <xs:documentation>Номер закладной</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:choice>
+                        <xs:element name="NoDepositAccounts" type="req:NoDepositAccountsType">
+                            <xs:annotation>
+                                <xs:documentation>счет депо на_____ (указывается имя в соответствии с запросом, указанным в подпункте «б» подпункта 1 пункта 1 настоящего Порядка) отсутствует</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="firstOwners" type="subj:TFirstOwner"/>
+                    </xs:choice>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="NoDepositAccountsType">
+        <xs:annotation>
+            <xs:documentation>Тип для заполнения счетов депо на_____ (указывается имя в соответствии с запросом, указанным в подпункте «б» подпункта 1 пункта 1 настоящего Порядка) отсутствует</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="NoDepositAccount"
+                type="req:NoDepositAccountType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="NoDepositAccountType">
+        <xs:annotation>
+            <xs:documentation>Тип для заполнения счета депо на_____ (указывается имя в соответствии с запросом, указанным в подпункте «б» подпункта 1 пункта 1 настоящего Порядка) отсутствует</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="person" type="subj:TFIO">
+                <xs:annotation>
+                    <xs:documentation>ФИО физического лица</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="name" type="req:s500">
+                <xs:annotation>
+                    <xs:documentation>Наименование российского или иностранного юридического лица, либо наименование ППО</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:simpleType name="s1000">
+        <xs:annotation>
+            <xs:documentation>текст длиной до 1000 символов</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="1000"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="s100">
+        <xs:annotation>
+            <xs:documentation>текст длиной до 100 символов</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="100"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SCadastralNumber">
+        <xs:annotation>
+            <xs:documentation>Кадастровый номер объекта недвижимости</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="40"/>
+            <!-- TODO проверить, что все случаи кадастровых номеров покрываются -->
+            <xs:pattern value="\d+:\d+:\d+:\d+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="s500">
+        <xs:annotation>
+            <xs:documentation>текст длиной до 500 символов</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="500"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="NoticeRedemptionResponseType">
+        <xs:complexContent>
+            <xs:extension base="req:ObtainingStatusNoticeType">
+                <xs:sequence>
+                    <xs:element name="MortgageNumber" type="req:s100">
+                        <xs:annotation>
+                            <xs:documentation>Номер закладной</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>
