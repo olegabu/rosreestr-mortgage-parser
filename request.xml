@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<req:Request xmlns:req="urn://x-artefacts-rosreestr-gov-ru/virtual-services/electronic-mortgage/1.0.0"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xsi:schemaLocation="urn://x-artefacts-rosreestr-gov-ru/virtual-services/electronic-mortgage/1.0.0">
+	<req:RoutingCode>71000000</req:RoutingCode>
+	<req:CadastralNumbers>
+		 <req:CadastralNumber>23:43:0414009:5822</req:CadastralNumber>
+	</req:CadastralNumbers>
+	<req:Operation>
+		<req:TransferElectronicMortgage>
+			<req:NoticeReleaseMortgage>
+				<req:InformationAddedEGRN>в Единый государственный реестр недвижимости внесены сведения о депозитарии, осуществляющем хранение электронной закладной №</req:InformationAddedEGRN>
+				<req:DateMortgage>2018-07-10</req:DateMortgage>
+				<req:AttachmentDescription>
+				     <req:AttachmentFSLink>/SBER/</req:AttachmentFSLink>
+					<req:AttachmentFormat>
+						<req:IsUnstructuredFormat>true</req:IsUnstructuredFormat>
+						<req:IsZippedPacket>true</req:IsZippedPacket>
+					</req:AttachmentFormat>
+					<req:AttachmentSignatureFSLink>Mortgage_TEST1/Mortgage_TEST1.xml.sig</req:AttachmentSignatureFSLink>
+					<req:FileName>mortgage.zip</req:FileName>
+				</req:AttachmentDescription>
+				<req:MortgageNumber>88-16/54786-44416/2018-249</req:MortgageNumber>
+			</req:NoticeReleaseMortgage>
+		</req:TransferElectronicMortgage>
+	</req:Operation>
+</req:Request>

@@ -1,0 +1,2834 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:subj="http://rosreestr.ru/services/v0.1/commonsMortgage/Subjects"
+	xmlns:docs="http://rosreestr.ru/services/v0.1/commonsMortgage/Documents"
+	xmlns:siml="http://rosreestr.ru/services/v0.1/commonsMortgage/simple-types"
+	xmlns:okv="http://rosreestr.ru/services/v0.1/commonsMortgage/directories/okv"
+	xmlns:mgc="http://rosreestr.ru/services/v0.1/commonsMortgage/MgCommons"
+	xmlns:obj="http://rosreestr.ru/services/v0.1/commonsMortgage/TObject"
+	xmlns:dRight="http://rosreestr.ru/services/v0.1/commonsMortgage/directories/right"
+	xmlns:dEn="http://rosreestr.ru/services/v0.1/commonsMortgage/directories/encumbrance"
+	xmlns:tns="http://rosreestr.ru/services/v0.1/commonsMortgage/electronicMortgage"
+	xmlns:com="http://rosreestr.ru/services/v0.1/commonsMortgage/Commons"
+	targetNamespace="http://rosreestr.ru/services/v0.1/commonsMortgage/electronicMortgage"
+	elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="1.1">
+	<xs:import namespace="http://rosreestr.ru/services/v0.1/commonsMortgage/Subjects"
+		schemaLocation="TSubject.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.1/commonsMortgage/simple-types"
+		schemaLocation="CommonSimpleType.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.1/commonsMortgage/Documents"
+		schemaLocation="TDocument.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.1/commonsMortgage/directories/okv"
+		schemaLocation="Dictionary/DOKV.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.1/commonsMortgage/MgCommons"
+		schemaLocation="MgCommons.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.1/commonsMortgage/TObject"
+		schemaLocation="TObject.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.1/commonsMortgage/directories/encumbrance"
+		schemaLocation="Dictionary/DEncumbrance.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.1/commonsMortgage/directories/right"
+		schemaLocation="Dictionary/DRight.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.1/commonsMortgage/Commons"
+		schemaLocation="Commons.xsd"/>
+
+	<xs:element name="electronicMortgage" type="tns:TElectronicMortgage">
+		<xs:annotation>
+			<xs:documentation>Электронная закладная</xs:documentation>
+		</xs:annotation>
+		<xs:unique name="docsElectronicMortage">
+			<xs:selector
+				xpath=".//docs:idDocument | .//docs:powerOfAttorney | .//docs:otherDocument | .//tns:additionalTerms/tns:attachments/tns:appliedDocument/* | tns:obligation/tns:contractsInfo/docs:contractInfo | tns:pledges/tns:pledge/tns:leaseDescription/tns:legalActLeave | tns:pledges/tns:pledge/tns:dduDescription/tns:legalActDdu"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<xs:unique name="subjElectronicMortage">
+			<xs:selector
+				xpath=".//subj:pledger | .//subj:debtor | .//subj:firstOwner | .//subj:representative"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<xs:unique name="objElectronicMortage">
+			<xs:selector xpath=".//tns:object | tns:pledges/tns:pledge/tns:dduDescription"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+	</xs:element>
+	<xs:element name="agreementAmendments" type="tns:TAgreementAmendments">
+		<xs:annotation>
+			<xs:documentation>Соглашение о внесении изменений в электронную закладную </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="TElectronicMortgage">
+		<xs:sequence>
+			<xs:element name="pledgers" type="subj:TPledger">
+				<xs:annotation>
+					<xs:documentation>1. Залогодатели</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="debtors" type="subj:TDebtor">
+				<xs:annotation>
+					<xs:documentation>2. Должники</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="firstOwners" type="subj:TFirstOwner">
+				<xs:annotation>
+					<xs:documentation>3. Первоначальный владелец закладной</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="obligation" type="tns:TObligation" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>4. Обязательство, обеспеченное ипотекой</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="interests" type="tns:TIterests" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>5 Размер процентов по денежному обязательству</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="debtRepaymentPlan" type="tns:TDebtRepaymentPlan" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>6. Срок уплаты суммы обязательства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pledges" type="tns:TPledges" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>7. Предмет ипотеки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="additionalTerms" type="tns:TAdditionalTerms" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>8. Дополнительные условия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="depositoryAccounting" type="tns:TDepositoryAccounting" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>9. Депозитарный учёта закладной</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="electronicInsteadDocumentary" type="tns:TElectronicInsteadDocumentary"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>10. Информация о выдаче электронной закладной взамен документарной закладной
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="_id" type="siml:s100">
+			<xs:annotation>
+				<xs:documentation>Номер закладной. Заполняется в случае выдачи электронной закладной взамен документарной </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="GUID" type="siml:sGUID" use="required">
+			<xs:annotation>
+				<xs:documentation>Глобальный уникальный идентификатор пакета</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="siml:agNeSoftware"/>
+	</xs:complexType>
+	<xs:complexType name="TAgreementAmendments">
+		<xs:annotation>
+			<xs:documentation>Соглашение о внесении изменений в электронную закладную </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="pledgers" type="subj:TPledgerAgreement">
+				<xs:annotation>
+					<xs:documentation>1. Залогодатели</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="debtors" type="subj:TDebtorAgreement">
+				<xs:annotation>
+					<xs:documentation>2. Должники</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="firstOwners" type="subj:TFirstOwnerAgreement">
+				<xs:annotation>
+					<xs:documentation>3. Первоначальный владелец закладной</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="obligation" minOccurs="0" type="tns:TObligationModification">
+				<xs:annotation>
+					<xs:documentation>Внесение изменений в раздел (реквизиты) 4. "Обязательство, обеспеченное ипотекой" </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="interests" type="tns:TIterestsModification">
+				<xs:annotation>
+					<xs:documentation>Внесение изменений в раздел (реквизиты) 5 "Размер процентов по денежному обязательству"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="debtRepaymentPlan"
+				type="tns:TDebtRepaymentPlanModification">
+				<xs:annotation>
+					<xs:documentation>Внесение изменений в раздел (реквизиты) 6. "Срок уплаты суммы обязательства"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element form="qualified" minOccurs="0" name="pledges"
+				type="tns:TPledgesModification">
+				<xs:annotation>
+					<xs:documentation>Внесение изменений в раздел (реквизиты) 7. "Предмет ипотеки"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="additionalTerms" type="tns:TAdditionalTermsModification">
+				<xs:annotation>
+					<xs:documentation>Внесение изменений в раздел (реквизиты) 8. "Дополнительные условия"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="depositoryAccounting"
+				type="tns:TDepositoryAccountingModification">
+				<xs:annotation>
+					<xs:documentation>Внесение изменений в раздел (реквизиты) 9. "Депозитарный учёта закладной"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="electronicInsteadDocumentary"
+				type="tns:TElectronicInsteadDocumentaryModification">
+				<xs:annotation>
+					<xs:documentation>Внесение изменений в раздел (реквизиты) 10. "Информация о выдаче электронной закладной взамен документарной закладной"
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="_id" type="siml:s100" use="required">
+			<xs:annotation>
+				<xs:documentation>Номер закладной</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="GUID" type="siml:sGUID" use="required">
+			<xs:annotation>
+				<xs:documentation>Глобальный уникальный идентификатор пакета</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="siml:agNeSoftware"/>
+	</xs:complexType>
+	<xs:complexType name="TObligationModification">
+		<xs:annotation>
+			<xs:documentation>Внесение изменений в раздел (реквизиты) 4. "Обязательство, обеспеченное ипотекой" </xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="replace" type="tns:TObligation">
+				<xs:annotation>
+					<xs:documentation>Изменить раздел</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="edit" type="tns:TBaseObligation">
+				<xs:annotation>
+					<xs:documentation>Изменить реквизиты раздела</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TIterestsModification">
+		<xs:annotation>
+			<xs:documentation>Внесение изменений в раздел (реквизиты) 5 "Размер процентов по денежному обязательству"</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="replace" type="tns:TIterests">
+				<xs:annotation>
+					<xs:documentation>Изменить раздел</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="edit" type="tns:TBaseIterests">
+				<xs:annotation>
+					<xs:documentation>Изменить реквизиты раздела</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TDebtRepaymentPlanModification">
+		<xs:annotation>
+			<xs:documentation>Внесение изменений в раздел (реквизиты) 6. "Срок уплаты суммы обязательства"</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="replace" type="tns:TDebtRepaymentPlan">
+				<xs:annotation>
+					<xs:documentation>Изменить раздел</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="edit" type="tns:TBaseDebtRepaymentPlan">
+				<xs:annotation>
+					<xs:documentation>Изменить реквизиты раздела</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TPledgesModification">
+		<xs:annotation>
+			<xs:documentation>Внесение изменений в раздел (реквизиты) 7. "Предмет ипотеки"</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="replace" type="tns:TPledges">
+				<xs:annotation>
+					<xs:documentation>Изменить раздел</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="modificationPledges" type="tns:TPledgesEdit">
+				<xs:annotation>
+					<xs:documentation>Изменение реквизитов предметов ипотеки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TPledgesEdit">
+		<xs:annotation>
+			<xs:documentation>Изменение реквизитов предметов ипотеки</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" name="pledge" type="tns:TModification">
+				<xs:annotation>
+					<xs:documentation>Изменение реквизитов предмета ипотеки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TModification">
+		<xs:annotation>
+			<xs:documentation>Изменение реквизитов предмета ипотеки</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="1">
+				<xs:element name="idObject" type="xs:token" minOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Параметр идентификации - Идентификатор объекта из электронной закладной /tns:electronicMortgage/tns:pledges/tns:pledge/tns:objectDescription/tns:object/@_id или /tns:electronicMortgage/tns:pledges/tns:pledge/tns:leaseDescription/tns:object/@_id или /tns:electronicMortgage/tns:pledges/tns:pledge/tns:dduDescription/@_id либо идентификаторы новых предметов ипотеки из соглашения</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="cadastralNumber" type="com:SCadastralNumber" minOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Параметр идентификации - Кадастровый номер предмета ипотеки из электронной закладной</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="dduKey" type="tns:TDduKey" minOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Параметры для идентификации предмета ипотеки по ДДУ
+</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="edit" type="tns:TBasePledge" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Изменить реквизиты раздела</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="add" type="tns:TMortgageAdd" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Добавить реквизиты раздела</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="delete" type="tns:TMortgageDelete" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Удалить реквизиты раздела</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TMortgageDelete">
+		<xs:annotation>
+			<xs:documentation>Тип по удалению сведений о государственной регистрации ипотеки</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="mortgage" type="mgc:TEmpty">
+				<xs:annotation>
+					<xs:documentation>Сведения о государственной регистрации ипотеки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="object" type="mgc:TEmpty">
+				<xs:annotation>
+					<xs:documentation>Удалить предмет ипотеки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TMortgageAdd">
+		<xs:annotation>
+			<xs:documentation>Сведения о добавлении предмета ипотеки либо реквизита премета ипотеки</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="object" type="tns:TPledge">
+				<xs:annotation>
+					<xs:documentation>Добавить предмет ипотеки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="mortgage" type="tns:TRegRight">
+				<xs:annotation>
+					<xs:documentation>Сведения о государственной регистрации ипотеки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TDduKey">
+		<xs:sequence>
+			<xs:element name="numberDdu" type="siml:s100" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Номер ДДУ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="issueDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Дата заключения договора</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TAdditionalTermsModification">
+		<xs:annotation>
+			<xs:documentation>Внесение изменений в раздел (реквизиты) 8. "Дополнительные условия"</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="replace" type="tns:TAdditionalTerms">
+				<xs:annotation>
+					<xs:documentation>Изменить раздел</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="modification" type="tns:TAdditionalTermsEdit">
+				<xs:annotation>
+					<xs:documentation>Внести изменения в реквизиты раздела</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TAdditionalTermsEdit">
+		<xs:annotation>
+			<xs:documentation>Внести изменения в реквизиты раздела</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="edit" type="tns:TBaseAdditionalTerms" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Изменить реквизиты раздела</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="add" type="tns:TAdditionalTermsAdd" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Добавить реквизиты раздела</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="delete" minOccurs="0" type="tns:TAdditionalTermsDelete">
+				<xs:annotation>
+					<xs:documentation>Удалить реквизиты раздела</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TAdditionalTermsDelete">
+		<xs:sequence>
+			<xs:element name="purposeOfCredit" type="mgc:TEmpty" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.2 Целевое назначение кредита /займа (для обязательств, основанных на кредитном договоре или договоре займа)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="propertyInsurance" type="mgc:TEmpty" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.4 Сведения о страховании имущества, на которое установлена ипотека</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="insuranceTerms" type="mgc:TEmpty" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.5 Условия иных видов страхования, предусмотренных условиями договора, обязательства по которому обеспечены ипотекой</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="punishmentTerms" type="mgc:TEmpty" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.6 Условие о возможности обращения взыскания на заложенное имущество во внесудебном порядке, а также условия реализации заложенного имущества, взыскание на которое обращено во внесудебном порядке</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pledgeSellingConditions" type="mgc:TEmpty" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.7 Способы и порядок реализации заложенного имущества при обращении взыскания на предмет ипотеки по решению суда</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="thirdPersonUsage" type="mgc:TEmpty" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.9 Право и условия предоставления залогодателем заложенного имущества в пользование третьим лицам</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="loanAgreementEffect" type="mgc:TEmpty" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.20 Действие кредитного договора (договора займа) после выдачи закладной залогодержателю</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="demands" type="mgc:TEmpty" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.22 Требования, обеспечиваемые ипотекой</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TDepositoryAccountingModification">
+		<xs:annotation>
+			<xs:documentation>Внесение изменений в раздел (реквизиты) 9. "Депозитарный учёта закладной"</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="replace" type="tns:TDepositoryAccounting">
+				<xs:annotation>
+					<xs:documentation>Изменить раздел</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="modification" type="tns:TDepositoryAccountingEdit">
+				<xs:annotation>
+					<xs:documentation>Внести изменение в реквизиты раздела</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TDepositoryAccountingEdit">
+		<xs:annotation>
+			<xs:documentation>Внести изменение в реквизиты раздела</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" name="edit" type="tns:TBaseDepositoryAccounting">
+				<xs:annotation>
+					<xs:documentation>Изменить реквизиты раздела</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="add" type="tns:TDepositoryAccountingAdd">
+				<xs:annotation>
+					<xs:documentation>Добавить реквизиты раздела</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="delete" type="tns:TDepositoryAccountingDelete">
+				<xs:annotation>
+					<xs:documentation>Удалить реквизиты раздела</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TElectronicInsteadDocumentaryModification">
+		<xs:annotation>
+			<xs:documentation>Внесение изменений в раздел (реквизиты) 10. "Информация о выдаче электронной закладной взамен документарной закладной"
+</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="replace" type="tns:TElectronicInsteadDocumentary">
+				<xs:annotation>
+					<xs:documentation>Изменить раздел</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="addSection" type="tns:TElectronicInsteadDocumentary">
+				<xs:annotation>
+					<xs:documentation>Добавить раздел</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="deleteSection" type="mgc:TEmpty">
+				<xs:annotation>
+					<xs:documentation>Удалить раздел</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TIterests">
+		<xs:annotation>
+			<xs:documentation>Размер процентов по денежному обязательству</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBaseIterests">
+				<xs:sequence>
+					<xs:element name="rate" type="tns:TRate" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>5.2 Размер фиксированной процентной ставки или условия определения изменяемой процентной ставки</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ratePeriod" type="tns:TInterestPeriod" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>5.3 Период начисления процентов</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="firstInterestPeriod" type="tns:TFirstInterestPeriod"
+						minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>5.4 Первый процентный период</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="baseInterestPeriod" type="tns:TBaseInterestPeriod"
+						minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>5.5 Базовый процентный период</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lastInterestPeriod" type="tns:TLastInterestPeriod"
+						minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>5.6 Последний процентный период</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lastPeriodIfWeekend" type="tns:TLastPeriodIfWeekend"
+						minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>5.7 Изменение даты окончания процентного периода в случае, если он приходится на нерабочий день</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="accrualRules" type="tns:TAccrualRules" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>5.8 Правила начисления процентов за пользование заемными средствами</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TBaseIterests">
+		<xs:annotation>
+			<xs:documentation>Базовый тип по размеру процентов по денежному обязательству</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="rate" type="tns:TRate" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>5.2 Размер фиксированной процентной ставки или условия определения изменяемой процентной ставки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ratePeriod" type="tns:TInterestPeriod" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>5.3 Период начисления процентов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="firstInterestPeriod" type="tns:TFirstInterestPeriod" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>5.4 Первый процентный период</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="baseInterestPeriod" type="tns:TBaseInterestPeriod" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>5.5 Базовый процентный период</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastInterestPeriod" type="tns:TLastInterestPeriod" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>5.6 Последний процентный период</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastPeriodIfWeekend" type="tns:TLastPeriodIfWeekend" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>5.7 Изменение даты окончания процентного периода в случае, если он приходится на нерабочий день</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="accrualRules" type="tns:TAccrualRules" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>5.8 Правила начисления процентов за пользование заемными средствами</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TBaseInterestPeriod">
+		<xs:annotation>
+			<xs:documentation>Базовый процентный период</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="byDateInterval" type="tns:TByDateInterval">
+					<xs:annotation>
+						<xs:documentation>Даты начала и окончания периода начисления процентов для оплаты</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="byRepaymentDate" type="mgc:TEmpty">
+					<xs:annotation>
+						<xs:documentation>С даты внесения платежа в очередном платежном периоде по дату внесения платежа в последующем платежном периоде</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="date" type="mgc:TEmpty">
+				<xs:annotation>
+					<xs:documentation>Дата начала очередного процентного периода следует за датой окончания предшествующего процентного периода</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TByDateInterval">
+		<xs:annotation>
+			<xs:documentation>Даты начала и окончания периода начисления процентов для оплаты</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="intervalStart" type="siml:dayOrLast">
+				<xs:annotation>
+					<xs:documentation>C _ числа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="intervalEnd" type="siml:dayOrLast">
+				<xs:annotation>
+					<xs:documentation>По _ число</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="interval" type="mgc:DInterval">
+					<xs:annotation>
+						<xs:documentation>Из списка</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="repeatOther" type="siml:s1000">
+					<xs:annotation>
+						<xs:documentation>Иное</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TLoanAmount">
+		<xs:annotation>
+			<xs:documentation>Сумма основного долга денежного обязательства</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="amount" type="tns:TCostType">
+					<xs:annotation>
+						<xs:documentation>Сумма основного долга</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="amountUnknown" type="tns:TAmountUnknown">
+					<xs:annotation>
+						<xs:documentation>Сумма основного долга неизвестна</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="procedureGranting" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Порядок предоставления суммы кредита/займа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="remainingAmount" type="tns:TRemainingAmount" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Остаток основной суммы долга</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TCostType">
+		<xs:annotation>
+			<xs:documentation>Стоимость</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="amount" type="siml:d20_2">
+				<xs:annotation>
+					<xs:documentation>Cумма</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="currency" type="okv:DOKV">
+				<xs:annotation>
+					<xs:documentation>Валюта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TAmountUnknown">
+		<xs:annotation>
+			<xs:documentation>Сумма основного долга неизвестна</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="conditions" type="tns:TConditions">
+				<xs:annotation>
+					<xs:documentation>Условия, позволяющие в надлежащий момент определять сумму основного долга </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="procedureDetermining" type="mgc:DProcedureDetermining">
+				<xs:annotation>
+					<xs:documentation>Порядок определения суммы основного долга</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TConditions">
+		<xs:annotation>
+			<xs:documentation>Условия, позволяющие в надлежащий момент определять сумму основного долга </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="condition" type="siml:s1000" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Условие</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TRemainingAmount">
+		<xs:annotation>
+			<xs:documentation>Остаток основной суммы долга</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="amount" type="tns:TCostType">
+				<xs:annotation>
+					<xs:documentation>Сумма</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>На дату</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TObligation">
+		<xs:annotation>
+			<xs:documentation>Обязательство, обеспеченное ипотекой</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBaseObligation">
+				<xs:sequence>
+					<xs:element name="contractsInfo" type="docs:TContractsInfo" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>4.1 Название кредитного договора или иного денежного обязательства, исполнение которого обеспечивается ипотекой</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="loanAmount" type="tns:TLoanAmount" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>4.2 Сумма основного долга денежнего обязательства</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TBaseObligation">
+		<xs:annotation>
+			<xs:documentation>Базовый тип по обязательству, обеспеченное ипотекой</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="contractsInfo" type="docs:TContractsInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>4.1 Название кредитного договора или иного денежного обязательства, исполнение которого обеспечивается ипотекой</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="loanAmount" type="tns:TLoanAmount" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>4.2 Сумма основного долга денежнего обязательства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TRateAndInterval">
+		<xs:annotation>
+			<xs:documentation>Размер и размерность ставки</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="rateAmount" type="siml:d6_2">
+				<xs:annotation>
+					<xs:documentation>Размер ставки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="intervalType" type="mgc:DIntervalType">
+				<xs:annotation>
+					<xs:documentation>Размерность</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TRate">
+		<xs:annotation>
+			<xs:documentation>Размер фиксированной процентной ставки или условия определения изменяемой процентной ставки</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="fixedRate" type="tns:TRateAndInterval">
+				<xs:annotation>
+					<xs:documentation>Размер фиксированной процентной ставки и ее размерность</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="variableRate" type="tns:TVariableRate">
+				<xs:annotation>
+					<xs:documentation>Размер изменяемой процентной ставки и ее размерность</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TVariableRate">
+		<xs:annotation>
+			<xs:documentation>Условия определения изменяемой процентной ставки</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="tns:TRateAndInterval">
+				<xs:sequence>
+					<xs:element name="conditions" type="tns:TConditions">
+						<xs:annotation>
+							<xs:documentation>Условия определения изменяемой процентной ставки в течение срока денежного обязательства</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TIinterestAccrualDate">
+		<xs:annotation>
+			<xs:documentation>Дата начисления процентов</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="date" type="mgc:TEmpty">
+				<xs:annotation>
+					<xs:documentation>дата, следующая за датой выдачи кредита или займа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDescription" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Иное описание даты</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TInterestPeriod">
+		<xs:annotation>
+			<xs:documentation>Период начисления процентов</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="startDate" type="tns:TIinterestAccrualDate">
+				<xs:annotation>
+					<xs:documentation>Дата начала начисления процентов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="endDate" type="tns:TIinterestAccrualEndDate">
+				<xs:annotation>
+					<xs:documentation>Дата окончания начисления процентов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TFirstInterestPeriod">
+		<xs:annotation>
+			<xs:documentation>Первый процентный период</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="date" type="mgc:DFirstPeriod">
+				<xs:annotation>
+					<xs:documentation>Дата</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDescription" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Иное описание даты</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TLastInterestPeriod">
+		<xs:sequence>
+			<xs:element name="date" type="mgc:TEmpty">
+				<xs:annotation>
+					<xs:documentation>с даты окончания последнего базового процентного периода по дату окончания срока денежного обязательства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TLastPeriodIfWeekend">
+		<xs:annotation>
+			<xs:documentation>Изменение даты окончания процентного периода в случае, если он приходится на нерабочий день</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="lastPeriod" type="mgc:DLastPeriodIfWeekend">
+				<xs:annotation>
+					<xs:documentation>Период</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDescription" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Иной порядок</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TRegularity">
+		<xs:annotation>
+			<xs:documentation>Регулярность начисления</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="regularityList" type="mgc:DRegularityList"/>
+			<xs:element name="otherDescription" type="siml:s1000"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TAccrualBase">
+		<xs:annotation>
+			<xs:documentation>База для начисления</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="accrualBaseList" type="mgc:DAccrualBaseList"/>
+			<xs:element name="otherDescription" type="siml:s1000"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TInterestsRounding">
+		<xs:annotation>
+			<xs:documentation>Округление начисленных процентов (результата расчета)</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="interestsRoundingList" type="mgc:DInterestsRoundingList"/>
+			<xs:element name="otherDescription" type="siml:s1000"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TIntermedRounding">
+		<xs:annotation>
+			<xs:documentation>Промежуточные округления</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="intermedRoundingList" type="mgc:DIntermedRoundingList"/>
+			<xs:element name="otherDescription" type="siml:s1000"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TAccrualRules">
+		<xs:annotation>
+			<xs:documentation>Правила начисления процентов за пользование заемными средствами</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="regularity" type="tns:TRegularity">
+				<xs:annotation>
+					<xs:documentation>Регулярность начисления</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="accrualBase" type="tns:TAccrualBase">
+				<xs:annotation>
+					<xs:documentation>База для начисления</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="interestsRounding" type="tns:TInterestsRounding">
+				<xs:annotation>
+					<xs:documentation>Округление начисленных процентов (результата расчета)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="intermedRounding" type="tns:TIntermedRounding">
+				<xs:annotation>
+					<xs:documentation>Промежуточные округления</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TDebtRepaymentPlan">
+		<xs:annotation>
+			<xs:documentation>Срок уплаты суммы обязательства</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBaseDebtRepaymentPlan">
+				<xs:sequence>
+					<xs:element name="term" type="tns:TTerm" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>6.1 Срок уплаты обязательства</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="repaymentDate" type="tns:TRepaymentDate" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>6.2 Дата платежа / платежный период </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="repaymentIfWeekend" type="tns:TRepaymentIfWeekend"
+						minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>6.3 Изменение платежного дня/окончания платежного периода (по плану) в случае, если он приходится на нерабочий день</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="firstRepaymentAmountAndTerm"
+						type="tns:TFirstRepaymentAmountAndTerm" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>6.4 Порядок определения размера и срока первого платежа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="nthRepaymentAmountAndTerms"
+						type="tns:TNthRepaymentAmountAndTerms" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>6.5. Порядок определения размера и срока платежей (с ___ по) (кроме первого и последнего)
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="lastRepaymentAmountAndTerm"
+						type="tns:TLastRepaymentAmountAndTerm" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>6.6 Порядок определения размера и срока последнего платежа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="fines" type="tns:TFines" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>6.7 Размер убытков и/или неустойки (штрафы, пени) вследствие неисполнения, просрочки исполнения или иного ненадлежащего исполнения обеспеченного ипотекой обязательства </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TBaseDebtRepaymentPlan">
+		<xs:annotation>
+			<xs:documentation>Базовый тип по сроку уплаты суммы обязательства</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="term" type="tns:TTerm" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>6.1 Срок уплаты обязательства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="repaymentDate" type="tns:TRepaymentDate" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>6.2 Дата платежа / платежный период </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="repaymentIfWeekend" type="tns:TRepaymentIfWeekend" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>6.3 Изменение платежного дня/окончания платежного периода (по плану) в случае, если он приходится на нерабочий день</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="firstRepaymentAmountAndTerm" type="tns:TFirstRepaymentAmountAndTerm"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>6.4 Порядок определения размера и срока первого платежа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="nthRepaymentAmountAndTerms" type="tns:TNthRepaymentAmountAndTerms"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>6.5. Порядок определения размера и срока платежей (с ___ по) (кроме первого и последнего)
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastRepaymentAmountAndTerm" type="tns:TLastRepaymentAmountAndTerm"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>6.6 Порядок определения размера и срока последнего платежа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="fines" type="tns:TFines" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>6.7 Размер убытков и/или неустойки (штрафы, пени) вследствие неисполнения, просрочки исполнения или иного ненадлежащего исполнения обеспеченного ипотекой обязательства </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TTerm">
+		<xs:annotation>
+			<xs:documentation>Срок оплаты</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="fromDate" type="tns:TFromDate">
+				<xs:annotation>
+					<xs:documentation>Начало срока уплаты суммы обязательства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="endDate" type="tns:TEndDate">
+				<xs:annotation>
+					<xs:documentation>Окончание срока уплаты суммы обязательства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TFromDate">
+		<xs:annotation>
+			<xs:documentation>Начало срока уплаты суммы обязательства</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="fixedDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>С точной даты (yyyy-MM-dd)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventDriven" type="siml:s500">
+				<xs:annotation>
+					<xs:documentation>с даты наступления события (с указанием самого события)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dateLoan" type="mgc:TEmpty">
+				<xs:annotation>
+					<xs:documentation>С даты выдачи кредита/займа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDescription" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Иное</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TEndDate">
+		<xs:annotation>
+			<xs:documentation>Окончание срока уплаты суммы обязательства</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="byDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Срок определен датой (включительно) (yyyy-MM-dd)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="byPeriod" type="tns:TByPeriod">
+				<xs:annotation>
+					<xs:documentation>Срок определен периодом времени</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="byEvent" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Срок определен событием</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TByPeriod">
+		<xs:annotation>
+			<xs:documentation>Временной период</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="interval" type="tns:TInterval">
+				<xs:annotation>
+					<xs:documentation>Временной период, исчисляемый в днях, неделях, месяцах, кварталах</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="fixedDate" type="tns:TFixedDate">
+				<xs:annotation>
+					<xs:documentation>Порядковое значение дня, месяца, года</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TInterval">
+		<xs:annotation>
+			<xs:documentation>Временной период, исчисляемый в днях, неделях, месяцах, кварталах</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="count" type="siml:p12">
+				<xs:annotation>
+					<xs:documentation>Количество</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="timeUnits" type="mgc:DTimeUnits">
+				<xs:annotation>
+					<xs:documentation>Единицы времени</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TFixedDate">
+		<xs:annotation>
+			<xs:documentation>Порядковое значение дня, месяца, года</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="day" type="siml:dayOrLast">
+				<xs:annotation>
+					<xs:documentation>День</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="month" type="siml:month">
+						<xs:annotation>
+							<xs:documentation>Месяц</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="year" type="siml:s200">
+						<xs:annotation>
+							<xs:documentation>Описание количества лет</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="monthQuantity" type="siml:p10">
+					<xs:annotation>
+						<xs:documentation>Месяц</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TRepaymentDate">
+		<xs:annotation>
+			<xs:documentation>Дата платежа / платежный период </xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="paymentDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Дата платежа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="repaymentDay" type="tns:TRepaymentDay">
+				<xs:annotation>
+					<xs:documentation>Платежный день</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="repaymentPeriod" type="tns:TRepaymentPeriod">
+				<xs:annotation>
+					<xs:documentation>Платежный период</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDescription" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Иное</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TRepaymentDay">
+		<xs:annotation>
+			<xs:documentation>Платежный день</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="day" type="siml:dayOrLast">
+				<xs:annotation>
+					<xs:documentation>На заданное или последнее число</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="payPeriod" type="mgc:DTimeUnitsMQY">
+				<xs:annotation>
+					<xs:documentation>каждого месяца / последнего месяца каждого квартала / последнего месяца каждого года</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TRepaymentPeriod">
+		<xs:annotation>
+			<xs:documentation>Платежный период</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="startPeriod" type="siml:day">
+				<xs:annotation>
+					<xs:documentation>С дня</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="endPeriod" type="siml:dayOrLast">
+				<xs:annotation>
+					<xs:documentation>По день</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="payPeriod" type="mgc:DTimeUnitsMQY">
+				<xs:annotation>
+					<xs:documentation>каждого месяца / последнего месяца каждого квартала / последнего месяца каждого года</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TRepaymentIfWeekend">
+		<xs:annotation>
+			<xs:documentation>Изменение платежного дня/окончания платежного периода</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="changingPaymentDay" type="mgc:DChangingPaymentDay">
+				<xs:annotation>
+					<xs:documentation>Условия изменения платежного дня/окончания платежного периода в случае, если он приходится на нерабочий день</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDescription" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Иное</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TFirstRepaymentAmountAndTerm">
+		<xs:annotation>
+			<xs:documentation>Порядок определения размера и срока первого платежа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="amount" type="tns:TAmount">
+				<xs:annotation>
+					<xs:documentation>Размер общего платежа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="repaymentDate" type="tns:TPaymentDate">
+				<xs:annotation>
+					<xs:documentation>Платеж рассчитывается на дату</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="repaymentValueOnDate" type="tns:TCostType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Значение платежа на указанную дату</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="recalculationConditions" type="tns:TRecalculationConditions">
+				<xs:annotation>
+					<xs:documentation>Условия перерасчета платежа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="repaymentRounding" type="tns:TRoundingResult">
+				<xs:annotation>
+					<xs:documentation>Округление результата расчета размера общего платежа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="interestRepayment" type="tns:TInterestRepayment">
+				<xs:annotation>
+					<xs:documentation>Размер платежа для погашения процентов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="interestRepaymentRounding" type="tns:TRoundingResult">
+				<xs:annotation>
+					<xs:documentation>Округление результата расчета размера платежа для погашения процентов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="principalAmountOfDebtRepayment"
+				type="tns:TPrincipalAmountOfDebtRepayment">
+				<xs:annotation>
+					<xs:documentation>Размер платежа для погашения основной суммы долга</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="principalAmountOfDebtRepaymentRounding" type="tns:TRoundingResult">
+				<xs:annotation>
+					<xs:documentation>Округление результата расчета размера платежа для погашения последней суммы долга</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDebtRepayment" type="tns:TOtherDebtRepayment">
+				<xs:annotation>
+					<xs:documentation>Размер платежа для погашения иных обязательств</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDebtRepaymentRounding" type="tns:TRoundingResult">
+				<xs:annotation>
+					<xs:documentation>Округление результата расчета размера платежа для погашения иных обязательств </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="repaymentTerm" type="tns:TRepaymentTerm">
+				<xs:annotation>
+					<xs:documentation>Срок оплаты</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TAmount">
+		<xs:annotation>
+			<xs:documentation>Размер общего платежа</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="calculated" type="mgc:DKindPayment">
+				<xs:annotation>
+					<xs:documentation>Аннуитетный или дифференцированный платеж</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="payment" type="tns:TCostType">
+				<xs:annotation>
+					<xs:documentation>Платеж в денежном выражении</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDescription" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Иное правило</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TPaymentDate">
+		<xs:annotation>
+			<xs:documentation>Платеж рассчитывается на дату</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="event" type="mgc:TEmpty" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Возникновения денежного обязательства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="date" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>В дату (yyyy-MM-dd)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TRecalculationConditions">
+		<xs:annotation>
+			<xs:documentation>Условия перерасчета</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="conditions" type="tns:TRecalculation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Условия перерасчета</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDescription" type="siml:s1000" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Иное</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TRecalculation">
+		<xs:annotation>
+			<xs:documentation>Список условий</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="listConditions" type="mgc:DListConditions" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Условия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TRoundingResult">
+		<xs:annotation>
+			<xs:documentation>Округление результата расчета</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="rounding" type="mgc:DRounding">
+				<xs:annotation>
+					<xs:documentation>Типы округления</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDescription" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Иное</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TInterestRepayment">
+		<xs:annotation>
+			<xs:documentation>Размер платежа для погашения процентов</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="repaymentKind" type="mgc:DRepaymentInterestKind">
+				<xs:annotation>
+					<xs:documentation>Вид погашения процентов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDescription" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Иное правило</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TPrincipalAmountOfDebtRepayment">
+		<xs:annotation>
+			<xs:documentation>Размер платежа для погашения основной суммы долга</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="repaymentDebtKind" type="mgc:DRepaymentDebtKind">
+				<xs:annotation>
+					<xs:documentation>Из списка</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDescription" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Иное</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TOtherDebtRepayment">
+		<xs:annotation>
+			<xs:documentation>Размер платежа для погашения иных обязательств</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="otherObligation" type="mgc:TEmpty">
+				<xs:annotation>
+					<xs:documentation>Иные обязательства не погашаются из суммы платежа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDescription" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Описания правила</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TRepaymentTerm">
+		<xs:annotation>
+			<xs:documentation>Срок оплаты</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="termKind" type="mgc:DTermKind">
+				<xs:annotation>
+					<xs:documentation>Виды срока оплаты</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDescription" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Иное</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TPaymentNumber">
+		<xs:annotation>
+			<xs:documentation>Номер платежа с ___ по ___</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="fromPaymentNumber" type="siml:p12">
+				<xs:annotation>
+					<xs:documentation>Номер платежа с __</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="byPaymentNumber" type="siml:p12">
+				<xs:annotation>
+					<xs:documentation>Номер платежа по __</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TNthRepaymentAmountAndTerm">
+		<xs:annotation>
+			<xs:documentation>Порядок определения размера и срока платежей</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="paymentNumber" type="tns:TPaymentNumber">
+				<xs:annotation>
+					<xs:documentation>Номер платежа с ___ по ___</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="amount" type="tns:TAmount">
+				<xs:annotation>
+					<xs:documentation>Размер общего платежа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="repaymentDate" type="tns:TPaymentDate">
+				<xs:annotation>
+					<xs:documentation>Платеж рассчитывается на дату</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="repaymentValueOnDate" type="tns:TCostType">
+				<xs:annotation>
+					<xs:documentation>Значение платежа на указанную дату</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="recalculationConditions" type="tns:TRecalculationConditions">
+				<xs:annotation>
+					<xs:documentation>Условия перерасчета платежа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="repaymentRounding" type="tns:TRoundingResult">
+				<xs:annotation>
+					<xs:documentation>Округление результата расчета размера общего платежа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="interestRepayment" type="tns:TInterestNoOneRepayment">
+				<xs:annotation>
+					<xs:documentation>Размер платежа для погашения процентов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="interestRepaymentRounding" type="tns:TRoundingResult">
+				<xs:annotation>
+					<xs:documentation>Округление результата расчета размера платежа для погашения процентов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="principalAmountOfDebtRepayment"
+				type="tns:TPrincipalAmountOfDebtRepaymentNoOne">
+				<xs:annotation>
+					<xs:documentation>Размер платежа для погашения основного долга</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="principalAmountOfDebtRepaymentRounding" type="tns:TRoundingResult">
+				<xs:annotation>
+					<xs:documentation>Округление результата расчета размера платежа для погашения основной суммы долга</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDebtRepayment" type="tns:TOtherDebtRepayment">
+				<xs:annotation>
+					<xs:documentation>Размер платежа для погашения иных обязательств</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDebtRepaymentRounding" type="tns:TRoundingResult">
+				<xs:annotation>
+					<xs:documentation>Округление результата расчета размера платежа для погашения иных обязательств </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="repaymentTerm" type="tns:TRepaymentTermNoOne">
+				<xs:annotation>
+					<xs:documentation>Срок оплаты</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TNthRepaymentAmountAndTerms">
+		<xs:annotation>
+			<xs:documentation>Порядок определения размера и срока платежей</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" name="nthRepaymentAmountAndTerm"
+				type="tns:TNthRepaymentAmountAndTerm">
+				<xs:annotation>
+					<xs:documentation>Порядок определения размера и срока платежа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TInterestNoOneRepayment">
+		<xs:annotation>
+			<xs:documentation>Размер платежа для погашения процентов</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="interestNoOneRepayment" type="mgc:TEmpty">
+				<xs:annotation>
+					<xs:documentation>проценты за пользование заемными средствами, начисленные за истекший процентный период по формуле простых процентов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDescription" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Иное правило</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TPrincipalAmountOfDebtRepaymentNoOne">
+		<xs:annotation>
+			<xs:documentation>Размер платежа для погашения основного долга</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="principalAmountOfDebtRepaymentNoOne" type="mgc:TEmpty">
+				<xs:annotation>
+					<xs:documentation>разница между размером общего платежа и платежом для погашения процентов
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDescription" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Иное</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TRepaymentTermNoOne">
+		<xs:annotation>
+			<xs:documentation>Срок оплаты (кроме первого и последнего)</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="termNoOneKind" type="mgc:DTermNoOneKind">
+				<xs:annotation>
+					<xs:documentation>Из списка</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDescription" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Иное</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TLastRepaymentAmountAndTerm">
+		<xs:annotation>
+			<xs:documentation>Порядок определения размера и срока последнего платежа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="amount" type="tns:TLastPaymentAmount">
+				<xs:annotation>
+					<xs:documentation>Сумма</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="repaymentTerm" type="tns:TRepaymentTermLastPayment">
+				<xs:annotation>
+					<xs:documentation>Срок оплаты</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TLastPaymentAmount">
+		<xs:annotation>
+			<xs:documentation>Размер последнего платежа</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="lastPaymentAmount" type="mgc:TEmpty">
+				<xs:annotation>
+					<xs:documentation>В размере непогашенного основного долга, начисленных, но неуплаченных процентов за пользование заемными средствами</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDescription" type="siml:s500">
+				<xs:annotation>
+					<xs:documentation>Иное</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TRepaymentTermLastPayment">
+		<xs:annotation>
+			<xs:documentation>Срок оплаты последнего платежа</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="repaymentTermLastPayment" type="mgc:TEmpty">
+				<xs:annotation>
+					<xs:documentation>ранняя из платежного дня (либо платежного периода)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDescription" type="siml:s500">
+				<xs:annotation>
+					<xs:documentation>Иное</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TFines">
+		<xs:annotation>
+			<xs:documentation>Размер убытков и/или неустойки (штрафы, пени) вследствие неисполнения, просрочки исполнения или иного ненадлежащего исполнения обеспеченного ипотекой обязательства</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="violationOfInterestConditions" type="tns:TFinesAmount">
+				<xs:annotation>
+					<xs:documentation>За неоплату/нарушение срока оплаты процентов за пользование заемными средствами</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="violationOfPrincipalDebtConditions" type="tns:TFinesAmount">
+				<xs:annotation>
+					<xs:documentation>За неоплату/нарушение срока погашения основного долга</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="calculationProcedure" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Порядок расчета и оплаты неустойки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="amountOfLoss" type="tns:TRoundingResult">
+				<xs:annotation>
+					<xs:documentation>Правила округления размера неустойки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TFinesAmount">
+		<xs:annotation>
+			<xs:documentation>Размеры убытков и/или неустоек</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="finesAmount" type="tns:TFineAmount"/>
+			<xs:element name="otherDescription" type="siml:s500">
+				<xs:annotation>
+					<xs:documentation>Иное</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TFineAmount">
+		<xs:annotation>
+			<xs:documentation>Значения размеров убытков и/или неустоек</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="fineAmount" type="siml:d20_2">
+				<xs:annotation>
+					<xs:documentation>Размер неустойки (в процентах)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="finePeriod" type="mgc:DTimeUnitsDY">
+				<xs:annotation>
+					<xs:documentation>Период начисления неустойки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TPledges">
+		<xs:annotation>
+			<xs:documentation>Описание предметов ипотеки</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="pledge" type="tns:TPledge" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Описание предмета ипотеки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TPledge">
+		<xs:annotation>
+			<xs:documentation>Предмет ипотеки</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBasePledge">
+				<xs:sequence>
+					<xs:choice minOccurs="1">
+						<xs:element name="objectDescription" type="tns:TObjectDescription">
+							<xs:annotation>
+								<xs:documentation>Описание объекта недвижимости</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="leaseDescription" type="tns:TLeaseDescription">
+							<xs:annotation>
+								<xs:documentation>Описание предмета аренды (если предметом ипотеки является право аренды)</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dduDescription" type="tns:TDduDescription">
+							<xs:annotation>
+								<xs:documentation>Описание права требования, вытекающего из договора участия в долевом строительстве (если предметом ипотеки является право требования, вытекающее из договора участия в долевом строительстве)
+</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+					<xs:element name="marketPrice" type="tns:TMarketPrice" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Рыночная стоимость предмета ипотеки</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="burdens" type="tns:TBurdens" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Наличие обременений правами третьих лиц, подлежащих государственной регистрации</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="mortgage" type="tns:TRegRight" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Сведения о государственной регистрации ипотеки</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TBasePledge">
+		<xs:annotation>
+			<xs:documentation>Базовый тип предмета ипотеки</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:element name="objectDescription" type="tns:TObjectDescription" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Описание объекта недвижимости</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="leaseDescription" type="tns:TLeaseDescription" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Описание предмета аренды (если предметом ипотеки является право аренды)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="dduDescription" type="tns:TDduDescription" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Описание права требования, вытекающего из договора участия в долевом строительстве (если предметом ипотеки является право требования, вытекающее из договора участия в долевом строительстве)
+</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="marketPrice" type="tns:TMarketPrice" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Рыночная стоимость предмета ипотеки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="burdens" type="tns:TBurdens" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наличие обременений правами третьих лиц, подлежащих государственной регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="mortgage" type="tns:TRegRight" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения о государственной регистрации ипотеки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TPledgeAgreement">
+		<xs:annotation>
+			<xs:documentation>Добавление сведений о государственной регистрации ипотеки</xs:documentation>
+		</xs:annotation>
+	</xs:complexType>
+	<xs:complexType name="TRegRight">
+		<xs:annotation>
+			<xs:documentation>Сведения об органе государственной регистрации, номере и дате регистрации</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="regRightAuthority" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Наименование органа регистрации прав</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="regNumber" type="siml:s1000" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Номер государственной регистрации </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="regDate" type="xs:date" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Дата государственной регистрации </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TMarketPrice">
+		<xs:annotation>
+			<xs:documentation>Рыночная стоимость предмета ипотеки</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="price" type="tns:TPrice">
+				<xs:annotation>
+					<xs:documentation>Сведения о рыночной либо кадастровой стоимости</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="valuers" type="tns:TValuers">
+				<xs:annotation>
+					<xs:documentation>Сведения об оценщиках</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="report" type="tns:TReport">
+				<xs:annotation>
+					<xs:documentation>Реквизиты отчета об оценке</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TReport">
+		<xs:annotation>
+			<xs:documentation>Сведения о реквизите отчета об оценке</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="reportDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Дата отчета</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="evalDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Дата оценки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TValuers">
+		<xs:annotation>
+			<xs:documentation>Сведения об оценщиках</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="valuer" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="subj:TValuer">
+							<xs:attribute name="_id" type="xs:token">
+								<xs:annotation>
+									<xs:documentation>Идентификатор субъекта оценщика</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TPrice">
+		<xs:annotation>
+			<xs:documentation>Сведения о рыночной либо кадастровой стоимости</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="amount" type="tns:TCostRubType">
+				<xs:annotation>
+					<xs:documentation>Рыночная стоимость</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="cadastralPrice" type="tns:TCostRubType">
+				<xs:annotation>
+					<xs:documentation>Кадастровая стоимость</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TRightRestrictions">
+		<xs:annotation>
+			<xs:documentation>Обременения правами третьих лиц, подлежащих государственной регистрации</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="rightKind" type="dRight:DRight">
+					<xs:annotation>
+						<xs:documentation>Вид права</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="rightRestrictionsKind" type="dEn:DEncumbrance">
+					<xs:annotation>
+						<xs:documentation>Вид ограничения</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="terms" type="siml:s1000" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Срок</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="regNumber" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Номер государственной регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="regDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Дата государственной регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TBurdens">
+		<xs:annotation>
+			<xs:documentation>Наличие обременений правами третьих лиц, подлежащих государственной регистрации</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="rightRestrictions" type="tns:TRightRestrictions">
+				<xs:annotation>
+					<xs:documentation>Обременения правами третьих лиц, подлежащих государственной регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="absent" type="mgc:TEmpty">
+				<xs:annotation>
+					<xs:documentation>Отсутсвуют</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TObjectDescription">
+		<xs:annotation>
+			<xs:documentation>Описание объекта недвижимости</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="object" type="obj:TObject">
+				<xs:annotation>
+					<xs:documentation>Объект</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="rightKind" type="dRight:DRight" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование права, в силу которого имущество, являющееся предметом ипотеки, принадлежит залогодателю</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="regRight" type="tns:TRegRight" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения об органе государственной регистрации, номере и дате регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TLeaseDescription">
+		<xs:annotation>
+			<xs:documentation>Описание предмета аренды</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="object" type="obj:TObject">
+				<xs:annotation>
+					<xs:documentation>Описание объекта недвижимости</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="legalActLeave" type="docs:TLegalActLeave">
+				<xs:annotation>
+					<xs:documentation>Договор аренды</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="regRight" type="tns:TRegRight" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения об органе государственной регистрации, номере и дате регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="terms" type="siml:s200">
+				<xs:annotation>
+					<xs:documentation>Срок действия аренды</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TDduDescription">
+		<xs:annotation>
+			<xs:documentation>Описание права требования, вытекающего из договора участия в долевом строительстве 
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="dduDescription" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Описание объекта долевого строительства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="legalActDdu" type="docs:TLegalActDdu">
+				<xs:annotation>
+					<xs:documentation>Договор участия в долевом строительстве </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="regRight" type="tns:TRegRight" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения об органе государственной регистрации, номере и дате регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="_id" type="xs:token">
+			<xs:annotation>
+				<xs:documentation>Идентификатор объекта</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="TAdditionalTerms">
+		<xs:annotation>
+			<xs:documentation>Дополнительные условия</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBaseAdditionalTerms">
+				<xs:sequence>
+					<xs:element name="dependencies" type="tns:TDependencies">
+						<xs:annotation>
+							<xs:documentation>8.1 Дополнительные обязательства должника и/или залогодателя, которые влияют на размер, условия или порядок исполнения денежного обязательства</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="purposeOfCredit" type="tns:TPurposeOfCredit" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>8.2 Целевое назначение кредита /займа (для обязательств, основанных на кредитном договоре или договоре займа)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="debtorIsBusinessman" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>8.3 Целевое назначение кредита/займа связана с осуществлением должником предпринимательской деятельности</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="propertyInsurance" type="tns:TPropertyInsurance" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>8.4 Сведения о страховании имущества, на которое установлена ипотека</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="insuranceTerms" type="siml:s25000" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>8.5 Условия иных видов страхования, предусмотренных условиями договора, обязательства по которому обеспечены ипотекой</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="punishmentTerms" type="siml:s25000" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>8.6 Условие о возможности обращения взыскания на заложенное имущество во внесудебном порядке, а также условия реализации заложенного имущества, взыскание на которое обращено во внесудебном порядке</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="pledgeSellingConditions" type="siml:s25000" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>8.7 Способы и порядок реализации заложенного имущества при обращении взыскания на предмет ипотеки по решению суда</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="estrangementTerms" type="tns:TEstrangementTerms">
+						<xs:annotation>
+							<xs:documentation>8.8 Право и условия отчуждения заложенного имущества залогодателем</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="thirdPersonUsage" type="tns:TThirdPersonUsage" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>8.9 Право и условия предоставления залогодателем заложенного имущества в пользование третьим лицам</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="prepaymentTerms" type="siml:s25000">
+						<xs:annotation>
+							<xs:documentation>8.10 Условия досрочного погашения обязательств должником</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="paymentPlanChangeTerms" type="siml:s25000">
+						<xs:annotation>
+							<xs:documentation>8.11 Условия изменений плана погашения при частичном досрочном погашении</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="paymentPlanViolationTerms" type="siml:s25000">
+						<xs:annotation>
+							<xs:documentation>8.12 Условия исполнения обязательств при нарушении должником плана погашения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="participantRights" type="siml:s25000">
+						<xs:annotation>
+							<xs:documentation>8.13 Права должника и залогодателя</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="debtorDuties" type="siml:s25000">
+						<xs:annotation>
+							<xs:documentation>8.14 Обязанности должника и залогодателя </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="creditorDuties" type="siml:s25000">
+						<xs:annotation>
+							<xs:documentation>8.15 Обязанности залогодержателя
+
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="pledgeeRights" type="siml:s25000">
+						<xs:annotation>
+							<xs:documentation>8.16 Права залогодержателя</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="groundOfFulleEarlyPerformance" type="siml:s25000">
+						<xs:annotation>
+							<xs:documentation>8.17 Основания требования залогодержателем полного досрочного исполнения должником денежного обязательства</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="jurisdictionOfDisputes" type="siml:s25000">
+						<xs:annotation>
+							<xs:documentation>8.18 Подсудность споров </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="otherMortgageTerms" type="siml:s25000">
+						<xs:annotation>
+							<xs:documentation>8.19 Иные условия договора об ипотеке и договора, обязательства из которого обеспечены ипотекой</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="loanAgreementEffect" type="mgc:DLoanAgreementEffect"
+						minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>8.20 Действие кредитного договора (договора займа) после выдачи закладной залогодержателю</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="attachments" type="tns:TAttachments" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>8.21 Приложения к закладной</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="demands" type="tns:TDemands" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>8.22 Требования, обеспечиваемые ипотекой</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TAdditionalTermsAdd">
+		<xs:annotation>
+			<xs:documentation>Тип для добавления дополнительных условий</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBaseAdditionalTerms">
+				<xs:sequence>
+					<xs:element name="purposeOfCredit" type="tns:TPurposeOfCredit" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>8.2 Целевое назначение кредита /займа (для обязательств, основанных на кредитном договоре или договоре займа)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="propertyInsurance" type="tns:TPropertyInsurance" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>8.4 Сведения о страховании имущества, на которое установлена ипотека</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="insuranceTerms" type="siml:s25000" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>8.5 Условия иных видов страхования, предусмотренных условиями договора, обязательства по которому обеспечены ипотекой</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="punishmentTerms" type="siml:s25000" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>8.6 Условие о возможности обращения взыскания на заложенное имущество во внесудебном порядке, а также условия реализации заложенного имущества, взыскание на которое обращено во внесудебном порядке</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="pledgeSellingConditions" type="siml:s25000" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>8.7 Способы и порядок реализации заложенного имущества при обращении взыскания на предмет ипотеки по решению суда</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="thirdPersonUsage" type="tns:TThirdPersonUsage" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>8.9 Право и условия предоставления залогодателем заложенного имущества в пользование третьим лицам</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="loanAgreementEffect" type="mgc:DLoanAgreementEffect"
+						minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>8.20 Действие кредитного договора (договора займа) после выдачи закладной залогодержателю</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="demands" type="tns:TDemands" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>8.22 Требования, обеспечиваемые ипотекой</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TBaseAdditionalTerms">
+		<xs:annotation>
+			<xs:documentation>Дополнительные условия</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="dependencies" type="tns:TDependencies" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.1 Дополнительные обязательства должника и/или залогодателя, которые влияют на размер, условия или порядок исполнения денежного обязательства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="purposeOfCredit" type="tns:TPurposeOfCredit" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.2 Целевое назначение кредита /займа (для обязательств, основанных на кредитном договоре или договоре займа)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="debtorIsBusinessman" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.3 Целевое назначение кредита/займа связана с осуществлением должником предпринимательской деятельности</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="propertyInsurance" type="tns:TPropertyInsurance" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.4 Сведения о страховании имущества, на которое установлена ипотека</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="insuranceTerms" type="siml:s25000" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.5 Условия иных видов страхования, предусмотренных условиями договора, обязательства по которому обеспечены ипотекой</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="punishmentTerms" type="siml:s25000" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.6 Условие о возможности обращения взыскания на заложенное имущество во внесудебном порядке, а также условия реализации заложенного имущества, взыскание на которое обращено во внесудебном порядке</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pledgeSellingConditions" type="siml:s25000" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.7 Способы и порядок реализации заложенного имущества при обращении взыскания на предмет ипотеки по решению суда</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="estrangementTerms" type="tns:TEstrangementTerms" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.8 Право и условия отчуждения заложенного имущества залогодателем</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="thirdPersonUsage" type="tns:TThirdPersonUsage" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.9 Право и условия предоставления залогодателем заложенного имущества в пользование третьим лицам</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="prepaymentTerms" type="siml:s25000" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.10 Условия досрочного погашения обязательств должником</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="paymentPlanChangeTerms" type="siml:s25000" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.11 Условия изменений плана погашения при частичном досрочном погашении</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="paymentPlanViolationTerms" type="siml:s25000" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.12 Условия исполнения обязательств при нарушении должником плана погашения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="participantRights" type="siml:s25000" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.13 Права должника и залогодателя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="debtorDuties" type="siml:s25000" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.14 Обязанности должника и залогодателя </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="creditorDuties" type="siml:s25000" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.15 Обязанности залогодержателя
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pledgeeRights" type="siml:s25000" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.16 Права залогодержателя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="groundOfFulleEarlyPerformance" type="siml:s25000" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.17 Основания требования залогодержателем полного досрочного исполнения должником денежного обязательства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="jurisdictionOfDisputes" type="siml:s25000" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.18 Подсудность споров </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherMortgageTerms" type="siml:s25000" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.19 Иные условия договора об ипотеке и договора, обязательства из которого обеспечены ипотекой</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="loanAgreementEffect" type="mgc:DLoanAgreementEffect" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.20 Действие кредитного договора (договора займа) после выдачи закладной залогодержателю</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="attachments" type="tns:TAttachments" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.21 Приложения к закладной</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="demands" type="tns:TDemands" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>8.22 Требования, обеспечиваемые ипотекой</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TDependencies">
+		<xs:annotation>
+			<xs:documentation>Дополнительные обязательства должника и/или залогодателя, которые влияют на размер, условия или порядок исполнения денежного обязательства</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="dependency" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Дополнительные обязательства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="noDependencies" type="mgc:TEmpty">
+				<xs:annotation>
+					<xs:documentation>Отсутсвуют</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TPurposeOfCredit">
+		<xs:annotation>
+			<xs:documentation>Целевое назначение кредита /займа</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="purposeOfCreditKind" type="mgc:DPurposeOfCreditKind">
+				<xs:annotation>
+					<xs:documentation>Целевое назначение кредита /займа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDescription" type="siml:s500" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Иное</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TPropertyInsurance">
+		<xs:annotation>
+			<xs:documentation>Сведения о страховании имущества, на которое установлена ипотека</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="riskInsurance" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Страхование имущества от рисков утраты и повреждения </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="payer" type="mgc:DPayer">
+				<xs:annotation>
+					<xs:documentation>Страхование осуществляется за счет</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="beneficiary" type="tns:TBeneficiary">
+				<xs:annotation>
+					<xs:documentation>Первым выгодоприобретателем является </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="insuranceAmount" type="tns:TInsuranceAmount">
+				<xs:annotation>
+					<xs:documentation>Страховая сумма </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TBeneficiary">
+		<xs:annotation>
+			<xs:documentation>Первый выгодоприобретатель</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="beneficiaryKind" type="mgc:DPayer">
+				<xs:annotation>
+					<xs:documentation>Вид первого выгодоприобретателя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDescription" type="siml:s500"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TEstrangementTerms">
+		<xs:annotation>
+			<xs:documentation>Право и условия отчуждения заложенного имущества залогодателем</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="rights" type="mgc:DRights"/>
+			<xs:element name="additionalTerms" type="siml:s500" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Описание дополнительных условий отчуждения заложенного имущества (при наличии): </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TThirdPersonUsage">
+		<xs:annotation>
+			<xs:documentation>Право и условия предоставления залогодателем заложенного имущества в пользование третьим лицам</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="thirdPersonUsageKind" type="mgc:DThirdPersonUsageKind">
+				<xs:annotation>
+					<xs:documentation>Право предоставления залогодателем заложенного имущества в пользование третьим лицам</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDescription" type="siml:s500">
+				<xs:annotation>
+					<xs:documentation>Иные условия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TAttachments">
+		<xs:annotation>
+			<xs:documentation>Приложенные документы к закладной</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="noAppliedDocument" type="mgc:TEmpty">
+				<xs:annotation>
+					<xs:documentation>Нет</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="appliedDocument" type="docs:TSomeDocument" minOccurs="1"
+				maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Приложенные документы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TDemands">
+		<xs:annotation>
+			<xs:documentation>Требования, обеспечиваемые ипотекой</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="amount" type="tns:TCostType">
+				<xs:annotation>
+					<xs:documentation>Общая твердая сумма требований залогодержателя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="volumeDemands" type="tns:TVolumeDemands">
+				<xs:annotation>
+					<xs:documentation>Объем требований, обеспеченных ипотекой, определяется на момент</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="demand" type="tns:TDemand" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Требование, обеспечиваемые ипотекой </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TVolumeDemands">
+		<xs:annotation>
+			<xs:documentation>Объем требований, обеспеченных ипотекой, определяется на момент</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="meetRequirements" type="mgc:TEmpty">
+				<xs:annotation>
+					<xs:documentation>удовлетворения требований за счет заложенного имущества</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dateAndEvent" type="tns:TDateAndEvent">
+				<xs:annotation>
+					<xs:documentation>Дата, событие</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDescription" type="siml:s500">
+				<xs:annotation>
+					<xs:documentation>Иной порядок</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TDateAndEvent">
+		<xs:annotation>
+			<xs:documentation>Дата, событие</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Дата</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="event" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Событие</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TDemand">
+		<xs:annotation>
+			<xs:documentation>Требование, обеспечиваемые ипотекой </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="amount" type="mgc:TEmpty">
+				<xs:annotation>
+					<xs:documentation>Основная сумма долга (сумма кредита, сумма займа), проценты за пользование заемными средства (для кредитного договора 
+и договора займа с выплатой процентов), возмещение залогодержателю расходов, которые залогодержатель несет в соответствии с условиями договора об ипотеке (при его наличии) или в силу необходимости обеспечить сохранение заложенного имущества на страхование заложенного имущества, содержание и (или) охрану заложенного имущества либо на погашение задолженности залогодателя по связанным с этим имуществом налогам, сборам или коммунальным платежам
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="compensationDamages" type="mgc:TEmpty" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Возмещение убытков и (или) неустойки (штрафы, пени) вследствие неисполнения, просрочки исполнения или иного ненадлежащего исполнения обеспеченного ипотекой обязательства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="interestUnlawfulUse" type="mgc:TEmpty" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Проценты за неправомерное пользование чужими денежными средствами, предусмотренные обеспеченным ипотекой обязательством либо федеральным законом</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="recoveryLegalCosts" type="mgc:TEmpty" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Возмещение судебных издержек и иных расходов, вызванных обращением взыскания на заложенное имущество</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="costRecovery" type="mgc:TEmpty" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Возмещение расходов по реализации заложенного имущества
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TDepositoryAccounting">
+		<xs:annotation>
+			<xs:documentation>Депозитарный учёт закладной</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBaseDepositoryAccounting">
+				<xs:sequence>
+					<xs:element name="custody" type="subj:TDepository">
+						<xs:annotation>
+							<xs:documentation>9.1 Наименование депозитария, в который электронная закладная передается на хранение</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="nomineeDep" type="subj:TDepository" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>9.2 Наименование депозитария – номинального держателя 
+(при наличии)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="nomineeAccountNum" type="tns:TDepositorAccNumType"
+						minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>9.3 Номер счета депо депозитария – номинального держателя 
+(при наличии)
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="accountingDep" type="subj:TDepository">
+						<xs:annotation>
+							<xs:documentation>9.4 Наименование депозитария, осуществляющего учет прав по закладной</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="accountNum" type="tns:TDepositorAccNumType">
+						<xs:annotation>
+							<xs:documentation>9.5 Номер счета депо депозитария, осуществляющего учет прав по закладной 
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="depositorAccNum" type="tns:TDepositorAccNumType">
+						<xs:annotation>
+							<xs:documentation>9.6 Номер счета депо первоначального владельца закладной/иного лица, осуществляющего права по электронной закладной
+</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TBaseDepositoryAccounting">
+		<xs:annotation>
+			<xs:documentation>Базовый тип по депозитарному учёту закладной</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="custody" type="subj:TDepository" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>9.1 Наименование депозитария, в который электронная закладная передается на хранение</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="nomineeDep" type="subj:TDepository" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>9.2 Наименование депозитария – номинального держателя 
+(при наличии)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="nomineeAccountNum" type="tns:TDepositorAccNumType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>9.3 Номер счета депо депозитария – номинального держателя 
+(при наличии)
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="accountingDep" type="subj:TDepository" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>9.4 Наименование депозитария, осуществляющего учет прав по закладной</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="accountNum" type="tns:TDepositorAccNumType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>9.5 Номер счета депо депозитария, осуществляющего учет прав по закладной 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="depositorAccNum" type="tns:TDepositorAccNumType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>9.6 Номер счета депо первоначального владельца закладной/иного лица, осуществляющего права по электронной закладной
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TDepositoryAccountingAdd">
+		<xs:annotation>
+			<xs:documentation>Тип по добавлению сведений по депозитарному учёту закладной</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="nomineeDep" type="subj:TDepository" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>9.2 Наименование депозитария – номинального держателя 
+(при наличии)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="nomineeAccountNum" type="tns:TDepositorAccNumType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>9.3 Номер счета депо депозитария – номинального держателя 
+(при наличии)
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TDepositoryAccountingDelete">
+		<xs:annotation>
+			<xs:documentation>Тип по добавлению сведений по депозитарному учёту закладной</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="nomineeDep" type="mgc:TEmpty" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>9.2 Наименование депозитария – номинального держателя 
+(при наличии)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="nomineeAccountNum" type="mgc:TEmpty" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>9.3 Номер счета депо депозитария – номинального держателя 
+(при наличии)
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TDepositorAccNumType">
+		<xs:annotation>
+			<xs:documentation>Счет депонента в депозитарии</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="number" type="siml:d20">
+				<xs:annotation>
+					<xs:documentation>Номер счета</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="section" type="siml:d20">
+				<xs:annotation>
+					<xs:documentation>Раздел счета</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TIinterestAccrualEndDate">
+		<xs:annotation>
+			<xs:documentation>Дата начисления процентов</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="date" type="mgc:TEmpty">
+				<xs:annotation>
+					<xs:documentation>дата возврата основной суммы долга</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="otherDescription" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Иное описание даты</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TInsuranceAmount">
+		<xs:annotation>
+			<xs:documentation>Страховая сумма</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:sequence>
+				<xs:element name="insuranceAmountKind" type="mgc:DInsuranceAmountKind">
+					<xs:annotation>
+						<xs:documentation>Вид</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="interest" type="siml:d10_2" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Значение процента</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:element name="otherDescription" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Иное описание</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TElectronicInsteadDocumentary">
+		<xs:annotation>
+			<xs:documentation>Базовый тип по информации о выдаче электронной закладной взамен документарной закладной
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="issueDate" type="xs:date" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Дата выдачи документарной закладной первоначальному владельцу</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="cancellationDate" type="xs:date" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Дата аннулирования документарной закладной</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TCostRubType">
+		<xs:annotation>
+			<xs:documentation>Стоимость в рублях</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="amount" type="siml:d20_2">
+				<xs:annotation>
+					<xs:documentation>Cумма</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="currency" type="okv:DOKV" fixed="RUB">
+				<xs:annotation>
+					<xs:documentation>Валюта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
