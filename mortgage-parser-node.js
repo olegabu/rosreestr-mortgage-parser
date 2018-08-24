@@ -1,4 +1,4 @@
-MortgageParser = require('./mortgage-parser');
+MortgageParser = require('./mortgage-parser-dom');
 
 module.exports = class MortgageParserNode extends MortgageParser {
 

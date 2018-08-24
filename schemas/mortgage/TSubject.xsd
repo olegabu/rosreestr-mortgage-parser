@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:dCou="http://rosreestr.ru/services/v0.1/commonsMortgage/directories/country"
+    xmlns:tns="http://rosreestr.ru/services/v0.1/commonsMortgage/Subjects"
+    xmlns:commons="http://rosreestr.ru/services/v0.1/commonsMortgage/Commons"
+    xmlns:siml="http://rosreestr.ru/services/v0.1/commonsMortgage/simple-types"
+    xmlns:address="http://rosreestr.ru/services/v0.1/commonsMortgage/Address"
+    xmlns:docs="http://rosreestr.ru/services/v0.1/commonsMortgage/Documents"
+    xmlns:mgc="http://rosreestr.ru/services/v0.1/commonsMortgage/MgCommons"
+    targetNamespace="http://rosreestr.ru/services/v0.1/commonsMortgage/Subjects">
+
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commonsMortgage/Documents"
+        schemaLocation="TDocument.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commonsMortgage/directories/country"
+        schemaLocation="Dictionary/DCountry.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commonsMortgage/Commons"
+        schemaLocation="Commons.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commonsMortgage/simple-types"
+        schemaLocation="CommonSimpleType.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commonsMortgage/Address"
+        schemaLocation="TAddress.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commonsMortgage/MgCommons"
+        schemaLocation="MgCommons.xsd"/>
+
+    <xs:complexType name="TContactInfo">
+        <xs:annotation>
+            <xs:documentation>Контактная информация</xs:documentation>
+        </xs:annotation>
+
+        <xs:sequence>
+            <xs:element name="phoneNumber" minOccurs="0" type="commons:SPhoneNumber">
+                <xs:annotation>
+                    <xs:documentation>Номер телефона</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="postalAddress" type="address:TAddress" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Почтовый адрес</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="email" minOccurs="0" type="commons:SEMail">
+                <xs:annotation>
+                    <xs:documentation>Адрес электронной почты</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TSubject">
+        <xs:annotation>
+            <xs:documentation>Сведения о субъекте</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="otherInfo" type="tns:TOtherInfo">
+                <xs:annotation>
+                    <xs:documentation>Сведения о субъекте</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TOtherInfo">
+        <xs:complexContent>
+            <xs:extension base="tns:TContactInfo">
+                <xs:sequence>
+                    <xs:element name="note" type="siml:s1000" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Иная информация</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TBasicPerson">
+        <xs:annotation>
+            <xs:documentation>Базовый субъект со всеми необязательными атрибутам для задания обязательности в потомках</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="tns:TSubject">
+                <xs:sequence>
+                    <xs:element name="surname" type="commons:rus-100">
+                        <xs:annotation>
+                            <xs:documentation>Фамилия</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="firstname" type="commons:rus-100">
+                        <xs:annotation>
+                            <xs:documentation>Имя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="patronymic" type="commons:rus-100" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Отчество</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="birthDate" type="xs:date" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Дата рождения</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="birthPlace" type="siml:s1000" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Место рождения</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="idDocument" type="docs:TIdDocumentRestr" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Данные удостоверения личности</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="snils" type="docs:SSNILS" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Номер СНИЛС</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TFIO">
+        <xs:annotation>
+            <xs:documentation>ФИО, удостоверившего документ</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="surname" type="commons:rus-100">
+                <xs:annotation>
+                    <xs:documentation>Фамилия</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="firstname" type="commons:rus-100">
+                <xs:annotation>
+                    <xs:documentation>Имя</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="patronymic" type="commons:rus-100">
+                <xs:annotation>
+                    <xs:documentation>Отчество</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TPerson">
+        <xs:annotation>
+            <xs:documentation>Сведения о физическом лице</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicPerson">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element name="otherInfo" type="tns:TOtherInfo">
+                            <xs:annotation>
+                                <xs:documentation>Иная информация</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element name="surname" type="commons:rus-100">
+                            <xs:annotation>
+                                <xs:documentation>Фамилия</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="firstname" type="commons:rus-100">
+                            <xs:annotation>
+                                <xs:documentation>Имя</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="patronymic" type="commons:rus-100">
+                            <xs:annotation>
+                                <xs:documentation>Отчество</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="1" name="birthDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата рождения</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="1" name="birthPlace" type="siml:s1000">
+                            <xs:annotation>
+                                <xs:documentation>Место рождения</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="1" name="idDocument" type="docs:TIdDocumentRestr">
+                            <xs:annotation>
+                                <xs:documentation>Данные удостоверения личности</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="snils" type="docs:SSNILS">
+                            <xs:annotation>
+                                <xs:documentation>Номер СНИЛС</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TOrganization">
+        <xs:annotation>
+            <xs:documentation>Сведения о юридическом лице</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="tns:TSubject">
+                <xs:sequence>
+                    <xs:element name="name" type="siml:s500">
+                        <xs:annotation>
+                            <xs:documentation>Полное наименование</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="nativeForeignParams" type="tns:TNativeForeignParams">
+                        <xs:annotation>
+                            <xs:documentation>Российское ЮЛ или иностранное ЮЛ</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="address" type="address:TAddress">
+                        <xs:annotation>
+                            <xs:documentation>Адрес местонахождения/Адрес местонахождения в стране регистрации (инкорпорации)</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TBaseNativeForeignParams">
+        <xs:annotation>
+            <xs:documentation>Российское ЮЛ или иностранное ЮЛ</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="nativeOrgParams" type="tns:TNativeOrgParams">
+                <xs:annotation>
+                    <xs:documentation>Данные по российским юридическим лицам</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="foreignOrgParams" type="tns:TForeignOrgParams" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Данные по иностранным юридическим лицам</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="TNativeForeignParams">
+        <xs:annotation>
+            <xs:documentation>Российское ЮЛ или иностранное ЮЛ</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBaseNativeForeignParams">
+                <xs:choice>
+                    <xs:element name="nativeOrgParams" type="tns:TNativeOrgParams">
+                        <xs:annotation>
+                            <xs:documentation>Данные по российским юридическим лицам</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="foreignOrgParams" type="tns:TForeignOrgParams" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Данные по иностранным юридическим лицам</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:choice>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TNativeParamsDepositary">
+        <xs:complexContent>
+            <xs:restriction base="tns:TBaseNativeForeignParams">
+                <xs:choice>
+                    <xs:element name="nativeOrgParams" type="tns:TNativeOrgParams">
+                        <xs:annotation>
+                            <xs:documentation>Данные по российским юридическим лицам</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:choice>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TNativeOrgParams">
+        <xs:annotation>
+            <xs:documentation>Данные по российским юридическим лицам</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:annotation>
+                <xs:documentation/>
+            </xs:annotation>
+            <xs:element name="ogrn" type="docs:SOrgOGRN">
+                <xs:annotation>
+                    <xs:documentation>Основной государствкенный регистрационный номер (ОГРН) организации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="inn" type="docs:SOrgINN">
+                <xs:annotation>
+                    <xs:documentation>Идентификационный номер налогоплательщика (ИНН) организации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TForeignOrgParams">
+        <xs:annotation>
+            <xs:documentation>Данные по иностранным юридическим лицам</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:annotation>
+                <xs:documentation/>
+            </xs:annotation>
+            <xs:element name="countryCode" type="dCou:DCountry">
+                <xs:annotation>
+                    <xs:documentation>Код страны</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="regDate" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Дата регистрации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="nameAuthority" type="siml:s1000">
+                <xs:annotation>
+                    <xs:documentation>Наименование регистрирующего органа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="regNumber" type="siml:s100">
+                <xs:annotation>
+                    <xs:documentation>Номер регистрации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="inn" type="docs:SOrgINN" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Идентификационный номер налогоплательщика </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TDepository">
+        <xs:annotation>
+            <xs:documentation>Данные депозитария</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="tns:TSubject">
+                <xs:sequence>
+                    <xs:element name="name" type="siml:s500">
+                        <xs:annotation>
+                            <xs:documentation>Полное наименование</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="nativeForeignParams" type="tns:TNativeParamsDepositary">
+                        <xs:annotation>
+                            <xs:documentation>Российское ЮЛ</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="address" type="address:TAddress">
+                        <xs:annotation>
+                            <xs:documentation>Местонахождение</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TOtherSubject">
+        <xs:annotation>
+            <xs:documentation>Сведения о ППО</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="tns:TSubject">
+                <xs:sequence>
+                    <xs:element name="name" type="siml:s500" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Полное наименование</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="nameAuthority" type="siml:s500">
+                        <xs:annotation>
+                            <xs:documentation>Наименование уполномоченного органа, действующего от имени публично-правового образования</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TBasicMgSubject">
+        <xs:annotation>
+            <xs:documentation>Базовые сведения о субъекте
+</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:choice>
+                <xs:element name="person" type="tns:TPerson">
+                    <xs:annotation>
+                        <xs:documentation>Физическое лицо</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="organization" type="tns:TOrganization">
+                    <xs:annotation>
+                        <xs:documentation>Юридическое лицо</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="1" name="other" type="tns:TOtherSubject">
+                    <xs:annotation>
+                        <xs:documentation>ППО</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+            <xs:element name="firstOwnerKind" minOccurs="0" type="tns:DFirstOwnerKind">
+                <xs:annotation>
+                    <xs:documentation>Тип первоначального владельца закладной</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="representative" type="tns:TRepresentative" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Представитель</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="_id" type="xs:token" use="required">
+            <xs:annotation>
+                <xs:documentation>Идентификатор субъекта</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:simpleType name="DFirstOwnerKind">
+        <xs:annotation>
+            <xs:documentation>Тип первоначального владельца закладной</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="359000000100">
+                <xs:annotation>
+                    <xs:documentation>Первоначальный владелец  закладной</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="359000000200">
+                <xs:annotation>
+                    <xs:documentation>Лицо, осуществляющее права по электронной закладной</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="TRepresentative">
+        <xs:annotation>
+            <xs:documentation>Базовый представитель заявителя</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="subject" type="tns:TPerson">
+                <xs:annotation>
+                    <xs:documentation>Представитель заявителя</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="representativeDocument" type="docs:TRepresentativeDocument">
+                <xs:annotation>
+                    <xs:documentation>Документ, подтверждающий полномочия представителя</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="_id" type="xs:token">
+            <xs:annotation>
+                <xs:documentation>Идентификатор субъекта</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="TMgSubject">
+        <xs:annotation>
+            <xs:documentation>Сведения о субъекте</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicMgSubject">
+                <xs:sequence>
+                    <xs:choice>
+                        <xs:element name="person" type="tns:TPerson">
+                            <xs:annotation>
+                                <xs:documentation>Физическое лицо</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="organization" type="tns:TOrganization">
+                            <xs:annotation>
+                                <xs:documentation>Юридическое лицо</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="1" name="other" type="tns:TOtherSubject">
+                            <xs:annotation>
+                                <xs:documentation>ППО</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:element minOccurs="0" name="representative" type="tns:TRepresentative"
+                        maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Представитель</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TAgreementSubject">
+        <xs:annotation>
+            <xs:documentation>Сведения о субъекте</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="tns:TMgSubject">
+                <xs:sequence>
+                    <xs:element name="modification" type="mgc:DSubjectAgreement">
+                        <xs:annotation>
+                            <xs:documentation>Информация по добавлению, редактирования или удалению субъекта</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TPledger">
+        <xs:annotation>
+            <xs:documentation>Сведения о залогодателе</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="pledger" type="tns:TMgSubject">
+                <xs:annotation>
+                    <xs:documentation>Залогодатель</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TPledgerAgreement">
+        <xs:annotation>
+            <xs:documentation>Сведения о залогодателе</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="pledger" type="tns:TAgreementSubject">
+                <xs:annotation>
+                    <xs:documentation>Залогодатель</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TDebtor">
+        <xs:annotation>
+            <xs:documentation>Сведения о должнике</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="debtor" type="tns:TMgSubject">
+                <xs:annotation>
+                    <xs:documentation>Должник</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TDebtorAgreement">
+        <xs:annotation>
+            <xs:documentation>Сведения о должнике</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="debtor" type="tns:TAgreementSubject"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TFirstOwner">
+        <xs:annotation>
+            <xs:documentation>Сведения о первоначальном владельце закладной</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="firstOwner" type="tns:TMgSubjectFirstOwner">
+                <xs:annotation>
+                    <xs:documentation>Первоначальный владелец закладной</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TFirstOwnerAgreement">
+        <xs:annotation>
+            <xs:documentation>Сведения о первоначальном владельце закладной</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="firstOwner"
+                type="tns:TMgSubjectFirstOwnerAgreement">
+                <xs:annotation>
+                    <xs:documentation>Первоначальный владелец закладной</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TMgSubjectFirstOwner">
+        <xs:annotation>
+            <xs:documentation>Первоначальный владелец закладной</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicMgSubject">
+                <xs:sequence>
+                    <xs:choice>
+                        <xs:element name="person" type="tns:TPerson">
+                            <xs:annotation>
+                                <xs:documentation>Физическое лицо</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="organization" type="tns:TOrganization">
+                            <xs:annotation>
+                                <xs:documentation>Юридическое лицо</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="1" name="other" type="tns:TOtherSubject">
+                            <xs:annotation>
+                                <xs:documentation>ППО</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:element name="firstOwnerKind" minOccurs="1" type="tns:DFirstOwnerKind">
+                        <xs:annotation>
+                            <xs:documentation>Тип первоначального владельца закладной</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="representative" type="tns:TRepresentative"
+                        maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Представитель</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TMgSubjectFirstOwnerAgreement">
+        <xs:annotation>
+            <xs:documentation>Первоначальный владелец закладной</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="tns:TMgSubjectFirstOwner">
+                <xs:sequence>
+                    <xs:element name="modification" type="mgc:DSubjectAgreement">
+                        <xs:annotation>
+                            <xs:documentation>Признак редактирования первоначального владельца</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TValuerPerson">
+        <xs:annotation>
+            <xs:documentation>Базовые сведения об оценщике физическом лице</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicPerson">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element name="otherInfo" type="tns:TOtherInfo">
+                            <xs:annotation>
+                                <xs:documentation>Сведения о субъекте</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element name="surname" type="commons:rus-100">
+                            <xs:annotation>
+                                <xs:documentation>Фамилия</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="firstname" type="commons:rus-100">
+                            <xs:annotation>
+                                <xs:documentation>Имя</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="patronymic" type="commons:rus-100">
+                            <xs:annotation>
+                                <xs:documentation>Отчество</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TValuerMGPerson">
+        <xs:annotation>
+            <xs:documentation>Сведения об оценщике физическом лице</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="tns:TValuerPerson">
+                <xs:sequence>
+                    <xs:element name="valuerOrganization" type="siml:s1000">
+                        <xs:annotation>
+                            <xs:documentation>Cведения о членстве оценщика в саморегулируемой организации оценщиков
+</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TValuer">
+        <xs:annotation>
+            <xs:documentation>Сведения об оценщике</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:choice>
+                <xs:element name="person" type="tns:TValuerMGPerson">
+                    <xs:annotation>
+                        <xs:documentation>Физическое лицо</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="organization" type="tns:TOrganization">
+                    <xs:annotation>
+                        <xs:documentation>Юридическое лицо</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

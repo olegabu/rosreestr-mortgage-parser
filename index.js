@@ -1,10 +1,9 @@
 const MortgageParserNode = require('./mortgage-parser-node');
+const MortgageParserJsonix = require('./mortgage-parser-jsonix');
 const ZipParser = require('./zip-parser');
-const Validator = require('./validator');
 
 module.exports = {
-    MortgageParser: MortgageParserNode,
-    ZipParser: ZipParser,
-    Validator: Validator
-}
-;
+  MortgageParserNode: MortgageParserNode,
+  MortgageParserJsonix: MortgageParserJsonix,
+  ZipParser: ZipParser
+};

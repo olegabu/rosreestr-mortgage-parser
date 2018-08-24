@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    xmlns:tns="http://rosreestr.ru/services/v0.1/commonsMortgage/MgCommons"
+    xmlns:commons="http://rosreestr.ru/services/v0.1/commonsMortgage/Commons"
+    xmlns:siml="http://rosreestr.ru/services/v0.1/commonsMortgage/simple-types"
+    targetNamespace="http://rosreestr.ru/services/v0.1/commonsMortgage/MgCommons">
+
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commonsMortgage/Commons" schemaLocation="Commons.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commonsMortgage/simple-types"
+        schemaLocation="CommonSimpleType.xsd"/>
+    <xs:simpleType name="DProcedureDetermining">
+        <xs:annotation>
+            <xs:documentation>Порядок определения суммы основного долга</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="420101">
+                <xs:annotation>
+                    <xs:documentation>Лимит выдачи</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="420102">
+                <xs:annotation>
+                    <xs:documentation>Лимит долга</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="420103">
+                <xs:annotation>
+                    <xs:documentation>Не определен</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="DIntervalType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="520101">
+                <xs:annotation>
+                    <xs:documentation>процентов годовых</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="520102">
+                <xs:annotation>
+                    <xs:documentation>процентов в день</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="520103">
+                <xs:annotation>
+                    <xs:documentation>процентов в месяц</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="520104">
+                <xs:annotation>
+                    <xs:documentation>процентов в квартал</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:complexType name="TEmpty">
+        <xs:annotation>
+            <xs:documentation>Фиксированное определение</xs:documentation>
+        </xs:annotation>
+    </xs:complexType>
+   
+    <xs:simpleType name="DFirstPeriod">
+        <xs:annotation>
+            <xs:documentation>Первый процентный период</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="540101">
+                <xs:annotation>
+                    <xs:documentation>ближайшая дата платежа</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="540102">
+                <xs:annotation>
+                    <xs:documentation>дата принятия кредитором платежа в платежном периоде</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="DLastPeriodIfWeekend">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="570101">
+                <xs:annotation>
+                    <xs:documentation>перенос на ближайший следующий за ним рабочий день</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="570102">
+                <xs:annotation>
+                    <xs:documentation>перенос на день, предшествующий нерабочему дню</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="570103">
+                <xs:annotation>
+                    <xs:documentation>без изменений</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="DRegularityList">
+        <xs:restriction base="tns:DBaseTimeUnits">
+            <xs:enumeration value="month">
+                <xs:annotation>
+                    <xs:documentation>Ежемесячно</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="day">
+                <xs:annotation>
+                    <xs:documentation>Ежедневно</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="DAccrualBaseList">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="580101">
+                <xs:annotation>
+                    <xs:documentation>Фактическое количество дней в году (365/366)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="580102">
+                <xs:annotation>
+                    <xs:documentation>360 дней</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="DInterestsRoundingList">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="580201">
+                <xs:annotation>
+                    <xs:documentation>До целых по математическим правилам</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="580202">
+                <xs:annotation>
+                    <xs:documentation>До двух разрядов дробной части по математическим правилам</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="580203">
+                <xs:annotation>
+                    <xs:documentation>До целых с округлением в меньшую сторону</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="580204">
+                <xs:annotation>
+                    <xs:documentation>До целых с округлением в большую сторону</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="DIntermedRoundingList">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="580301">
+                <xs:annotation>
+                    <xs:documentation>Не производятся</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="580302">
+                <xs:annotation>
+                    <xs:documentation>Производится ежемесячно</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="580303">
+                <xs:annotation>
+                    <xs:documentation>Производится ежедневно</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="DBaseTimeUnits">
+        <xs:annotation>
+            <xs:documentation>единица времени (день/неделя/месяц/квартал/год)</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="day">
+                <xs:annotation>
+                    <xs:documentation>день</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="week">
+                <xs:annotation>
+                    <xs:documentation>неделя</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="month">
+                <xs:annotation>
+                    <xs:documentation>месяц</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="quarter">
+                <xs:annotation>
+                    <xs:documentation>квартал</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="year">
+                <xs:annotation>
+                    <xs:documentation>год</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>            
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="DTimeUnits">     
+        <xs:annotation>
+            <xs:documentation>день/неделя/месяц/квартал</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="tns:DBaseTimeUnits">
+            <xs:enumeration value="day">
+                <xs:annotation>
+                    <xs:documentation>день</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="week">
+                <xs:annotation>
+                    <xs:documentation>неделя</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="month">
+                <xs:annotation>
+                    <xs:documentation>месяц</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="quarter">
+                <xs:annotation>
+                    <xs:documentation>квартал</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+       </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="DTimeUnitsMQY">
+        <xs:annotation>
+            <xs:documentation>месяц/квартал/год</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="tns:DBaseTimeUnits">
+            <xs:enumeration value="month">
+                <xs:annotation>
+                    <xs:documentation>месяц</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="quarter">
+                <xs:annotation>
+                    <xs:documentation>квартал</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="year">
+                <xs:annotation>
+                    <xs:documentation>год</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+        
+    <xs:simpleType name="DChangingPaymentDay">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="630101">
+                <xs:annotation>
+                    <xs:documentation>Перенос на ближайший следующий за ним рабочий день</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="630102">
+                <xs:annotation>
+                    <xs:documentation>Перенос на день, предшествующий нерабочему дню</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="630103">
+                <xs:annotation>
+                    <xs:documentation>Без изменений</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="DInterval">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="640101">
+                <xs:annotation>
+                    <xs:documentation>календарного месяца</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="640102">
+                <xs:annotation>
+                    <xs:documentation>следующего календарного месяца</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="640103">
+                <xs:annotation>
+                    <xs:documentation>последнего месяца квартала</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="640104">
+                <xs:annotation>
+                    <xs:documentation>последнего месяца года</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="DRepaymentInterestKind">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="640201">
+                <xs:annotation>
+                    <xs:documentation>проценты не погашаются из суммы платежа</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="640202">
+                <xs:annotation>
+                    <xs:documentation>проценты за пользование заемными средствами, начисленные за первый процентный период по формуле простых процентов</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="DTermKind">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="640301">
+                <xs:annotation>
+                    <xs:documentation>ближайший платежный день (либо платежный период) после даты возникновения денежного обязательства</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="640302">
+                <xs:annotation>
+                    <xs:documentation>платежный день (либо платежный период) для второго платежа</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="DKindPayment">
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="650101">
+            <xs:annotation>
+                <xs:documentation>Аннуитетный платеж</xs:documentation>
+            </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="650102">
+            <xs:annotation>
+                <xs:documentation>Дифференцированный платеж</xs:documentation>
+            </xs:annotation>
+        </xs:enumeration>
+    </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="DListConditions">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="650201">
+                <xs:annotation>
+                    <xs:documentation>изменение процентной ставки</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="650202">
+                <xs:annotation>
+                    <xs:documentation>изменение срока погашения денежного обязательства</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="650203">
+                <xs:annotation>
+                    <xs:documentation>частичное досрочное погашение основного долга</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="650204">
+                <xs:annotation>
+                    <xs:documentation>платеж не меняется</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="DRounding">
+        <xs:annotation>
+            <xs:documentation>способ округления суммы</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="650301">
+                <xs:annotation>
+                    <xs:documentation>до целых по математическим правилам</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="650302">
+                <xs:annotation>
+                    <xs:documentation>до двух разрядов дробной части по математическим правилам</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="650303">
+                <xs:annotation>
+                    <xs:documentation>до целых с округлением в меньшую сторону</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="650304">
+                <xs:annotation>
+                    <xs:documentation>до целых с округлением в большую сторону</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="DRepaymentDebtKind">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="650401">
+                <xs:annotation>
+                    <xs:documentation>основная сумма долга не погашается из суммы платежа</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="650402">
+                <xs:annotation>
+                    <xs:documentation>разница между размером общего платежа и платежом для погашения процентов</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="650403">
+                <xs:annotation>
+                    <xs:documentation>основная сумма долга, разделенная на количество платежей в плане погашения, кроме последнего</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="DTermNoOneKind">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="650501">
+                <xs:annotation>
+                    <xs:documentation>платежный день</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="650502">
+                <xs:annotation>
+                    <xs:documentation>платежный период</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="DTimeUnitsDY">
+        <xs:restriction base="tns:DBaseTimeUnits">
+            <xs:enumeration value="year">
+                <xs:annotation>
+                    <xs:documentation>процентов годовых</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="day">
+                <xs:annotation>
+                    <xs:documentation>процентов в день</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="DPurposeOfCreditKind">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="820101">
+                <xs:annotation>
+                    <xs:documentation>приобретение предмета ипотеки</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="820102">
+                <xs:annotation>
+                    <xs:documentation>строительство предмета ипотеки</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="820103">
+                <xs:annotation>
+                    <xs:documentation>капитальный ремонт и/или иное неотделимое улучшение предмета ипотеки</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="820104">
+                <xs:annotation>
+                    <xs:documentation>погашение ранее предоставленных кредита или займа на приобретение или строительство предмета ипотеки</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="DPayer">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="840101">
+                <xs:annotation>
+                    <xs:documentation>залогодатель</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="840102">
+                <xs:annotation>
+                    <xs:documentation>залогодержатель</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="DInsuranceAmountKind">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="840201">
+                <xs:annotation>
+                    <xs:documentation>не менее остатка основной суммы долга</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="840202">
+                <xs:annotation>
+                    <xs:documentation>не менее остатка основной суммы долга, увеличенной на ___ процентов</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="DRights">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="880101">
+                <xs:annotation>
+                    <xs:documentation>Залогодатель не имеет право отчуждать заложенное имущество</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="880102">
+                <xs:annotation>
+                    <xs:documentation>Залогодатель имеет право отчуждать заложенное имущество только с согласия залогодержателя</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="DThirdPersonUsageKind">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="890101">
+                <xs:annotation>
+                    <xs:documentation>залогодатель вправе без согласия залогодержателя сдавать заложенное имущество в аренду, передавать его во временное безвозмездное пользование и по соглашению с другим лицом предоставлять последнему право ограниченного пользования этим имуществом (сервитут) при условиях, что: срок, на который имущество предоставляется в пользование, не превышает срока обеспеченного ипотекой обязательства; имущество предоставляется 
+                        в пользование для целей, соответствующих назначению имущества</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="890102">
+                <xs:annotation>
+                    <xs:documentation>права пользования третьих лиц прекращаются в соответствии с законодательством</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="DLoanAgreementEffect">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="8200101">
+                <xs:annotation>
+                    <xs:documentation>Кредитный договор (договор займа) продолжает действовать</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8200102">
+                <xs:annotation>
+                    <xs:documentation>C даты выдачи залогодержателю настоящей закладной органом регистрации прав договор об ипотеке (при его наличии) и кредитный договор (договор займа), обязательство по которому обеспечено ипотекой, прекращают свое действие, все отношения между залогодателем, должником и залогодержателем регулируются настоящей закладной</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="DSubjectAgreement">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="add">
+                <xs:annotation>
+                    <xs:documentation>Добавление нового субъекта</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="edit">
+                <xs:annotation>
+                    <xs:documentation>Редактирование нового субъекта</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="delete">
+                <xs:annotation>
+                    <xs:documentation>Удаление субъекта</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="unchanged">
+                <xs:annotation>
+                    <xs:documentation>Субъект не меняется</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

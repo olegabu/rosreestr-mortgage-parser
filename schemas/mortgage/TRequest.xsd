@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    xmlns:tns="http://rosreestr.ru/services/v0.1/commonsMortgage/TRequest"
+    targetNamespace="http://rosreestr.ru/services/v0.1/commonsMortgage/TRequest">
+
+    <xs:element name="request" type="tns:TRequest">
+        <xs:annotation>
+            <xs:documentation>Техническое описание пакета электронных документов</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="TRequest">
+        <xs:annotation>
+            <xs:documentation>Техническое описание пакета электронных документов</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="mortgageFile" type="tns:TMortgageFile" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Файл закладной или соглашения о внесении изменений в электронную закладную </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="file" type="tns:TFile" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Прочие приложенные файлы</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TFile">
+        <xs:annotation>
+            <xs:documentation>Описание файла</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="fileName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Путь до файла относительно корня архива</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TMortgageFile">
+        <xs:annotation>
+            <xs:documentation>Описание файла закладной или соглашения о внесении изменений в электронную закладную </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="tns:TFile"> </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

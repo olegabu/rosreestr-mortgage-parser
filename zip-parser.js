@@ -1,4 +1,4 @@
-const MortgageParser = require('./mortgage-parser-node');
+const MortgageParser = require('./mortgage-parser-jsonix');
 const NodeZip = require('node-zip');
 const Validator = require('./validator');
 

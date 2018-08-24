@@ -1,15 +1,31 @@
-const MortgageParser = require('../index').MortgageParser;
-
 const fs = require('fs');
 
-const mortgageParser = new MortgageParser();
-
 fs.readFile('Mortgage.xml', 'utf8', (err, text) => {
-  console.log(text);
-  console.log(mortgageParser.parse(text));
+  const mortgageParserJsonix = new (require('./index').MortgageParserJsonix)();
+
+  let ret = mortgageParserJsonix.parse(text);
+
+  console.log(JSON.stringify(ret));
+  console.log(ret);
+
+  const mortgageParserNode = new (require('./index').MortgageParserNode)();
+
+  ret = mortgageParserNode.parse(text);
+
+  console.log(JSON.stringify(ret));
+  console.log(ret);
 });
 
-const ZipParser = require('../index').ZipParser;
+fs.readFile('request.xml', 'utf8', (err, text) => {
+  const mortgageParserJsonix = new (require('./index').MortgageParserJsonix)();
+
+  let ret = mortgageParserJsonix.parseRequest(text);
+
+  console.log(JSON.stringify(ret));
+  console.log(ret);
+});
+
+const ZipParser = require('./index').ZipParser;
 
 const zipParser = new ZipParser();
 
@@ -21,6 +37,3 @@ fs.readFile('mortgage_request.zip.dataUrl.txt', 'utf8', (err, text) => {
   console.log(zipParser.parseDataUrl(text));
 });
 
-// fs.readFile('agreement_request.zip', (err, data) => {
-//   console.log(zipParser.parse(data));
-// });

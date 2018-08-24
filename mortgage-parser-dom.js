@@ -1,5 +1,5 @@
 
-module.exports = class MortgageParser {
+module.exports = class MortgageParserDom {
 
   constructor(parser, findFunction) {
     this.namespaceMap = {
@@ -34,14 +34,14 @@ module.exports = class MortgageParser {
     const sectionDepository = this.find(d, ret.errors, 'ns6:electronicMortgage/ns6:depositoryAccounting/ns6:accountNum/ns6:section');
 
     if(numberDepository && sectionDepository) {
-      ret.depositoryAccount = {id: numberDepository, section: sectionDepository};
+      ret.depositoryAccount = {number: numberDepository, section: sectionDepository};
     }
 
     const numberDeponent = this.find(d, ret.errors, 'ns6:electronicMortgage/ns6:depositoryAccounting/ns6:depositorAccNum/ns6:number');
     const sectionDeponent = this.find(d, ret.errors, 'ns6:electronicMortgage/ns6:depositoryAccounting/ns6:depositorAccNum/ns6:section');
 
     if(numberDeponent && sectionDeponent) {
-      ret.deponentAccount = {id: numberDeponent, section: sectionDeponent};
+      ret.deponentAccount = {number: numberDeponent, section: sectionDeponent};
     }
 
     return ret;
