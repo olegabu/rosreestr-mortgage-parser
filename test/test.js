@@ -1,4 +1,4 @@
-const MortgageParser = require('./index').MortgageParser;
+const MortgageParser = require('../index').MortgageParser;
 
 const fs = require('fs');
 
@@ -9,7 +9,7 @@ fs.readFile('Mortgage.xml', 'utf8', (err, text) => {
   console.log(mortgageParser.parse(text));
 });
 
-const ZipParser = require('./index').ZipParser;
+const ZipParser = require('../index').ZipParser;
 
 const zipParser = new ZipParser();
 

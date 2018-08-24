@@ -1,10 +1,12 @@
 const MortgageParser = require('./mortgage-parser-node');
 const NodeZip = require('node-zip');
+const Validator = require('./validator');
 
 module.exports = class ZipParser {
 
   constructor() {
     this.mortgageParser = new MortgageParser();
+    this.validator = new Validator();
   }
 
   parseDataUrl(dataUrl) {
