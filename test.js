@@ -1,39 +1,38 @@
 const fs = require('fs');
 
-fs.readFile('Mortgage.xml', 'utf8', (err, text) => {
-  const mortgageParserJsonix = new (require('./index').MortgageParserJsonix)();
+const mortgageParserJsonix = new (require('./index').MortgageParserJsonix)();
 
-  let ret = mortgageParserJsonix.parse(text);
+let text = fs.readFileSync('Mortgage.xml', 'utf8');
 
-  console.log(JSON.stringify(ret));
-  console.log(ret);
+let ret = mortgageParserJsonix.parse(text);
 
-  const mortgageParserNode = new (require('./index').MortgageParserNode)();
+console.log(JSON.stringify(ret));
+console.log(ret);
 
-  ret = mortgageParserNode.parse(text);
+const mortgageParserNode = new (require('./index').MortgageParserNode)();
 
-  console.log(JSON.stringify(ret));
-  console.log(ret);
-});
+ret = mortgageParserNode.parse(text);
 
-fs.readFile('request.xml', 'utf8', (err, text) => {
-  const mortgageParserJsonix = new (require('./index').MortgageParserJsonix)();
+console.log(JSON.stringify(ret));
+console.log(ret);
 
-  let ret = mortgageParserJsonix.parseRequest(text);
+text = fs.readFileSync('request.xml', 'utf8');
 
-  console.log(JSON.stringify(ret));
-  console.log(ret);
-});
+ret = mortgageParserJsonix.parseRequest(text);
 
-const ZipParser = require('./index').ZipParser;
+console.log(JSON.stringify(ret));
+console.log(ret);
 
-const zipParser = new ZipParser();
+const zipParser = new (require('./index').ZipParser)();
 
-fs.readFile('mortgage_request.zip', (err, data) => {
-  console.log(zipParser.parse(data));
-});
+let data = fs.readFileSync('mortgage_request.zip');
+console.log(zipParser.parse(data));
 
-fs.readFile('mortgage_request.zip.dataUrl.txt', 'utf8', (err, text) => {
-  console.log(zipParser.parseDataUrl(text));
-});
+text = fs.readFileSync('mortgage_request.zip.dataUrl.txt', 'utf8');
+console.log(zipParser.parseDataUrl(text));
+
+console.log(mortgageParserJsonix.getNoticeRedemptionResponse(true, '23:43:0414009:5822', '30:12:020292:2742-30/001/2018-150', 'Принят'));
+console.log(mortgageParserJsonix.getChangeNotificationResponse(true, '2018-05-28', '23:43:0414009:5822', '30:12:020292:2742-30/001/2018-150', 'Принят'));
+console.log(mortgageParserJsonix.getNoticeReceiptMortgageResponse(true, '2018-05-28', '23:43:0414009:5822', 'Принят'));
+console.log(mortgageParserJsonix.getObtainingStatusNoticeReleaseMortgageResponse(true, '2018-05-28', '23:43:0414009:5822', '30:12:020292:2742-30/001/2018-150', 'Принят'));
 
