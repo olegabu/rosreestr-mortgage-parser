@@ -16,7 +16,7 @@ ret = mortgageParserNode.parse(text);
 console.log(JSON.stringify(ret));
 console.log(ret);
 
-text = fs.readFileSync('request.xml', 'utf8');
+text = fs.readFileSync('./test/request.xml', 'utf8');
 
 ret = mortgageParserJsonix.parseRequest(text);
 
