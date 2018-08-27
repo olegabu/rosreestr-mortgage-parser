@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<req:Request xmlns:subj="http://rosreestr.ru/services/v0.1/commonsMortgage/Subjects"
+	xmlns:req="urn://x-artefacts-rosreestr-gov-ru/virtual-services/electronic-mortgage/1.0.0"
+	xmlns:siml="http://rosreestr.ru/services/v0.1/commonsMortgage/simple-types"
+	xmlns:tns="http://rosreestr.ru/services/v0.1/commonsMortgage/Commons"
+	xmlns:dHouse="http://rosreestr.ru/services/v0.1/commonsMortgage/directories/house"
+	xmlns:address="http://rosreestr.ru/services/v0.1/commonsMortgage/Address"
+	xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+	xmlns:dCou="http://rosreestr.ru/services/v0.1/commonsMortgage/directories/country"
+	xmlns:docs="http://rosreestr.ru/services/v0.1/commonsMortgage/Documents"
+	xmlns:dDocument="http://rosreestr.ru/services/v0.1/commonsMortgage/directories/document"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<req:RoutingCode>71000000</req:RoutingCode>
+	<req:CadastralNumbers>
+		<req:CadastralNumber>23:43:0414009:5822</req:CadastralNumber>
+	</req:CadastralNumbers>
+	<req:Operation>
+		<req:TransferAgreement>
+			<req:CheckingInformationOwner>
+				<req:FirstOwners>
+					<subj:firstOwner _id="1">
+						<subj:person>
+							<subj:otherInfo>
+								<subj:email>NataSemTest@mail.ru</subj:email>
+								</subj:otherInfo>
+								<subj:surname>-Красивая</subj:surname>
+								<subj:firstname>Анна-</subj:firstname>
+							<subj:birthDate>1988-09-18</subj:birthDate>
+							<subj:birthPlace>г. Москва, ул. Воздвиженка, д.10</subj:birthPlace>
+									<subj:idDocument _id="Паспорт гражданина РФ">
+								<docs:documentTypes>
+									<docs:documentTypeCode>008001001000</docs:documentTypeCode>
+								</docs:documentTypes>
+								<docs:number>777888</docs:number>
+								<docs:series>03 09</docs:series>
+									</subj:idDocument>
+						</subj:person>
+						<subj:firstOwnerKind>359000000100</subj:firstOwnerKind>
+					</subj:firstOwner>
+				</req:FirstOwners>
+				<req:MortgageNumber>30:12:020292:2742-30/001/2018-150</req:MortgageNumber>
+			</req:CheckingInformationOwner>
+		</req:TransferAgreement>
+	</req:Operation>
+</req:Request>

@@ -1,15 +1,15 @@
 const fs = require('fs');
 
-const mortgageParserJsonix = new (require('./index').MortgageParserJsonix)();
+const mortgageParserJsonix = new (require('./../index').MortgageParserJsonix)();
 
-let text = fs.readFileSync('Mortgage.xml', 'utf8');
+let text = fs.readFileSync('./test/cases/Mortgage.xml', 'utf8');
 
 let ret = mortgageParserJsonix.parse(text);
 
 console.log(JSON.stringify(ret));
 console.log(ret);
 
-const mortgageParserNode = new (require('./index').MortgageParserNode)();
+const mortgageParserNode = new (require('./../index').MortgageParserNode)();
 
 ret = mortgageParserNode.parse(text);
 
@@ -23,12 +23,12 @@ ret = mortgageParserJsonix.parseRequest(text);
 console.log(JSON.stringify(ret));
 console.log(ret);
 
-const zipParser = new (require('./index').ZipParser)();
+const zipParser = new (require('./../index').ZipParser)();
 
-let data = fs.readFileSync('mortgage_request.zip');
+let data = fs.readFileSync('./test/cases/mortgage_request.zip');
 console.log(zipParser.parse(data));
 
-text = fs.readFileSync('mortgage_request.zip.dataUrl.txt', 'utf8');
+text = fs.readFileSync('./test/cases/mortgage_request.zip.dataUrl.txt', 'utf8');
 console.log(zipParser.parseDataUrl(text));
 
 console.log(mortgageParserJsonix.getNoticeRedemptionResponse(true, '23:43:0414009:5822', '30:12:020292:2742-30/001/2018-150', 'Принят'));
