@@ -1,35 +1,37 @@
-const MortgageParser = require('./mortgage-parser-jsonix');
+const MortgageParser = require ('./mortgage-parser-jsonix');
+
 const NodeZip = require('node-zip');
-const Validator = require('./validator');
 
 module.exports = class ZipParser {
-
-  constructor() {
-    this.mortgageParser = new MortgageParser();
-    this.validator = new Validator();
-  }
+    constructor() {
+        this.mortgageParser = new MortgageParser();
+    };
 
   parseDataUrl(dataUrl) {
     const parts = dataUrl.split(',');
     // console.log(parts);
 
-    return this.parse(Buffer.from(parts[1], 'base64'));
+    return this.parseZip(Buffer.from(parts[2], 'base64'));
   }
 
-  parse(data) {
+  parseZip(data) {
+
     const ret = {};
 
-    const topZip = new NodeZip(data, {base64: false, checkCRC32: true});
+    const zipFile = new NodeZip(data, {base64: false, checkCRC32: true});
 
-    // console.log(topZip.files);
 
-    const requestFile = topZip.files['request.xml'];
-    const requestData = requestFile._data;
+      if (zipFile.files['request.xml']) {
+          const requestFile = zipFile.files['request.xml'];
+          const requestData = requestFile._data;
+          ret.request = this.mortgageParser.parseRequest(requestData);
+          return ret
+      }
+      else
+      {
+        return ret.errors.append('Unable to look file request.xml')
+      }
 
-    // console.log(requestData);
-
-    ret.request = this.mortgageParser.parseRequest(requestData);
-    // console.log(ret.request);
 
     const payloadZipFile = topZip.files[ret.request.fileName];
     const payloadZipData = payloadZipFile._data;
