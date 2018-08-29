@@ -43,52 +43,6 @@ module.exports = class MortgageParserJsonix {
             let root = '';
             ret.cadastralNumber = u.value.cadastralNumbers.cadastralNumber;
 
-            let responseMap = {
-                'transferElectronicMortgageDepositary': {
-                    'comment': '',
-                    'cadastralNumber': '',
-                    'status': '',
-                    'dateDepository': '',
-
-                },
-                'noticeReleaseMortgage': {
-                    'comment': '',
-                    'cadastralNumber': '',
-                    'status': '',
-                    'dateDepository': '',
-                    'mortgageNumber': '',
-                },
-                'checkingInformationOwner': {
-                    'comment': '',
-                    'cadastralNumber': '',
-                    'status': '',
-                    'dateDepository': '',
-                    'mortgageNumber': '',
-                    'email': '',
-                    'surname': '',
-                    'firstname': '',
-                    'birthDate': '',
-                    'birthPlace': '',
-                    'documentTypeCode': '',
-                    'passport_number': '',
-                    'passport_series': '',
-                    'firstOwnerKind': ''
-                },
-                'directionAgreement': {
-                    'comment': '',
-                    'cadastralNumber': '',
-                    'status': '',
-                    'dateReceiptAgreement': '',
-                    'mortgageNumber': '',
-                },
-                'noticeRedemption': {
-                    'comment': '',
-                    'cadastralNumber': '',
-                    'status': '',
-                    'mortgageNumber': '',
-                }
-            };
-
             let response_args;
 
 
@@ -96,7 +50,7 @@ module.exports = class MortgageParserJsonix {
                 case _.hasIn(u, 'value.operation.transferElectronicMortgage.transferElectronicMortgageDepositary'):
                     root = u.value.operation.transferElectronicMortgage.transferElectronicMortgageDepositary;
                     ret.requestType = 'transferElectronicMortgageDepositary';
-                    ret.fileAttach = root.attachmentDescription.fileName;
+                    ret.fileName = root.attachmentDescription.fileName;
 
                     response_args = responseMap[ret.requestType];
                     // TODO Get correct data from chaincode
@@ -111,7 +65,7 @@ module.exports = class MortgageParserJsonix {
                     root = u.value.operation.transferElectronicMortgage.noticeReleaseMortgage;
                     ret.requestType = 'noticeReleaseMortgage';
                     ret.mortgageNumber = root.mortgageNumber;
-                    ret.fileAttach = root.attachmentDescription.fileName;
+                    ret.fileName = root.attachmentDescription.fileName;
                     response_args = responseMap[ret.requestType];
                     // TODO Get correct data from chaincode
                     response_args['cadastralNumber'] = ret.cadastralNumber;

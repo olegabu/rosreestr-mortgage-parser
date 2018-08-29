@@ -31,8 +31,3 @@ console.log(zipParser.parseZip(data));
 text = fs.readFileSync('./test/cases/mortgage_request.zip.dataUrl.txt', 'utf8');
 console.log(zipParser.parseDataUrl(text));
 
-console.log(mortgageParserJsonix.getNoticeRedemptionResponse(true, '23:43:0414009:5822', '30:12:020292:2742-30/001/2018-150', 'Принят'));
-console.log(mortgageParserJsonix.getChangeNotificationResponse(true, '2018-05-28', '23:43:0414009:5822', '30:12:020292:2742-30/001/2018-150', 'Принят'));
-console.log(mortgageParserJsonix.getNoticeReceiptMortgageResponse(true, '2018-05-28', '23:43:0414009:5822', 'Принят'));
-console.log(mortgageParserJsonix.getNoticeReleaseMortgageResponse(true, '2018-05-28', '23:43:0414009:5822', '30:12:020292:2742-30/001/2018-150', 'Принят'));
-
