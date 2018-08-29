@@ -5,7 +5,7 @@ const Request = require('./mappings/Request').Request;
 
 module.exports = class MortgageParserJsonix {
 
-    parse(text) {
+    parseMortgage(text) {
         const ret = {errors: []};
 
         try {
@@ -41,12 +41,70 @@ module.exports = class MortgageParserJsonix {
             ret.value = u.value;
 
             let root = '';
+            ret.cadastralNumber = u.value.cadastralNumbers.cadastralNumber;
+
+            let responseMap = {
+                'transferElectronicMortgageDepositary': {
+                    'comment': '',
+                    'cadastralNumber': '',
+                    'status': '',
+                    'dateDepository': '',
+
+                },
+                'noticeReleaseMortgage': {
+                    'comment': '',
+                    'cadastralNumber': '',
+                    'status': '',
+                    'dateDepository': '',
+                    'mortgageNumber': '',
+                },
+                'checkingInformationOwner': {
+                    'comment': '',
+                    'cadastralNumber': '',
+                    'status': '',
+                    'dateDepository': '',
+                    'mortgageNumber': '',
+                    'email': '',
+                    'surname': '',
+                    'firstname': '',
+                    'birthDate': '',
+                    'birthPlace': '',
+                    'documentTypeCode': '',
+                    'passport_number': '',
+                    'passport_series': '',
+                    'firstOwnerKind': ''
+                },
+                'directionAgreement': {
+                    'comment': '',
+                    'cadastralNumber': '',
+                    'status': '',
+                    'dateReceiptAgreement': '',
+                    'mortgageNumber': '',
+                },
+                'noticeRedemption': {
+                    'comment': '',
+                    'cadastralNumber': '',
+                    'status': '',
+                    'mortgageNumber': '',
+                }
+            };
+
+            let response_args;
+
 
             switch (true) {
                 case _.hasIn(u, 'value.operation.transferElectronicMortgage.transferElectronicMortgageDepositary'):
                     root = u.value.operation.transferElectronicMortgage.transferElectronicMortgageDepositary;
                     ret.requestType = 'transferElectronicMortgageDepositary';
                     ret.fileAttach = root.attachmentDescription.fileName;
+
+                    response_args = responseMap[ret.requestType];
+                    // TODO Get correct data from chaincode
+                    response_args['cadastralNumber'] = ret.cadastralNumber;
+                    response_args['status'] = true;
+                    response_args['dateDepository'] = '2018-05-28';
+                    response_args['comment'] = 'Принят';
+                    ret.response = this.getNoticeReceiptMortgageResponse(response_args);
                     break;
 
                 case _.hasIn(u, 'value.operation.transferElectronicMortgage.noticeReleaseMortgage'):
@@ -54,32 +112,69 @@ module.exports = class MortgageParserJsonix {
                     ret.requestType = 'noticeReleaseMortgage';
                     ret.mortgageNumber = root.mortgageNumber;
                     ret.fileAttach = root.attachmentDescription.fileName;
+                    response_args = responseMap[ret.requestType];
+                    // TODO Get correct data from chaincode
+                    response_args['cadastralNumber'] = ret.cadastralNumber;
+                    response_args['status'] = true;
+                    response_args['dateDepository'] = '2018-05-28';
+                    response_args['comment'] = 'Принят';
+                    response_args['mortgageNumber'] = ret.mortgageNumber;
+                    ret.response = this.getNoticeReleaseMortgageResponse(response_args);
                     break;
 
                 case _.hasIn(u, 'value.operation.transferAgreement.checkingInformationOwner'):
                     root = u.value.operation.transferAgreement.checkingInformationOwner;
                     ret.requestType = 'checkingInformationOwner';
-                    ret.mortgageNumber = root.mortgageNumber;
+                    response_args = responseMap[ret.requestType];
+                    // TODO Get correct data from chaincode
+                    response_args['cadastralNumber'] = ret.cadastralNumber;
+                    response_args['status'] = true;
+                    response_args['dateDepository'] = '2018-05-28';
+                    response_args['comment'] = 'Принят';
+                    response_args['mortgageNumber'] = ret.mortgageNumber;
+                    response_args['email'] = 'test@test.ru';
+                    response_args['surname'] = 'test';
+                    response_args['firstname'] = 'test';
+                    response_args['birthDate'] = '10-10-1998';
+                    response_args['birthPlace'] = 'Moscow';
+                    response_args['documentTypeCode'] = '008001001000';
+                    response_args['passport_number'] = '50000';
+                    response_args['passport_series'] = '4000';
+                    response_args['firstOwnerKind'] = '359000000100';
+                    ret.response = this.getNoticeCheckingInformationOwner(response_args);
                     break;
 
                 case _.hasIn(u, 'value.operation.transferAgreement.directionAgreement'):
                     root = u.value.operation.transferAgreement.directionAgreement;
                     ret.requestType = 'directionAgreement';
                     ret.mortgageNumber = root.mortgageNumber;
+                    response_args = responseMap[ret.requestType];
+                    // TODO Get correct data from chaincode
+                    response_args['cadastralNumber'] = ret.cadastralNumber;
+                    response_args['status'] = true;
+                    response_args['dateReceiptAgreement'] = '2018-05-28';
+                    response_args['comment'] = 'Принят';
+                    response_args['mortgageNumber'] = ret.mortgageNumber;
+                    ret.response = this.getChangeNotificationResponse(response_args);
                     break;
 
                 case _.hasIn(u, 'value.operation.noticeRedemption'):
                     root = u.value.operation.noticeRedemption;
                     ret.requestType = 'noticeRedemption';
                     ret.mortgageNumber = root.mortgageNumber;
+                    response_args = responseMap[ret.requestType];
+                    // TODO Get correct data from chaincode
+                    response_args['cadastralNumber'] = ret.cadastralNumber;
+                    response_args['status'] = true;
+                    response_args['comment'] = 'Принят';
+                    response_args['mortgageNumber'] = ret.mortgageNumber;
+                    ret.response = this.getNoticeRedemptionResponse(response_args);
                     break;
 
                 default:
                     ret.requestType = 'undefined';
                     ret.errors.push('Unknown request type.');
             }
-
-            ret.cadastralNumber = u.value.cadastralNumbers.cadastralNumber
 
 
         } catch (e) {
@@ -108,6 +203,25 @@ module.exports = class MortgageParserJsonix {
         return ret;
     }
 
+    parseResponse(text) {
+        const ret = {errors: []};
+
+        try {
+            let _ = require('lodash');
+            const context = new Jsonix.Context([Request]);
+
+            const unmarshaller = context.createUnmarshaller();
+            const u = unmarshaller.unmarshalString(text);
+
+            ret.value = u.value;
+            return ret
+
+        }
+        catch (e) {
+            ret.errors.push(e);
+        }
+    };
+
     getMarshaller() {
         const context = new Jsonix.Context([Request], {
             namespacePrefixes: {
@@ -118,20 +232,20 @@ module.exports = class MortgageParserJsonix {
         return context.createMarshaller();
     }
 
-    getNoticeRedemptionResponse(status, cadastralNumber, mortgageNumber, comment) {
+    getNoticeRedemptionResponse(request_args) {
         const ret = {errors: []};
 
         try {
             const response = {
                 Response: {
                     cadastralNumbers: {
-                        cadastralNumber: [cadastralNumber]
+                        cadastralNumber: request_args['cadastralNumber']
                     },
                     operation: {
                         noticeRedemption: {
-                            status: status,
-                            comment: comment,
-                            mortgageNumber: mortgageNumber
+                            status: request_args['status'],
+                            comment: request_args['comment'],
+                            mortgageNumber: request_args['mortgageNumber']
                         }
                     }
                 }
@@ -145,22 +259,22 @@ module.exports = class MortgageParserJsonix {
         return ret;
     }
 
-    getChangeNotificationResponse(status, dateReceiptAgreement, cadastralNumber, mortgageNumber, comment) {
+    getChangeNotificationResponse(response_args) {
         const ret = {errors: []};
 
         try {
             const response = {
                 Response: {
                     cadastralNumbers: {
-                        cadastralNumber: [cadastralNumber]
+                        cadastralNumber: response_args['cadastralNumber']
                     },
                     operation: {
                         transferAgreement: {
                             changeNotification: {
-                                status: status,
-                                comment: comment,
-                                mortgageNumber: mortgageNumber,
-                                dateReceiptAgreement: dateReceiptAgreement
+                                status: response_args['status'],
+                                comment: response_args['comment'],
+                                mortgageNumber: response_args['mortgageNumber'],
+                                dateReceiptAgreement: response_args['dateReceiptAgreement']
                             }
                         }
                     }
@@ -175,21 +289,21 @@ module.exports = class MortgageParserJsonix {
         return ret;
     }
 
-    getNoticeReceiptMortgageResponse(status, dateDepository, cadastralNumber, comment) {
+    getNoticeReceiptMortgageResponse(response_args) {
         const ret = {errors: []};
 
         try {
             const response = {
                 Response: {
                     cadastralNumbers: {
-                        cadastralNumber: [cadastralNumber]
+                        cadastralNumber: response_args['cadastralNumber']
                     },
                     operation: {
                         transferElectronicMortgage: {
                             noticeReceiptMortgage: {
-                                status: status,
-                                comment: comment,
-                                dateDepository: dateDepository
+                                status: response_args['status'],
+                                comment: response_args['comment'],
+                                dateDepository: response_args['dateDepository']
                             }
                         }
                     }
@@ -204,22 +318,22 @@ module.exports = class MortgageParserJsonix {
         return ret;
     }
 
-    getObtainingStatusNoticeReleaseMortgageResponse(status, dateDepository, cadastralNumber, mortgageNumber, comment) {
+    getNoticeReleaseMortgageResponse(response_args) {
         const ret = {errors: []};
 
         try {
             const response = {
                 Response: {
                     cadastralNumbers: {
-                        cadastralNumber: [cadastralNumber]
+                        cadastralNumber: response_args['cadastralNumber']
                     },
                     operation: {
                         transferElectronicMortgage: {
                             obtainingStatusNoticeReleaseMortgage: {
-                                status: status,
-                                comment: comment,
-                                dateDepository: dateDepository,
-                                mortgageNumber: mortgageNumber
+                                status: response_args['status'],
+                                comment: response_args['comment'],
+                                dateDepository: response_args['dateDepository'],
+                                mortgageNumber: response_args['mortgageNumber']
                             }
                         }
                     }
@@ -234,5 +348,56 @@ module.exports = class MortgageParserJsonix {
         return ret;
     }
 
-}
-;
+    getNoticeCheckingInformationOwner(response_args) {
+        const ret = {errors: []};
+
+        try {
+            const response = {
+                Response: {
+                    cadastralNumber: {
+                        cadastralNumbers: response_args['cadastralNumber']
+                    },
+                    operation: {
+                        transferAgreement: {
+                            noticeOwner: {
+                                status: response_args['status'],
+                                comment: response_args['comment'],
+                                mortgageNumber: response_args['mortgageNumber'],
+                                firstOwners: {
+                                    firstOwner: {
+                                        person: {
+                                            otherInfo: {
+                                                email: response_args['email']
+                                            },
+                                            surname: response_args['surname'],
+                                            firstname: response_args['firstname'],
+                                            birthDate: response_args['birthDate'],
+                                            birthPlace: response_args['birthPlace'],
+                                            idDocument: {
+                                                documentTypes: {
+                                                    documentTypeCode: response_args['documentTypeCode']
+                                                },
+                                                number: response_args['passport_number'],
+                                                series: response_args['passport_series']
+                                            }
+                                        },
+                                        firstOwnerKind: response_args['firstOwnerKind']
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            ret.value = this.getMarshaller().marshalString(response);
+        }
+        catch
+            (e) {
+            ret.errors.push(e);
+        }
+
+        return ret;
+    }
+
+};
