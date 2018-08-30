@@ -37,19 +37,19 @@ module.exports = class MortgageParser {
         }
         catch (e) {
             ret.errors.push(e);
+            return ret;
         }
-
-
     };
 
     generateResponse(request_type, data) {
         const ret = {errors: []};
         try {
             ret.response = this.mortgageParserJsonix.generateResponse(request_type, data)['response'];
-            return ret
+            return ret;
         }
         catch (e) {
             ret.errors.push(e);
+            return ret;
         }
     };
 };
