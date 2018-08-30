@@ -137,16 +137,6 @@ module.exports = class MortgageParserJsonix {
     catch (e) {
         ret.errors.push(e);
     }
-
-
-    for (let key in requestMap) {
-        if (requestType === key) {
-
-        }
-        else {
-
-        }
-    }
     };
 
     getMarshaller() {

@@ -20,10 +20,9 @@ module.exports = class ZipParser {
             if (zipFile.files['request.xml']) {
                 const requestFile = zipFile.files['request.xml'];
                 const requestData = requestFile._data;
-
+                ret.topZip = zipFile;
                 for (const key in global.responseMap) {
                     if (requestData.includes(key.slice(1,))) {
-                        ret.topZip = zipFile;
                         ret.request = this.mortgageParserJsonix.parseRequest(requestData);
                         return ret;
                     }
