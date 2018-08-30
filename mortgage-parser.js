@@ -1,3 +1,4 @@
+const NodeZip = require('node-zip');
 
 module.exports = class MortgageParser {
     constructor() {
@@ -17,23 +18,19 @@ module.exports = class MortgageParser {
                 zipRes = zipParser.parseDataUrl(data);
             }
 
-            ret.request = zipRes;
+            ret.request = zipRes['request'];
 
-            if (ret.request.error.length === 0 && ret.request.hasOwnProperty('fileName')) {
-                const attachFile = topZip.files[ret.request.fileName];
+            if (ret.request.hasOwnProperty('fileName')) {
+                const attachFile = zipRes.topZip.files[ret.request.fileName];
+                // TODO validate file type
                 const payloadZip = new NodeZip(attachFile._data, {base64: false, checkCRC32: true});
-
                 const payloadRequestFile = payloadZip.files['request.xml'];
                 const payloadRequestData = payloadRequestFile._data;
-
-                ret.payloadRequest = mortgageParserJsonix.parsePayloadRequest(payloadRequestData);
-                // console.log(ret.payloadRequest);
-
+                ret.payloadRequest = this.mortgageParserJsonix.parsePayloadRequest(payloadRequestData);
                 const payloadFile = payloadZip.files[ret.payloadRequest.fileName];
-                ret.payload = payloadFile._data;
+                ret.payload = this.mortgageParserJsonix.parseMortgage(payloadFile._data);
+                return ret;
 
-                // console.log(payload);
-                // console.log(this.mortgageParser.parse(payload));
             }
             return ret;
         }
