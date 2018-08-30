@@ -102,6 +102,7 @@ function testRequestResponse(BASE_ROOT, request_type, request_file, response_fil
     //let diff = getObjectDiff(model_response_jsonix.value, response_jsonix.value);
     //assert.equal(diff.length, 0,
     //    console.log('Test OK, this ' + request_type + ' response'));
+    //TODO Verify Response by model Response.
 }
 
 console.log('Test request-response parser');

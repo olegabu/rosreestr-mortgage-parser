@@ -16,11 +16,17 @@ module.exports = class MortgageParserJsonix {
 
             ret.value = u.value;
 
-            ret.regNumber = u.value.pledges.pledge[0].mortgage.regNumber;
-            ret.storageOgrn = u.value.depositoryAccounting.custody.nativeForeignParams.nativeOrgParams.ogrn;
-            ret.recordOgrn = u.value.depositoryAccounting.accountingDep.nativeForeignParams.nativeOrgParams.ogrn;
-            ret.depositoryAccount = u.value.depositoryAccounting.accountNum;
-            ret.deponentAccount = u.value.depositoryAccounting.depositorAccNum;
+            if (u.name.localPart === 'agreementAmendments') {
+                return ret;
+            }
+            else { // if electronicMortgage
+                ret.regNumber = u.value.pledges.pledge[0].mortgage.regNumber;
+                ret.storageOgrn = u.value.depositoryAccounting.custody.nativeForeignParams.nativeOrgParams.ogrn;
+                ret.recordOgrn = u.value.depositoryAccounting.accountingDep.nativeForeignParams.nativeOrgParams.ogrn;
+                ret.depositoryAccount = u.value.depositoryAccounting.accountNum;
+                ret.deponentAccount = u.value.depositoryAccounting.depositorAccNum;
+            }
+
         } catch (e) {
             ret.errors.push(e);
         }
@@ -290,13 +296,13 @@ module.exports = class MortgageParserJsonix {
                                             firstname: response_args['firstname'],
                                             birthDate: response_args['birthDate'],
                                             birthPlace: response_args['birthPlace'],
-                                            idDocument: {
+                                            idDocument: [{
                                                 documentTypes: {
                                                     documentTypeCode: response_args['documentTypeCode']
                                                 },
                                                 number: response_args['passport_number'],
                                                 series: response_args['passport_series']
-                                            }
+                                            }]
                                         },
                                         firstOwnerKind: response_args['firstOwnerKind']
                                     }
