@@ -1,6 +1,6 @@
-MortgageParser = require('./mortgage-parser-dom');
+MortgageParserDom = require('./mortgage-parser-dom');
 
-module.exports = class MortgageParserNode extends MortgageParser {
+module.exports = class MortgageParserNode extends MortgageParserDom {
 
   constructor() {
     const parser = new (require('xmldom').DOMParser)();

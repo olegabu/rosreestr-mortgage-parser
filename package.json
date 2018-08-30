@@ -20,8 +20,8 @@
     "node-zip": "^1.1.1",
     "xmldom": "^0.1.27",
     "xpath": "0.0.27",
-    "libxmljs": "0.19.1",
     "assert": "1.4.1",
-    "lodash": "4.17.10"
+    "lodash": "4.17.10",
+    "beautify": "0.0.8"
   }
 }

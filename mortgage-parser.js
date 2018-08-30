@@ -1,86 +1,57 @@
+
 module.exports = class MortgageParser {
     constructor() {
-        const mortgageParserJsonix = new (require('./../index').MortgageParserJsonix)();
-
-        const zipParser = new (require('./../index').ZipParser)();
-
-        let responseMap = {
-            'transferElectronicMortgageDepositary': {
-                'comment': '',
-                'cadastralNumber': '',
-                'status': '',
-                'dateDepository': '',
-
-            },
-            'noticeReleaseMortgage': {
-                'comment': '',
-                'cadastralNumber': '',
-                'status': '',
-                'dateDepository': '',
-                'mortgageNumber': '',
-            },
-            'checkingInformationOwner': {
-                'comment': '',
-                'cadastralNumber': '',
-                'status': '',
-                'dateDepository': '',
-                'mortgageNumber': '',
-                'email': '',
-                'surname': '',
-                'firstname': '',
-                'birthDate': '',
-                'birthPlace': '',
-                'documentTypeCode': '',
-                'passport_number': '',
-                'passport_series': '',
-                'firstOwnerKind': ''
-            },
-            'directionAgreement': {
-                'comment': '',
-                'cadastralNumber': '',
-                'status': '',
-                'dateReceiptAgreement': '',
-                'mortgageNumber': '',
-            },
-            'noticeRedemption': {
-                'comment': '',
-                'cadastralNumber': '',
-                'status': '',
-                'mortgageNumber': '',
-            }
-        };
+        this.mortgageParserJsonix = new (require('./index').MortgageParserJsonix)();
     };
 
     parseZip(data, type) {
-        let ret = {};
-        let zipRes = '';
+        const ret = {errors: []};
+        try {
+            let zipRes = '';
+            const zipParser = new (require('./index').ZipParser)();
+            if (type === '0') { //Zip
+                zipRes = zipParser.parseZip(data);
+            }
 
-        if (type === '0') { //Zip
-            zipRes = this.zipParser.parseZip(data, this.responseMap);
+            if (type === '1') { //DataUrl
+                zipRes = zipParser.parseDataUrl(data);
+            }
+
+            ret.request = zipRes;
+
+            if (ret.request.error.length === 0 && ret.request.hasOwnProperty('fileName')) {
+                const attachFile = topZip.files[ret.request.fileName];
+                const payloadZip = new NodeZip(attachFile._data, {base64: false, checkCRC32: true});
+
+                const payloadRequestFile = payloadZip.files['request.xml'];
+                const payloadRequestData = payloadRequestFile._data;
+
+                ret.payloadRequest = mortgageParserJsonix.parsePayloadRequest(payloadRequestData);
+                // console.log(ret.payloadRequest);
+
+                const payloadFile = payloadZip.files[ret.payloadRequest.fileName];
+                ret.payload = payloadFile._data;
+
+                // console.log(payload);
+                // console.log(this.mortgageParser.parse(payload));
+            }
+            return ret;
+        }
+        catch (e) {
+            ret.errors.push(e);
         }
 
-        if (type === '1') { //DataUrl
-            zipRes = this.zipParser.parseDataUrl(data, this.responseMap);
+
+    };
+
+    generateResponse(request_type, data) {
+        const ret = {errors: []};
+        try {
+            ret.response = this.mortgageParserJsonix.generateResponse(request_type, data)['response'];
+            return ret
         }
-
-        ret.request = zipRes;
-
-        if (ret.request.error.length === 0 && ret.request.hasOwnProperty('fileName')) {
-            const attachFile = topZip.files[ret.request.fileName];
-            const payloadZip = new NodeZip(attachFile._data, {base64: false, checkCRC32: true});
-
-            const payloadRequestFile = payloadZip.files['request.xml'];
-            const payloadRequestData = payloadRequestFile._data;
-
-            ret.payloadRequest = this.mortgageParserJsonix.parsePayloadRequest(payloadRequestData);
-            // console.log(ret.payloadRequest);
-
-            const payloadFile = payloadZip.files[ret.payloadRequest.fileName];
-            ret.payload = payloadFile._data;
-
-            // console.log(payload);
-            // console.log(this.mortgageParser.parse(payload));
+        catch (e) {
+            ret.errors.push(e);
         }
-        return res
     };
 };

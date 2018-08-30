@@ -43,22 +43,12 @@ module.exports = class MortgageParserJsonix {
             let root = '';
             ret.cadastralNumber = u.value.cadastralNumbers.cadastralNumber;
 
-            let response_args;
-
 
             switch (true) {
                 case _.hasIn(u, 'value.operation.transferElectronicMortgage.transferElectronicMortgageDepositary'):
                     root = u.value.operation.transferElectronicMortgage.transferElectronicMortgageDepositary;
                     ret.requestType = 'transferElectronicMortgageDepositary';
                     ret.fileName = root.attachmentDescription.fileName;
-
-                    response_args = responseMap[ret.requestType];
-                    // TODO Get correct data from chaincode
-                    response_args['cadastralNumber'] = ret.cadastralNumber;
-                    response_args['status'] = true;
-                    response_args['dateDepository'] = '2018-05-28';
-                    response_args['comment'] = 'Принят';
-                    ret.response = this.getNoticeReceiptMortgageResponse(response_args);
                     break;
 
                 case _.hasIn(u, 'value.operation.transferElectronicMortgage.noticeReleaseMortgage'):
@@ -66,63 +56,23 @@ module.exports = class MortgageParserJsonix {
                     ret.requestType = 'noticeReleaseMortgage';
                     ret.mortgageNumber = root.mortgageNumber;
                     ret.fileName = root.attachmentDescription.fileName;
-                    response_args = responseMap[ret.requestType];
-                    // TODO Get correct data from chaincode
-                    response_args['cadastralNumber'] = ret.cadastralNumber;
-                    response_args['status'] = true;
-                    response_args['dateDepository'] = '2018-05-28';
-                    response_args['comment'] = 'Принят';
-                    response_args['mortgageNumber'] = ret.mortgageNumber;
-                    ret.response = this.getNoticeReleaseMortgageResponse(response_args);
                     break;
 
                 case _.hasIn(u, 'value.operation.transferAgreement.checkingInformationOwner'):
                     root = u.value.operation.transferAgreement.checkingInformationOwner;
                     ret.requestType = 'checkingInformationOwner';
-                    response_args = responseMap[ret.requestType];
-                    // TODO Get correct data from chaincode
-                    response_args['cadastralNumber'] = ret.cadastralNumber;
-                    response_args['status'] = true;
-                    response_args['dateDepository'] = '2018-05-28';
-                    response_args['comment'] = 'Принят';
-                    response_args['mortgageNumber'] = ret.mortgageNumber;
-                    response_args['email'] = 'test@test.ru';
-                    response_args['surname'] = 'test';
-                    response_args['firstname'] = 'test';
-                    response_args['birthDate'] = '10-10-1998';
-                    response_args['birthPlace'] = 'Moscow';
-                    response_args['documentTypeCode'] = '008001001000';
-                    response_args['passport_number'] = '50000';
-                    response_args['passport_series'] = '4000';
-                    response_args['firstOwnerKind'] = '359000000100';
-                    ret.response = this.getNoticeCheckingInformationOwner(response_args);
                     break;
 
                 case _.hasIn(u, 'value.operation.transferAgreement.directionAgreement'):
                     root = u.value.operation.transferAgreement.directionAgreement;
                     ret.requestType = 'directionAgreement';
                     ret.mortgageNumber = root.mortgageNumber;
-                    response_args = responseMap[ret.requestType];
-                    // TODO Get correct data from chaincode
-                    response_args['cadastralNumber'] = ret.cadastralNumber;
-                    response_args['status'] = true;
-                    response_args['dateReceiptAgreement'] = '2018-05-28';
-                    response_args['comment'] = 'Принят';
-                    response_args['mortgageNumber'] = ret.mortgageNumber;
-                    ret.response = this.getChangeNotificationResponse(response_args);
                     break;
 
                 case _.hasIn(u, 'value.operation.noticeRedemption'):
                     root = u.value.operation.noticeRedemption;
                     ret.requestType = 'noticeRedemption';
                     ret.mortgageNumber = root.mortgageNumber;
-                    response_args = responseMap[ret.requestType];
-                    // TODO Get correct data from chaincode
-                    response_args['cadastralNumber'] = ret.cadastralNumber;
-                    response_args['status'] = true;
-                    response_args['comment'] = 'Принят';
-                    response_args['mortgageNumber'] = ret.mortgageNumber;
-                    ret.response = this.getNoticeRedemptionResponse(response_args);
                     break;
 
                 default:
@@ -174,6 +124,29 @@ module.exports = class MortgageParserJsonix {
         catch (e) {
             ret.errors.push(e);
         }
+    };
+
+    generateResponse(request_type, response_args) {
+
+    const ret = {errors: []};
+    try {
+        const model_params = responseMap[request_type];
+        ret.response = this[model_params.response_function](response_args);
+        return ret;
+    }
+    catch (e) {
+        ret.errors.push(e);
+    }
+
+
+    for (let key in requestMap) {
+        if (requestType === key) {
+
+        }
+        else {
+
+        }
+    }
     };
 
     getMarshaller() {

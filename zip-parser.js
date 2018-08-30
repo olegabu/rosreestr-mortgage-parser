@@ -1,17 +1,15 @@
-const MortgageParser = require('./mortgage-parser-jsonix');
-
 const NodeZip = require('node-zip');
 
 module.exports = class ZipParser {
     constructor() {
-        this.mortgageParser = new MortgageParser();
+        const mortgageParserJsonix = new (require('./index').MortgageParserJsonix)();
     };
 
     parseDataUrl(dataUrl) {
         const parts = dataUrl.split(',');
         // console.log(parts);
 
-        return this.parseZip(Buffer.from(parts[2], 'base64'));
+        return this.parseZip(Buffer.from(parts[1], 'base64'));
     }
 
     parseZip(data, responseMap) {
@@ -26,10 +24,10 @@ module.exports = class ZipParser {
 
             for (const key in responseMap) {
                 if (key in requestData) {
-                    ret.request = this.mortgageParser.parseRequest(requestData);
+                    ret.request = this.mortgageParserJsonix.parseRequest(requestData);
                 }
                 else {
-                    ret.request = this.mortgageParser.parsePayloadRequest(requestData);
+                    ret.request = this.mortgageParserJsonix.parsePayloadRequest(requestData);
                 }
                 return ret
             }
