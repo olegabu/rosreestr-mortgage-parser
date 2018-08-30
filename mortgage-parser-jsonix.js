@@ -134,21 +134,23 @@ module.exports = class MortgageParserJsonix {
 
     generateResponse(request_type, response_args) {
 
-    const ret = {errors: []};
-    try {
-        const model_params = responseMap[request_type];
-        ret.response = this[model_params.response_function](response_args);
-        return ret;
-    }
-    catch (e) {
-        ret.errors.push(e);
-    }
+        const ret = {errors: []};
+        try {
+            const model_params = responseMap[request_type];
+            ret.response = this[model_params.response_function](response_args);
+            return ret;
+        }
+        catch (e) {
+            ret.errors.push(e);
+        }
     };
 
     getMarshaller() {
         const context = new Jsonix.Context([Request], {
             namespacePrefixes: {
-                'urn://x-artefacts-rosreestr-gov-ru/virtual-services/electronic-mortgage/1.0.0': ''
+                'urn://x-artefacts-rosreestr-gov-ru/virtual-services/electronic-mortgage/1.0.0': 'req',
+                'http://rosreestr.ru/services/v0.1/commonsMortgage/Subjects': 'subj',
+                'http://rosreestr.ru/services/v0.1/commonsMortgage/Documents': 'docs'
             }
         });
 
@@ -160,7 +162,7 @@ module.exports = class MortgageParserJsonix {
 
         try {
             const response = {
-                Response: {
+                'req:Response': {
                     cadastralNumbers: {
                         cadastralNumber: request_args['cadastralNumber']
                     },
@@ -187,7 +189,7 @@ module.exports = class MortgageParserJsonix {
 
         try {
             const response = {
-                Response: {
+                'req:Response': {
                     cadastralNumbers: {
                         cadastralNumber: response_args['cadastralNumber']
                     },
@@ -217,7 +219,7 @@ module.exports = class MortgageParserJsonix {
 
         try {
             const response = {
-                Response: {
+                'req:Response': {
                     cadastralNumbers: {
                         cadastralNumber: response_args['cadastralNumber']
                     },
@@ -246,7 +248,7 @@ module.exports = class MortgageParserJsonix {
 
         try {
             const response = {
-                Response: {
+                'req:Response': {
                     cadastralNumbers: {
                         cadastralNumber: response_args['cadastralNumber']
                     },
@@ -276,7 +278,7 @@ module.exports = class MortgageParserJsonix {
 
         try {
             const response = {
-                Response: {
+                'req:Response': {
                     cadastralNumber: {
                         cadastralNumbers: response_args['cadastralNumber']
                     },
@@ -286,8 +288,8 @@ module.exports = class MortgageParserJsonix {
                                 status: response_args['status'],
                                 comment: response_args['comment'],
                                 mortgageNumber: response_args['mortgageNumber'],
-                                firstOwners: {
-                                    firstOwner: {
+                                'req:firstOwners': {
+                                    'subj:FirstOwner': [{
                                         person: {
                                             otherInfo: {
                                                 email: response_args['email']
@@ -297,16 +299,16 @@ module.exports = class MortgageParserJsonix {
                                             birthDate: response_args['birthDate'],
                                             birthPlace: response_args['birthPlace'],
                                             idDocument: [{
-                                                documentTypes: {
+                                                'docs:DocumentTypes': {
                                                     documentTypeCode: response_args['documentTypeCode']
                                                 },
-                                                number: response_args['passport_number'],
-                                                series: response_args['passport_series']
+                                                'docs:Number': response_args['passport_number'],
+                                                'docs:Series': response_args['passport_series']
                                             }]
                                         },
                                         firstOwnerKind: response_args['firstOwnerKind']
-                                    }
-                                }
+                                    }]
+                                },
                             }
                         }
                     }
