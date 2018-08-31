@@ -41,10 +41,10 @@ module.exports = class MortgageParser {
         }
     };
 
-    generateResponse(request_type, data) {
+    generateResponse(request_type, response_args) {
         const ret = {errors: []};
         try {
-            ret.response = this.mortgageParserJsonix.generateResponse(request_type, data)['response'];
+            ret.response = this.mortgageParserJsonix.generateResponse(request_type, response_args)['response'];
             return ret;
         }
         catch (e) {

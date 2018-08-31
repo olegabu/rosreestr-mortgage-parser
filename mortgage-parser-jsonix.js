@@ -25,10 +25,11 @@ module.exports = class MortgageParserJsonix {
                 ret.recordOgrn = u.value.depositoryAccounting.accountingDep.nativeForeignParams.nativeOrgParams.ogrn;
                 ret.depositoryAccount = u.value.depositoryAccounting.accountNum;
                 ret.deponentAccount = u.value.depositoryAccounting.depositorAccNum;
+                ret.cadastralNumber = ret.request.cadastralNumber;
             }
 
         } catch (e) {
-            ret.errors.push(e);
+            return ret.errors.push(e);
         }
 
         return ret;
@@ -89,7 +90,7 @@ module.exports = class MortgageParserJsonix {
 
 
         } catch (e) {
-            ret.errors.push(e);
+            return ret.errors.push(e);
         }
 
         return ret;
@@ -108,7 +109,7 @@ module.exports = class MortgageParserJsonix {
 
             ret.fileName = u.value.mortgageFile.fileName;
         } catch (e) {
-            ret.errors.push(e);
+            return ret.errors.push(e);
         }
 
         return ret;
@@ -129,12 +130,11 @@ module.exports = class MortgageParserJsonix {
 
         }
         catch (e) {
-            ret.errors.push(e);
+            return ret.errors.push(e);
         }
     };
 
     generateResponse(request_type, response_args) {
-
         const ret = {errors: []};
         try {
             const model_params = responseMap[request_type];
@@ -142,7 +142,7 @@ module.exports = class MortgageParserJsonix {
             return ret;
         }
         catch (e) {
-            ret.errors.push(e);
+            return ret.errors.push(e);
         }
     };
 
@@ -179,7 +179,7 @@ module.exports = class MortgageParserJsonix {
 
             ret.value = this.getMarshaller().marshalString(response);
         } catch (e) {
-            ret.errors.push(e);
+            return ret.errors.push(e);
         }
 
         return ret;
@@ -209,7 +209,7 @@ module.exports = class MortgageParserJsonix {
 
             ret.value = this.getMarshaller().marshalString(response);
         } catch (e) {
-            ret.errors.push(e);
+            return ret.errors.push(e);
         }
 
         return ret;
@@ -238,7 +238,7 @@ module.exports = class MortgageParserJsonix {
 
             ret.value = this.getMarshaller().marshalString(response);
         } catch (e) {
-            ret.errors.push(e);
+            return ret.errors.push(e);
         }
 
         return ret;
@@ -268,7 +268,7 @@ module.exports = class MortgageParserJsonix {
 
             ret.value = this.getMarshaller().marshalString(response);
         } catch (e) {
-            ret.errors.push(e);
+            return ret.errors.push(e);
         }
 
         return ret;
@@ -320,7 +320,7 @@ module.exports = class MortgageParserJsonix {
         }
         catch
             (e) {
-            ret.errors.push(e);
+            return ret.errors.push(e);
         }
 
         return ret;
