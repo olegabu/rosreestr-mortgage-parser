@@ -29,7 +29,8 @@ module.exports = class MortgageParser {
                 const payloadFile = payloadZip.files[ret.payloadRequest.fileName];
                 ret.payload = this.mortgageParserJsonix.parseMortgage(payloadFile._data);
                 if (ret.request.requestType === 'directionAgreement'){
-                    ret.payload.regNumber = ret.request.mortgageNumber
+                    ret.payload.regNumber = ret.request.mortgageNumber;
+                    ret.payload.cadastralNumber = ret.request.cadastralNumber;
                 }
                 return ret;
             }
