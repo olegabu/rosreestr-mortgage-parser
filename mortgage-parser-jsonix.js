@@ -25,7 +25,9 @@ module.exports = class MortgageParserJsonix {
                 ret.recordOgrn = u.value.depositoryAccounting.accountingDep.nativeForeignParams.nativeOrgParams.ogrn;
                 ret.depositoryAccount = u.value.depositoryAccounting.accountNum;
                 ret.deponentAccount = u.value.depositoryAccounting.depositorAccNum;
-                ret.cadastralNumber = ret.request.cadastralNumber;
+                if (_.hasIn(ret, 'cadastralNumber = ret.request.cadastralNumber')) {
+                    ret.cadastralNumber = ret.request.cadastralNumber;
+                }
             }
 
         } catch (e) {
