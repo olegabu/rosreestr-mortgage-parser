@@ -45,6 +45,9 @@ module.exports = class MortgageParser {
         const ret = {errors: []};
         try {
             ret.response = this.mortgageParserJsonix.generateResponse(request_type, response_args)['response'];
+            if (ret.response === 1) {
+                ret.errors.push('Incorrect response_args (data types or format) for parser: ' + JSON.stringify(response_args))
+            }
             return ret;
         }
         catch (e) {
