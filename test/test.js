@@ -25,9 +25,9 @@ console.log(ret);
 
 const zipParser = new (require('./../index').ZipParser)();
 
-let data = fs.readFileSync('./test/cases/mortgage_request.zip');
+let data = fs.readFileSync('./test/cases/case_noticeReleaseMortgage_4.zip');
 console.log(zipParser.parseZip(data));
 
-text = fs.readFileSync('./test/cases/mortgage_request.zip.dataUrl.txt', 'utf8');
+text = fs.readFileSync('./test/cases/case_noticeReleaseMortgage_4.zip.dataUrl.txt', 'utf8');
 console.log(zipParser.parseDataUrl(text));
 
