@@ -73,6 +73,7 @@ module.exports = class MortgageParserJsonix {
                     root = u.value.operation.transferAgreement.directionAgreement;
                     ret.requestType = 'directionAgreement';
                     ret.mortgageNumber = root.mortgageNumber;
+                    ret.fileName = root.attachmentDescription.fileName;
                     break;
 
                 case _.hasIn(u, 'value.operation.noticeRedemption'):
