@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "description": "Parse electronic mortgage files from RosReestr",
   "scripts": {
-    "test": "node ./test/test.js"
+    "test": "node ./test/test-mortgage-parser.js&&node ./test/test-request-response.js"
   },
   "repository": {
     "type": "git",

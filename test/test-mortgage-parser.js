@@ -4,16 +4,21 @@ const CASE_DIR = './test/cases/';
 
 // File pattern description: case_<request.requestType>_<caseNum>.<fileExtension>
 
-console.log('Begin tests!');
+console.log('Begin tests: ');
 
 fs.readdirSync(CASE_DIR).forEach(fileName => {
-    if (fileName.match(/(^case)(_\w*_)\d*\.(zip|txt)$/igms)) {
-        const fileData = fs.readFileSync('./test/cases/case_noticeReleaseMortgage_4.zip');
+    //fileName = 'case_directionAgreement_1.zip';
+    if (fileName.match(/(^case)(_\w*_)\d*\.(zip)$/igms)) {
+        const fileData = fs.readFileSync('./test/cases/' + fileName);
         const fileResultParse = mortgageParser.parseZip(fileData, '0');
-        console.log(fileResultParse);
+
+        console.log('\n<----->');
+        console.log('Case: ' + fileName);
+        console.log(fileResultParse.request.requestType);
+        console.log(fileResultParse.payload);
     }
     else {
-        console.log('Incorrect test case file name: ' + fileName);
+        //console.log('Incorrect test case file name: ' + fileName);
     }
 });
 

@@ -32,7 +32,7 @@ const testMap = {
         'cadastralNumber': ['80:82302323:23322'],
         'status': 'true',
         'dateDepository': '2018-05-28',
-        'response_function': 'this.getNoticeReceiptMortgageResponse',
+        'response_function': 'getNoticeReceiptMortgageResponse',
         'request_file': 'Request4.xml', 'response_file': 'Response4.xml',
 
     },
@@ -42,7 +42,7 @@ const testMap = {
         'status': 'true',
         'dateDepository': '2018-05-28',
         'mortgageNumber': '1312312312',
-        'response_function': 'this.getNoticeReleaseMortgageResponse',
+        'response_function': 'getNoticeReleaseMortgageResponse',
         'request_file': 'Request3.xml', 'response_file': 'Response3.xml',
 
     },
@@ -61,7 +61,7 @@ const testMap = {
         'passport_number': '234232',
         'passport_series': '223424',
         'firstOwnerKind': '359000000100',
-        'response_function': 'this.getNoticeCheckingInformationOwner',
+        'response_function': 'getNoticeCheckingInformationOwner',
         'request_file': 'Request2.xml', 'response_file': 'Response2.xml',
     },
     'directionAgreement': {
@@ -70,7 +70,7 @@ const testMap = {
         'status': 'true',
         'dateReceiptAgreement': '2018-05-28',
         'mortgageNumber': '80:82302323:23322',
-        'response_function': 'this.getChangeNotificationResponse',
+        'response_function': 'getChangeNotificationResponse',
         'request_file': 'Request1.xml', 'response_file': 'Response1.xml',
     },
     'noticeRedemption': {
@@ -78,7 +78,7 @@ const testMap = {
         'cadastralNumber': ['80:82302323:23322'],
         'status': 'true',
         'mortgageNumber': '80:82302323:23322',
-        'response_function': 'this.getNoticeRedemptionResponse',
+        'response_function': 'getNoticeRedemptionResponse',
         'request_file': 'Request0.xml', 'response_file': 'Response0.xml',
     }
 };
@@ -109,5 +109,18 @@ console.log('Test request-response parser');
 
 for (let request_type in testMap) {
     testRequestResponse(BASE_ROOT, request_type, testMap[request_type]['request_file'], testMap[request_type]['response_file']);
-
 }
+
+/*
+const response_params = {
+    'comment': 'Принят',
+    'cadastralNumber': [''],
+    'status': 'true',
+    'dateDepository': '2018-8-31',
+    'mortgageNumber': '',
+};
+*/
+//const res = mortgageParser.generateResponse('noticeReleaseMortgage', response_params);
+
+
+//console.log(res);

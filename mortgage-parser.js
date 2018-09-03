@@ -32,10 +32,21 @@ module.exports = class MortgageParser {
                     ret.payload.regNumber = ret.request.mortgageNumber;
                     ret.payload.cadastralNumber = ret.request.cadastralNumber;
                 }
-                return ret;
             }
             else if (ret.request.hasOwnProperty('fileName') && ret.request.fileName.match(/\.(xml)$/i)){
+                ret.payload = {};
                 ret.payload = this.mortgageParserJsonix.parseMortgage(zipRes.topZip.files[ret.request.fileName]._data);
+            }
+
+            else if (['noticeRedemption', 'checkingInformationOwner'].indexOf(ret.request.requestType > 0)){
+                ret.payload = {};
+                if (ret.request.requestType === 'checkingInformationOwner') {
+                    ret.payload.regNumber = ret.request.value.operation.transferAgreement.checkingInformationOwner.mortgageNumber;
+                }
+                else {
+                ret.payload.regNumber = ret.request.mortgageNumber;
+                }
+                ret.payload.cadastralNumber = ret.request.cadastralNumber;
             }
             return ret;
         }
