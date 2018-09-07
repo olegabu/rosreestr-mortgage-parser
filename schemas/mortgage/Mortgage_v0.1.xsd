@@ -80,12 +80,12 @@
 			</xs:element>
 			<xs:element name="interests" type="tns:TIterests" minOccurs="1">
 				<xs:annotation>
-					<xs:documentation>5 Размер процентов по денежному обязательству</xs:documentation>
+					<xs:documentation>5 Размер процентов по денежному обязательству, обеспеченному ипотекой</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="debtRepaymentPlan" type="tns:TDebtRepaymentPlan" minOccurs="1">
 				<xs:annotation>
-					<xs:documentation>6. Срок уплаты суммы обязательства</xs:documentation>
+					<xs:documentation>6. Срок уплаты суммы обязательства, обеспечиваемого ипотекой (план погашения долга)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="pledges" type="tns:TPledges" minOccurs="1">
@@ -108,6 +108,12 @@
 				<xs:annotation>
 					<xs:documentation>10. Информация о выдаче электронной закладной взамен документарной закладной
 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="registrationInformation"
+				type="tns:TRegRight">
+				<xs:annotation>
+					<xs:documentation>12. Сведения о государственной регистрации ипотеки</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -722,7 +728,7 @@
 			<xs:documentation>Условия, позволяющие в надлежащий момент определять сумму основного долга </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="condition" type="siml:s1000" maxOccurs="unbounded">
+			<xs:element name="condition" type="siml:s25000" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Условие</xs:documentation>
 				</xs:annotation>
@@ -755,7 +761,7 @@
 				<xs:sequence>
 					<xs:element name="contractsInfo" type="docs:TContractsInfo" minOccurs="1">
 						<xs:annotation>
-							<xs:documentation>4.1 Название кредитного договора или иного денежного обязательства, исполнение которого обеспечивается ипотекой</xs:documentation>
+							<xs:documentation>4.1 Кредитный договор (иной договор) или денежное обязательство, обеспечиваемое ипотекой</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="loanAmount" type="tns:TLoanAmount" minOccurs="1">
@@ -774,7 +780,7 @@
 		<xs:sequence>
 			<xs:element name="contractsInfo" type="docs:TContractsInfo" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>4.1 Название кредитного договора или иного денежного обязательства, исполнение которого обеспечивается ипотекой</xs:documentation>
+					<xs:documentation>4.1 Кредитный договор (иной договор) или денежное обязательство, обеспечиваемое ипотекой</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="loanAmount" type="tns:TLoanAmount" minOccurs="0">
@@ -983,7 +989,7 @@
 				<xs:sequence>
 					<xs:element name="term" type="tns:TTerm" minOccurs="1">
 						<xs:annotation>
-							<xs:documentation>6.1 Срок уплаты обязательства</xs:documentation>
+							<xs:documentation>6.1 Срок уплаты обязательства, обеспечиваемого ипотекой (план погашения долга)</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="repaymentDate" type="tns:TRepaymentDate" minOccurs="1">
@@ -1727,7 +1733,7 @@
 					<xs:documentation>За неоплату/нарушение срока погашения основного долга</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="calculationProcedure" type="siml:s1000">
+			<xs:element name="calculationProcedure" type="siml:s2000">
 				<xs:annotation>
 					<xs:documentation>Порядок расчета и оплаты неустойки</xs:documentation>
 				</xs:annotation>
@@ -1808,17 +1814,17 @@
 					</xs:choice>
 					<xs:element name="marketPrice" type="tns:TMarketPrice" minOccurs="1">
 						<xs:annotation>
-							<xs:documentation>Рыночная стоимость предмета ипотеки</xs:documentation>
+							<xs:documentation>7.1.1 Рыночная стоимость предмета ипотеки</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="burdens" type="tns:TBurdens" minOccurs="1">
 						<xs:annotation>
-							<xs:documentation>Наличие обременений правами третьих лиц, подлежащих государственной регистрации</xs:documentation>
+							<xs:documentation>7.1.2 Наличие обременений правами третьих лиц, подлежащих государственной регистрации</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="mortgage" type="tns:TRegRight" minOccurs="0">
 						<xs:annotation>
-							<xs:documentation>Сведения о государственной регистрации ипотеки</xs:documentation>
+							<xs:documentation>7.1.3. Сведения о государственной регистрации ипотеки</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 				</xs:sequence>
@@ -2197,13 +2203,13 @@
 					</xs:element>
 					<xs:element name="otherMortgageTerms" type="siml:s25000">
 						<xs:annotation>
-							<xs:documentation>8.19 Иные условия договора об ипотеке и договора, обязательства из которого обеспечены ипотекой</xs:documentation>
+							<xs:documentation>8.19 Иные условия договора об ипотеке, кредитного договора (иного договора) или иного денежного обязательства, обеспечиваемого ипотекой</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="loanAgreementEffect" type="mgc:DLoanAgreementEffect"
 						minOccurs="0">
 						<xs:annotation>
-							<xs:documentation>8.20 Действие кредитного договора (договора займа) после выдачи закладной залогодержателю</xs:documentation>
+							<xs:documentation>8.20 Действие кредитного договора (иного договора) или денежного обязательства, обеспечиваемого ипотекой после выдачи закладной залогодержателю</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="attachments" type="tns:TAttachments" minOccurs="1">
@@ -2456,14 +2462,18 @@
 		<xs:annotation>
 			<xs:documentation>Первый выгодоприобретатель</xs:documentation>
 		</xs:annotation>
-		<xs:sequence>
+		<xs:choice minOccurs="1">
 			<xs:element name="beneficiaryKind" type="mgc:DPayer">
 				<xs:annotation>
 					<xs:documentation>Вид первого выгодоприобретателя</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="otherDescription" type="siml:s500"/>
-		</xs:sequence>
+			<xs:element name="otherDescription" type="siml:s500">
+				<xs:annotation>
+					<xs:documentation>Иное описание</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
 	</xs:complexType>
 	<xs:complexType name="TEstrangementTerms">
 		<xs:annotation>
@@ -2488,7 +2498,7 @@
 					<xs:documentation>Право предоставления залогодателем заложенного имущества в пользование третьим лицам</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="otherDescription" type="siml:s500">
+			<xs:element name="otherDescription" type="siml:s1000">
 				<xs:annotation>
 					<xs:documentation>Иные условия</xs:documentation>
 				</xs:annotation>
@@ -2743,12 +2753,12 @@
 			<xs:documentation>Счет депонента в депозитарии</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="number" type="siml:d20">
+			<xs:element name="number" type="siml:s20">
 				<xs:annotation>
 					<xs:documentation>Номер счета</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="section" type="siml:d20">
+			<xs:element name="section" type="siml:d20" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Раздел счета</xs:documentation>
 				</xs:annotation>
