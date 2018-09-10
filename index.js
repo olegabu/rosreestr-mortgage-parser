@@ -1,6 +1,7 @@
 const MortgageParser = require('./mortgage-parser');
 const MortgageParserNode = require('./mortgage-parser-node');
 const MortgageParserJsonix = require('./mortgage-parser-jsonix');
+const MortgageResponseJsonix = require('./mortgage-responses');
 const ZipParser = require('./zip-parser');
 
 global.responseMap = {
@@ -58,5 +59,6 @@ module.exports = {
   MortgageParser: MortgageParser,
   MortgageParserNode: MortgageParserNode,
   MortgageParserJsonix: MortgageParserJsonix,
+  MortgageResponseJsonix:MortgageResponseJsonix,
   ZipParser: ZipParser,
 };

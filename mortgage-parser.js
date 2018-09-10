@@ -3,6 +3,7 @@ const NodeZip = require('node-zip');
 module.exports = class MortgageParser {
     constructor() {
         this.mortgageParserJsonix = new (require('./index').MortgageParserJsonix)();
+        this.mortgageResponseJsonix = new (require('./index').MortgageResponseJsonix)();
     };
 
     parseZip(data, type) {
@@ -59,7 +60,7 @@ module.exports = class MortgageParser {
     generateResponse(request_type, response_args) {
         const ret = {errors: []};
         try {
-            ret.response = this.mortgageParserJsonix.generateResponse(request_type, response_args)['response'];
+            ret.response = this.mortgageResponseJsonix.generateResponse(request_type, response_args)['response'];
             if (ret.response === 1) {
                 ret.errors.push('Incorrect response_args (data types or format) for parser: ' + JSON.stringify(response_args))
             }

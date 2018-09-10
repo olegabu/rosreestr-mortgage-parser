@@ -15,14 +15,14 @@ var TRequest_Module_Factory = function () {
             typeInfo: '.TFile'
           }]
       }, {
-        localName: 'TMortgageFile',
-        baseTypeInfo: '.TFile'
-      }, {
         localName: 'TFile',
         propertyInfos: [{
             name: 'fileName',
             required: true
           }]
+      }, {
+        localName: 'TMortgageFile',
+        baseTypeInfo: '.TFile'
       }],
     elementInfos: [{
         elementName: 'request',

@@ -2,9 +2,9 @@ const fs = require('fs');
 const assert = require('assert');
 const _ = require('lodash');
 
+const mortgageResponseJsonix = new (require('./../index').MortgageResponseJsonix)();
 const mortgageParserJsonix = new (require('./../index').MortgageParserJsonix)();
-const mortgageParser = new (require('./../index').MortgageParser)();
-const beautify = require('beautify');
+const btf = require('beautify');
 
 // Search differences between objects.
 
@@ -85,9 +85,6 @@ const testMap = {
 
 
 function testRequestResponse(BASE_ROOT, request_type, request_file, response_file) {
-    if (request_type in ['checkingInformationOwner']) {
-        return;
-    }
 
     let request = fs.readFileSync(BASE_ROOT + request_file, 'utf8');
     let request_parser = mortgageParserJsonix.parseRequest(request);
@@ -96,9 +93,9 @@ function testRequestResponse(BASE_ROOT, request_type, request_file, response_fil
 
     //let model_response = fs.readFileSync(BASE_ROOT + response_file, 'utf8');
     //let model_response_jsonix = mortgageParserJsonix.parseResponse(model_response);
-    let response_generator = mortgageParser.generateResponse(request_type, testMap[request_type]);
-    let response_jsonix = mortgageParserJsonix.parseResponse(response_generator.response.value);
-    console.log(beautify(response_generator.response.value, {format: 'xml'}));
+    let response_generator = mortgageResponseJsonix.generateResponse(request_type, testMap[request_type]);
+    let response_jsonix = mortgageResponseJsonix.parseResponse(response_generator.response.value);
+    console.log(btf(response_generator.response.value, {format: 'xml'}));
     //let diff = getObjectDiff(model_response_jsonix.value, response_jsonix.value);
     //assert.equal(diff.length, 0,
     //    console.log('Test OK, this ' + request_type + ' response'));

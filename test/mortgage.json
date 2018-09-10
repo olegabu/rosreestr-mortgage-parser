@@ -1,0 +1,926 @@
+{
+    "TYPE_NAME": "Mortgage.TElectronicMortgage",
+    "guid": "fb379ab3-c6bd-4a6f-1189-12b76b0a9f34",
+    "nameSoftware": "Test",
+    "versionSoftware": "1",
+    "pledgers": {
+    "TYPE_NAME": "Mortgage.TPledger",
+        "pledger": [
+        {
+            "TYPE_NAME": "Mortgage.TMgSubject",
+            "id": "0de62bab-4570-42bd-8840-61571a184377",
+            "person": {
+                "TYPE_NAME": "Mortgage.TPerson",
+                "otherInfo": {
+                    "TYPE_NAME": "Mortgage.TOtherInfo",
+                    "phoneNumber": "+72345678976",
+                    "postalAddress": {
+                        "TYPE_NAME": "Mortgage.TAddress",
+                        "fias": "47239a33-5e32-4320-916a-c3e64a89dfc6",
+                        "okato": "46460000000",
+                        "oktmo": "46760000",
+                        "kladr": "50000024000084100",
+                        "region": {
+                            "TYPE_NAME": "Mortgage.TAddressElement",
+                            "code": "50",
+                            "type": "Ð¾Ð±Ð»",
+                            "name": "ÐÐ¾ÑÐºÐ¾Ð²ÑÐºÐ°Ñ"
+                        }
+                    },
+                    "email": "hgfhd@mail.com"
+                },
+                "surname": "ÑÐ¾Ð¿Ð¾Ð°Ñ",
+                "firstname": "Ð¿ÑÐ°ÑÐ²Ð¿Ð²",
+                "patronymic": "Ð¿Ð°ÑÐ²Ð¿Ð²",
+                "birthDate": {
+                    "year": 2018,
+                    "month": 5,
+                    "day": 30,
+                    "hour": null,
+                    "minute": null,
+                    "second": null,
+                    "fractionalSecond": null,
+                    "timezone": 180,
+                    "date": "2018-05-29T21:00:00.000Z"
+                },
+                "birthPlace": "Ð¼Ð¾ÑÐºÐ²Ð°",
+                "idDocument": {
+                    "TYPE_NAME": "Mortgage.TIdDocumentRestr",
+                    "id": "828e5ee9-7e0f-4aa5-8736-b4d70c9d08b1",
+                    "documentTypes": [
+                        {
+                            "TYPE_NAME": "Mortgage.DocumentTypes",
+                            "documentTypeCode": "008001004000"
+                        },
+                        {
+                            "TYPE_NAME": "Mortgage.DocumentTypes",
+                            "documentTypeCode": "008001004000"
+                        }
+                    ],
+                    "number": "123121",
+                    "issueDate": {
+                        "year": 2018,
+                        "month": 6,
+                        "day": 13,
+                        "hour": null,
+                        "minute": null,
+                        "second": null,
+                        "fractionalSecond": null,
+                        "timezone": 180,
+                        "date": "2018-06-12T21:00:00.000Z"
+                    },
+                    "series": "1231",
+                    "issuer": {
+                        "TYPE_NAME": "Mortgage.TIssuerInfo",
+                        "name": "Ð¼Ð¿ÑÐ°ÑÑÐ¿ÑÐ²Ð°Ñ"
+                    }
+                },
+                "snils": "23434534534"
+            }
+        }
+    ]
+},
+    "debtors": {
+    "TYPE_NAME": "Mortgage.TDebtor",
+        "debtor": [
+        {
+            "TYPE_NAME": "Mortgage.TMgSubject",
+            "id": "ad44eb63-8865-4f2b-a60d-8ff8d5ef8da7",
+            "person": {
+                "TYPE_NAME": "Mortgage.TPerson",
+                "otherInfo": {
+                    "TYPE_NAME": "Mortgage.TOtherInfo",
+                    "phoneNumber": "+72345678976",
+                    "postalAddress": {
+                        "TYPE_NAME": "Mortgage.TAddress",
+                        "fias": "47239a33-5e32-4320-916a-c3e64a89dfc6",
+                        "okato": "46460000000",
+                        "oktmo": "46760000",
+                        "kladr": "50000024000084100",
+                        "region": {
+                            "TYPE_NAME": "Mortgage.TAddressElement",
+                            "code": "50",
+                            "type": "Ð¾Ð±Ð»",
+                            "name": "ÐÐ¾ÑÐºÐ¾Ð²ÑÐºÐ°Ñ"
+                        }
+                    },
+                    "email": "hgfhd@mail.com"
+                },
+                "surname": "ÑÐ¾Ð¿Ð¾Ð°Ñ",
+                "firstname": "Ð¿ÑÐ°ÑÐ²Ð¿Ð²",
+                "patronymic": "Ð¿Ð°ÑÐ²Ð¿Ð²",
+                "birthDate": {
+                    "year": 2018,
+                    "month": 5,
+                    "day": 30,
+                    "hour": null,
+                    "minute": null,
+                    "second": null,
+                    "fractionalSecond": null,
+                    "timezone": 180,
+                    "date": "2018-05-29T21:00:00.000Z"
+                },
+                "birthPlace": "Ð¼Ð¾ÑÐºÐ²Ð°",
+                "idDocument": {
+                    "TYPE_NAME": "Mortgage.TIdDocumentRestr",
+                    "id": "357bd4c2-96d1-4b8b-afe0-59d00ed25004",
+                    "documentTypes": [
+                        {
+                            "TYPE_NAME": "Mortgage.DocumentTypes",
+                            "documentTypeCode": "008001004000"
+                        },
+                        {
+                            "TYPE_NAME": "Mortgage.DocumentTypes",
+                            "documentTypeCode": "008001004000"
+                        }
+                    ],
+                    "number": "123121",
+                    "issueDate": {
+                        "year": 2018,
+                        "month": 6,
+                        "day": 13,
+                        "hour": null,
+                        "minute": null,
+                        "second": null,
+                        "fractionalSecond": null,
+                        "timezone": 180,
+                        "date": "2018-06-12T21:00:00.000Z"
+                    },
+                    "series": "1231",
+                    "issuer": {
+                        "TYPE_NAME": "Mortgage.TIssuerInfo",
+                        "name": "Ð¼Ð¿ÑÐ°ÑÑÐ¿ÑÐ²Ð°Ñ"
+                    }
+                },
+                "snils": "23434534534"
+            }
+        }
+    ]
+},
+    "firstOwners": {
+    "TYPE_NAME": "Mortgage.TFirstOwner",
+        "firstOwner": [
+        {
+            "TYPE_NAME": "Mortgage.TMgSubjectFirstOwner",
+            "id": "446e671c-4448-4ec7-878f-97b75833878e",
+            "person": {
+                "TYPE_NAME": "Mortgage.TPerson",
+                "otherInfo": {
+                    "TYPE_NAME": "Mortgage.TOtherInfo",
+                    "phoneNumber": "+72345675433",
+                    "postalAddress": {
+                        "TYPE_NAME": "Mortgage.TAddress",
+                        "fias": "47239a33-5e32-4320-916a-c3e64a89dfc6",
+                        "okato": "76236501000",
+                        "oktmo": "76715000",
+                        "kladr": "7501900100001140028",
+                        "region": {
+                            "TYPE_NAME": "Mortgage.TAddressElement",
+                            "code": "75",
+                            "type": "ÐºÑÐ°Ð¹",
+                            "name": "ÐÐ°Ð±Ð°Ð¹ÐºÐ°Ð»ÑÑÐºÐ¸Ð¹"
+                        },
+                        "house": {
+                            "TYPE_NAME": "Mortgage.THouse",
+                            "type": "Ð´",
+                            "value": "34"
+                        }
+                    },
+                    "email": "hghfhgdf@mail.com"
+                },
+                "surname": "ÑÐ¿Ð°ÑÐ²",
+                "firstname": "Ð¿Ð°ÑÐ²Ð¿Ð°",
+                "patronymic": "Ð¿Ð°ÑÐ²Ð°",
+                "birthDate": {
+                    "year": 2018,
+                    "month": 6,
+                    "day": 6,
+                    "hour": null,
+                    "minute": null,
+                    "second": null,
+                    "fractionalSecond": null,
+                    "timezone": 180,
+                    "date": "2018-06-05T21:00:00.000Z"
+                },
+                "birthPlace": "ÑÐ¾ÑÑÐ¾Ð²",
+                "idDocument": {
+                    "TYPE_NAME": "Mortgage.TIdDocumentRestr",
+                    "id": "c76fef87-82b1-4a36-aba5-b6f98987de50",
+                    "documentTypes": [
+                        {
+                            "TYPE_NAME": "Mortgage.DocumentTypes",
+                            "documentTypeCode": "008001004000"
+                        },
+                        {
+                            "TYPE_NAME": "Mortgage.DocumentTypes",
+                            "documentTypeCode": "008001004000"
+                        }
+                    ],
+                    "name": "ÐÐ°ÑÐ¿Ð¾ÑÑ Ð³ÑÐ°Ð¶Ð´Ð°Ð½Ð¸Ð½Ð° Ð Ð¾ÑÑÐ¸Ð¹ÑÐºÐ¾Ð¹ Ð¤ÐµÐ´ÐµÑÐ°ÑÐ¸Ð¸",
+                    "number": "123123",
+                    "issueDate": {
+                        "year": 2018,
+                        "month": 5,
+                        "day": 30,
+                        "hour": null,
+                        "minute": null,
+                        "second": null,
+                        "fractionalSecond": null,
+                        "timezone": 180,
+                        "date": "2018-05-29T21:00:00.000Z"
+                    },
+                    "series": "1231",
+                    "issuer": {
+                        "TYPE_NAME": "Mortgage.TIssuerInfo",
+                        "name": "Ð¿ÑÐ°Ð²Ð¿Ñ"
+                    }
+                },
+                "snils": "34566474332"
+            },
+            "firstOwnerKind": "359000000100"
+        }
+    ]
+},
+    "obligation": {
+    "TYPE_NAME": "Mortgage.TObligation",
+        "contractsInfo": {
+        "TYPE_NAME": "Mortgage.TContractsInfo",
+            "contractInfo": [
+            {
+                "TYPE_NAME": "Mortgage.TContractInfo",
+                "legalAct": {
+                    "TYPE_NAME": "Mortgage.TLegalActRestrMGContract",
+                    "id": "13165134-09bb-4a31-9004-f48f18574270",
+                    "documentTypes": [
+                        {
+                            "TYPE_NAME": "Mortgage.DocumentTypes",
+                            "documentTypeCode": "558401010101"
+                        }
+                    ],
+                    "name": "Ð¿ÑÐ°Ð²",
+                    "number": "123",
+                    "issueDate": {
+                        "year": 2018,
+                        "month": 1,
+                        "day": 1,
+                        "hour": null,
+                        "minute": null,
+                        "second": null,
+                        "fractionalSecond": null,
+                        "timezone": 180,
+                        "date": "2017-12-31T21:00:00.000Z"
+                    },
+                    "placeContract": "Ð¿ÑÐ°Ð²Ð¿Ñ"
+                }
+            }
+        ]
+    },
+    "loanAmount": {
+        "TYPE_NAME": "Mortgage.TLoanAmount",
+            "amount": {
+            "TYPE_NAME": "Mortgage.TCostType",
+                "amount": 123,
+                "currency": "GWP"
+        },
+        "procedureGranting": "Ð¿ÑÐ°Ð²Ð¿Ñ",
+            "remainingAmount": {
+            "TYPE_NAME": "Mortgage.TRemainingAmount",
+                "amount": {
+                "TYPE_NAME": "Mortgage.TCostType",
+                    "amount": 123123,
+                    "currency": "GWP"
+            },
+            "date": {
+                "year": 2018,
+                    "month": 5,
+                    "day": 29,
+                    "hour": null,
+                    "minute": null,
+                    "second": null,
+                    "fractionalSecond": null,
+                    "timezone": 180,
+                    "date": "2018-05-28T21:00:00.000Z"
+            }
+        }
+    }
+},
+    "interests": {
+    "TYPE_NAME": "Mortgage.TIterests",
+        "rate": {
+        "TYPE_NAME": "Mortgage.TRate",
+            "fixedRate": {
+            "TYPE_NAME": "Mortgage.TRateAndInterval",
+                "rateAmount": 12,
+                "intervalType": "520103"
+        }
+    },
+    "ratePeriod": {
+        "TYPE_NAME": "Mortgage.TInterestPeriod",
+            "startDate": {
+            "TYPE_NAME": "Mortgage.TIinterestAccrualDate",
+                "date": {
+                "TYPE_NAME": "Mortgage.TEmpty"
+            }
+        },
+        "endDate": {
+            "TYPE_NAME": "Mortgage.TIinterestAccrualEndDate",
+                "date": {
+                "TYPE_NAME": "Mortgage.TEmpty"
+            }
+        }
+    },
+    "firstInterestPeriod": {
+        "TYPE_NAME": "Mortgage.TFirstInterestPeriod",
+            "date": "540102"
+    },
+    "baseInterestPeriod": {
+        "TYPE_NAME": "Mortgage.TBaseInterestPeriod",
+            "byDateInterval": {
+            "TYPE_NAME": "Mortgage.TByDateInterval",
+                "intervalStart": "1",
+                "intervalEnd": "2",
+                "interval": "640103"
+        },
+        "date": {
+            "TYPE_NAME": "Mortgage.TEmpty"
+        }
+    },
+    "lastInterestPeriod": {
+        "TYPE_NAME": "Mortgage.TLastInterestPeriod",
+            "date": {
+            "TYPE_NAME": "Mortgage.TEmpty"
+        }
+    },
+    "lastPeriodIfWeekend": {
+        "TYPE_NAME": "Mortgage.TLastPeriodIfWeekend",
+            "lastPeriod": "570103"
+    },
+    "accrualRules": {
+        "TYPE_NAME": "Mortgage.TAccrualRules",
+            "regularity": {
+            "TYPE_NAME": "Mortgage.TRegularity",
+                "regularityList": "day"
+        },
+        "accrualBase": {
+            "TYPE_NAME": "Mortgage.TAccrualBase",
+                "accrualBaseList": "580102"
+        },
+        "interestsRounding": {
+            "TYPE_NAME": "Mortgage.TInterestsRounding",
+                "interestsRoundingList": "580204"
+        },
+        "intermedRounding": {
+            "TYPE_NAME": "Mortgage.TIntermedRounding",
+                "intermedRoundingList": "580303"
+        }
+    }
+},
+    "debtRepaymentPlan": {
+    "TYPE_NAME": "Mortgage.TDebtRepaymentPlan",
+        "term": {
+        "TYPE_NAME": "Mortgage.TTerm",
+            "fromDate": {
+            "TYPE_NAME": "Mortgage.TFromDate",
+                "fixedDate": {
+                "year": 2018,
+                    "month": 5,
+                    "day": 30,
+                    "hour": null,
+                    "minute": null,
+                    "second": null,
+                    "fractionalSecond": null,
+                    "timezone": 180,
+                    "date": "2018-05-29T21:00:00.000Z"
+            }
+        },
+        "endDate": {
+            "TYPE_NAME": "Mortgage.TEndDate",
+                "byDate": {
+                "year": 2018,
+                    "month": 5,
+                    "day": 30,
+                    "hour": null,
+                    "minute": null,
+                    "second": null,
+                    "fractionalSecond": null,
+                    "timezone": 180,
+                    "date": "2018-05-29T21:00:00.000Z"
+            }
+        }
+    },
+    "repaymentDate": {
+        "TYPE_NAME": "Mortgage.TRepaymentDate",
+            "paymentDate": {
+            "year": 2018,
+                "month": 6,
+                "day": 7,
+                "hour": null,
+                "minute": null,
+                "second": null,
+                "fractionalSecond": null,
+                "timezone": 180,
+                "date": "2018-06-06T21:00:00.000Z"
+        }
+    },
+    "repaymentIfWeekend": {
+        "TYPE_NAME": "Mortgage.TRepaymentIfWeekend",
+            "changingPaymentDay": "630101"
+    },
+    "firstRepaymentAmountAndTerm": {
+        "TYPE_NAME": "Mortgage.TFirstRepaymentAmountAndTerm",
+            "amount": {
+            "TYPE_NAME": "Mortgage.TAmount",
+                "calculated": "650102"
+        },
+        "repaymentDate": {
+            "TYPE_NAME": "Mortgage.TPaymentDate",
+                "event": {
+                "TYPE_NAME": "Mortgage.TEmpty"
+            }
+        },
+        "repaymentValueOnDate": {
+            "TYPE_NAME": "Mortgage.TCostType",
+                "amount": 12,
+                "currency": "ÐÐÐ"
+        },
+        "recalculationConditions": {
+            "TYPE_NAME": "Mortgage.TRecalculationConditions",
+                "conditions": {
+                "TYPE_NAME": "Mortgage.TRecalculation",
+                    "listConditions": [
+                    "650203"
+                ]
+            }
+        },
+        "repaymentRounding": {
+            "TYPE_NAME": "Mortgage.TRoundingResult",
+                "rounding": "650303"
+        },
+        "interestRepayment": {
+            "TYPE_NAME": "Mortgage.TInterestRepayment",
+                "repaymentKind": "640201"
+        },
+        "interestRepaymentRounding": {
+            "TYPE_NAME": "Mortgage.TRoundingResult",
+                "rounding": "650303"
+        },
+        "principalAmountOfDebtRepayment": {
+            "TYPE_NAME": "Mortgage.TPrincipalAmountOfDebtRepayment",
+                "repaymentDebtKind": "650403"
+        },
+        "principalAmountOfDebtRepaymentRounding": {
+            "TYPE_NAME": "Mortgage.TRoundingResult",
+                "rounding": "650303"
+        },
+        "otherDebtRepayment": {
+            "TYPE_NAME": "Mortgage.TOtherDebtRepayment",
+                "otherObligation": {
+                "TYPE_NAME": "Mortgage.TEmpty"
+            }
+        },
+        "otherDebtRepaymentRounding": {
+            "TYPE_NAME": "Mortgage.TRoundingResult",
+                "rounding": "650303"
+        },
+        "repaymentTerm": {
+            "TYPE_NAME": "Mortgage.TRepaymentTerm",
+                "otherDescription": "Ð°Ð¿Ð²ÑÑ"
+        }
+    },
+    "nthRepaymentAmountAndTerms": {
+        "TYPE_NAME": "Mortgage.TNthRepaymentAmountAndTerms",
+            "nthRepaymentAmountAndTerm": [
+            {
+                "TYPE_NAME": "Mortgage.TNthRepaymentAmountAndTerm",
+                "paymentNumber": {
+                    "TYPE_NAME": "Mortgage.TPaymentNumber",
+                    "fromPaymentNumber": 123,
+                    "byPaymentNumber": 123
+                },
+                "amount": {
+                    "TYPE_NAME": "Mortgage.TAmount",
+                    "calculated": "650102"
+                },
+                "repaymentDate": {
+                    "TYPE_NAME": "Mortgage.TPaymentDate"
+                },
+                "repaymentValueOnDate": {
+                    "TYPE_NAME": "Mortgage.TCostType",
+                    "amount": 12,
+                    "currency": "BGN"
+                },
+                "recalculationConditions": {
+                    "TYPE_NAME": "Mortgage.TRecalculationConditions",
+                    "conditions": {
+                        "TYPE_NAME": "Mortgage.TRecalculation",
+                        "listConditions": [
+                            "650204"
+                        ]
+                    }
+                },
+                "repaymentRounding": {
+                    "TYPE_NAME": "Mortgage.TRoundingResult",
+                    "rounding": "650303"
+                },
+                "interestRepayment": {
+                    "TYPE_NAME": "Mortgage.TInterestNoOneRepayment",
+                    "interestNoOneRepayment": {
+                        "TYPE_NAME": "Mortgage.TEmpty"
+                    }
+                },
+                "interestRepaymentRounding": {
+                    "TYPE_NAME": "Mortgage.TRoundingResult",
+                    "rounding": "650303"
+                },
+                "principalAmountOfDebtRepayment": {
+                    "TYPE_NAME": "Mortgage.TPrincipalAmountOfDebtRepaymentNoOne",
+                    "principalAmountOfDebtRepaymentNoOne": {
+                        "TYPE_NAME": "Mortgage.TEmpty"
+                    }
+                },
+                "principalAmountOfDebtRepaymentRounding": {
+                    "TYPE_NAME": "Mortgage.TRoundingResult",
+                    "rounding": "650303"
+                },
+                "otherDebtRepayment": {
+                    "TYPE_NAME": "Mortgage.TOtherDebtRepayment",
+                    "otherObligation": {
+                        "TYPE_NAME": "Mortgage.TEmpty"
+                    }
+                },
+                "otherDebtRepaymentRounding": {
+                    "TYPE_NAME": "Mortgage.TRoundingResult",
+                    "rounding": "650304"
+                },
+                "repaymentTerm": {
+                    "TYPE_NAME": "Mortgage.TRepaymentTermNoOne",
+                    "otherDescription": "ÑÐ¼Ð¿ÑÑÐ°ÑÐ¿Ð²ÑÑ"
+                }
+            }
+        ]
+    },
+    "lastRepaymentAmountAndTerm": {
+        "TYPE_NAME": "Mortgage.TLastRepaymentAmountAndTerm",
+            "amount": {
+            "TYPE_NAME": "Mortgage.TLastPaymentAmount",
+                "lastPaymentAmount": {
+                "TYPE_NAME": "Mortgage.TEmpty"
+            }
+        },
+        "repaymentTerm": {
+            "TYPE_NAME": "Mortgage.TRepaymentTermLastPayment",
+                "repaymentTermLastPayment": {
+                "TYPE_NAME": "Mortgage.TEmpty"
+            }
+        }
+    },
+    "fines": {
+        "TYPE_NAME": "Mortgage.TFines",
+            "violationOfInterestConditions": {
+            "TYPE_NAME": "Mortgage.TFinesAmount",
+                "otherDescription": "some conditions"
+        },
+        "violationOfPrincipalDebtConditions": {
+            "TYPE_NAME": "Mortgage.TFinesAmount",
+                "otherDescription": "some conditions"
+        },
+        "calculationProcedure": "ÑÐ¿Ð°Ð¿Ð²Ð¿Ñ",
+            "amountOfLoss": {
+            "TYPE_NAME": "Mortgage.TRoundingResult",
+                "rounding": "650302"
+        }
+    }
+},
+    "pledges": {
+    "TYPE_NAME": "Mortgage.TPledges",
+        "pledge": [
+        {
+            "TYPE_NAME": "Mortgage.TPledge",
+            "objectDescription": {
+                "TYPE_NAME": "Mortgage.TObjectDescription",
+                "object": {
+                    "TYPE_NAME": "Mortgage.TObject",
+                    "id": "5677fd49-18b9-477e-a889-73d2d3ef4197",
+                    "objectTypeCode": "002001001000",
+                    "cadastralNumber": {
+                        "TYPE_NAME": "Mortgage.TCadastralNumberBase",
+                        "cadastralNumber": "12:12:123123:1231"
+                    },
+                    "address": [
+                        {
+                            "TYPE_NAME": "Mortgage.TAddress",
+                            "fias": "47239a33-5e32-4320-916a-c3e64a89dfc6",
+                            "okato": "65406000000",
+                            "oktmo": "65703000001",
+                            "kladr": "6600300100001510011",
+                            "region": {
+                                "TYPE_NAME": "Mortgage.TAddressElement",
+                                "code": "66",
+                                "type": "Ð¾Ð±Ð»",
+                                "name": "Ð¡Ð²ÐµÑÐ´Ð»Ð¾Ð²ÑÐºÐ°Ñ"
+                            },
+                            "house": {
+                                "TYPE_NAME": "Mortgage.THouse",
+                                "type": "Ð´",
+                                "value": "121"
+                            }
+                        }
+                    ],
+                    "physicalProperties": {
+                        "TYPE_NAME": "Mortgage.TObjectPhysicalProperties",
+                        "property": [
+                            {
+                                "TYPE_NAME": "Mortgage.TAreaPhysicalValue",
+                                "type": "area",
+                                "unitType": "012002001000",
+                                "value": 12
+                            }
+                        ]
+                    }
+                },
+                "regRight": {
+                    "TYPE_NAME": "Mortgage.TRegRight",
+                    "regRightAuthority": "Ð¿ÑÐ°ÑÐ²Ð¿Ñ",
+                    "regNumber": "12312",
+                    "regDate": {
+                        "year": 2018,
+                        "month": 6,
+                        "day": 14,
+                        "hour": null,
+                        "minute": null,
+                        "second": null,
+                        "fractionalSecond": null,
+                        "timezone": 180,
+                        "date": "2018-06-13T21:00:00.000Z"
+                    }
+                }
+            },
+            "marketPrice": {
+                "TYPE_NAME": "Mortgage.TMarketPrice",
+                "price": {
+                    "TYPE_NAME": "Mortgage.TPrice",
+                    "amount": {
+                        "TYPE_NAME": "Mortgage.TCostRubType",
+                        "amount": 12,
+                        "currency": "RUB"
+                    }
+                },
+                "valuers": {
+                    "TYPE_NAME": "Mortgage.TValuers",
+                    "valuer": [
+                        {
+                            "TYPE_NAME": "Mortgage.TValuers.Valuer",
+                            "person": {
+                                "TYPE_NAME": "Mortgage.TValuerMGPerson",
+                                "otherInfo": {
+                                    "TYPE_NAME": "Mortgage.TOtherInfo",
+                                    "phoneNumber": "+73425678965",
+                                    "postalAddress": {
+                                        "TYPE_NAME": "Mortgage.TAddress",
+                                        "fias": "47239a33-5e32-4320-916a-c3e64a89dfc6",
+                                        "okato": "65490000006",
+                                        "oktmo": "65755000136",
+                                        "kladr": "66000021012003000",
+                                        "region": {
+                                            "TYPE_NAME": "Mortgage.TAddressElement",
+                                            "code": "66",
+                                            "type": "Ð¾Ð±Ð»",
+                                            "name": "Ð¡Ð²ÐµÑÐ´Ð»Ð¾Ð²ÑÐºÐ°Ñ"
+                                        }
+                                    },
+                                    "email": "hgfhds@mail.com"
+                                },
+                                "surname": "Ð¿ÑÐ°ÑÐ²Ñ",
+                                "firstname": "Ð¿ÑÐ°Ð²Ð¿Ð°Ñ",
+                                "patronymic": "Ð°Ð¿Ð²Ð¿Ð°ÑÐ²",
+                                "valuerOrganization": "test"
+                            }
+                        }
+                    ]
+                },
+                "report": {
+                    "TYPE_NAME": "Mortgage.TReport",
+                    "reportDate": {
+                        "year": 2018,
+                        "month": 6,
+                        "day": 14,
+                        "hour": null,
+                        "minute": null,
+                        "second": null,
+                        "fractionalSecond": null,
+                        "timezone": 180,
+                        "date": "2018-06-13T21:00:00.000Z"
+                    },
+                    "evalDate": {
+                        "year": 2018,
+                        "month": 6,
+                        "day": 14,
+                        "hour": null,
+                        "minute": null,
+                        "second": null,
+                        "fractionalSecond": null,
+                        "timezone": 180,
+                        "date": "2018-06-13T21:00:00.000Z"
+                    }
+                }
+            },
+            "burdens": {
+                "TYPE_NAME": "Mortgage.TBurdens",
+                "absent": {
+                    "TYPE_NAME": "Mortgage.TEmpty"
+                }
+            },
+            "mortgage": {
+                "TYPE_NAME": "Mortgage.TRegRight",
+                "regRightAuthority": "Ð°Ð¿ÑÑÐ¿Ð²Ð°Ð²",
+                "regNumber": "88-16/54786-44416/2018-249",
+                "regDate": {
+                    "year": 2018,
+                    "month": 5,
+                    "day": 29,
+                    "hour": null,
+                    "minute": null,
+                    "second": null,
+                    "fractionalSecond": null,
+                    "timezone": 180,
+                    "date": "2018-05-28T21:00:00.000Z"
+                }
+            }
+        }
+    ]
+},
+    "additionalTerms": {
+    "TYPE_NAME": "Mortgage.TAdditionalTerms",
+        "dependencies": {
+        "TYPE_NAME": "Mortgage.TDependencies",
+            "noDependencies": {
+            "TYPE_NAME": "Mortgage.TEmpty"
+        }
+    },
+    "purposeOfCredit": {
+        "TYPE_NAME": "Mortgage.TPurposeOfCredit",
+            "otherDescription": "asdasd"
+    },
+    "debtorIsBusinessman": false,
+        "propertyInsurance": {
+        "TYPE_NAME": "Mortgage.TPropertyInsurance",
+            "riskInsurance": false,
+            "payer": "840101",
+            "beneficiary": {
+            "TYPE_NAME": "Mortgage.TBeneficiary",
+                "beneficiaryKind": "840101",
+                "otherDescription": "sdfghjkk"
+        },
+        "insuranceAmount": {
+            "TYPE_NAME": "Mortgage.TInsuranceAmount",
+                "otherDescription": "asdasd"
+        }
+    },
+    "insuranceTerms": "ghfhdgdf",
+        "punishmentTerms": "ghfhdgdf",
+        "pledgeSellingConditions": "ghfhdgdf",
+        "estrangementTerms": {
+        "TYPE_NAME": "Mortgage.TEstrangementTerms",
+            "additionalTerms": "asdasd"
+    },
+    "thirdPersonUsage": {
+        "TYPE_NAME": "Mortgage.TThirdPersonUsage",
+            "otherDescription": "asdasd"
+    },
+    "prepaymentTerms": "asdasd",
+        "paymentPlanChangeTerms": "asdasd",
+        "paymentPlanViolationTerms": "asdasd",
+        "participantRights": "asdasd",
+        "debtorDuties": "asdasd",
+        "creditorDuties": "asdasd",
+        "pledgeeRights": "asdasd",
+        "groundOfFulleEarlyPerformance": "asdasd",
+        "jurisdictionOfDisputes": "asdasd",
+        "otherMortgageTerms": "asdasd",
+        "attachments": {
+        "TYPE_NAME": "Mortgage.TAttachments",
+            "noAppliedDocument": {
+            "TYPE_NAME": "Mortgage.TEmpty"
+        }
+    }
+},
+    "depositoryAccounting": {
+    "TYPE_NAME": "Mortgage.TDepositoryAccounting",
+        "custody": {
+        "TYPE_NAME": "Mortgage.TDepository",
+            "otherInfo": {
+            "TYPE_NAME": "Mortgage.TOtherInfo",
+                "phoneNumber": "+72345675433",
+                "postalAddress": {
+                "TYPE_NAME": "Mortgage.TAddress",
+                    "fias": "47239a33-5e32-4320-916a-c3e64a89dfc6",
+                    "okato": "76236501000",
+                    "oktmo": "76715000",
+                    "kladr": "7501900100001140028",
+                    "region": {
+                    "TYPE_NAME": "Mortgage.TAddressElement",
+                        "code": "75",
+                        "type": "ÐºÑÐ°Ð¹",
+                        "name": "ÐÐ°Ð±Ð°Ð¹ÐºÐ°Ð»ÑÑÐºÐ¸Ð¹"
+                },
+                "house": {
+                    "TYPE_NAME": "Mortgage.THouse",
+                        "type": "Ð´",
+                        "value": "34"
+                }
+            },
+            "email": "hghfhgdf@mail.com"
+        },
+        "name": "Ð¿Ð°ÑÐ²Ð¿Ð°",
+            "nativeForeignParams": {
+            "TYPE_NAME": "Mortgage.TNativeParamsDepositary",
+                "nativeOrgParams": {
+                "TYPE_NAME": "Mortgage.TNativeOrgParams",
+                    "ogrn": "1107746400827",
+                    "inn": "3456674332"
+            }
+        },
+        "address": {
+            "TYPE_NAME": "Mortgage.TAddress",
+                "fias": "47239a33-5e32-4320-916a-c3e64a89dfc6",
+                "okato": "76236501000",
+                "oktmo": "76715000",
+                "kladr": "7501900100001140028",
+                "region": {
+                "TYPE_NAME": "Mortgage.TAddressElement",
+                    "code": "75",
+                    "type": "ÐºÑÐ°Ð¹",
+                    "name": "ÐÐ°Ð±Ð°Ð¹ÐºÐ°Ð»ÑÑÐºÐ¸Ð¹"
+            },
+            "house": {
+                "TYPE_NAME": "Mortgage.THouse",
+                    "type": "Ð´",
+                    "value": "34"
+            }
+        }
+    },
+    "accountingDep": {
+        "TYPE_NAME": "Mortgage.TDepository",
+            "otherInfo": {
+            "TYPE_NAME": "Mortgage.TOtherInfo",
+                "phoneNumber": "+72345675433",
+                "postalAddress": {
+                "TYPE_NAME": "Mortgage.TAddress",
+                    "fias": "47239a33-5e32-4320-916a-c3e64a89dfc6",
+                    "okato": "76236501000",
+                    "oktmo": "76715000",
+                    "kladr": "7501900100001140028",
+                    "region": {
+                    "TYPE_NAME": "Mortgage.TAddressElement",
+                        "code": "75",
+                        "type": "ÐºÑÐ°Ð¹",
+                        "name": "ÐÐ°Ð±Ð°Ð¹ÐºÐ°Ð»ÑÑÐºÐ¸Ð¹"
+                },
+                "house": {
+                    "TYPE_NAME": "Mortgage.THouse",
+                        "type": "Ð´",
+                        "value": "34"
+                }
+            },
+            "email": "hghfhgdf@mail.com"
+        },
+        "name": "Ð¿Ð°ÑÐ²Ð¿Ð°",
+            "nativeForeignParams": {
+            "TYPE_NAME": "Mortgage.TNativeParamsDepositary",
+                "nativeOrgParams": {
+                "TYPE_NAME": "Mortgage.TNativeOrgParams",
+                    "ogrn": "1027739326449",
+                    "inn": "1234567897"
+            }
+        },
+        "address": {
+            "TYPE_NAME": "Mortgage.TAddress",
+                "fias": "47239a33-5e32-4320-916a-c3e64a89dfc6",
+                "okato": "76236501000",
+                "oktmo": "76715000",
+                "kladr": "7501900100001140028",
+                "region": {
+                "TYPE_NAME": "Mortgage.TAddressElement",
+                    "code": "75",
+                    "type": "ÐºÑÐ°Ð¹",
+                    "name": "ÐÐ°Ð±Ð°Ð¹ÐºÐ°Ð»ÑÑÐºÐ¸Ð¹"
+            },
+            "house": {
+                "TYPE_NAME": "Mortgage.THouse",
+                    "type": "Ð´",
+                    "value": "34"
+            }
+        }
+    },
+    "accountNum": {
+        "TYPE_NAME": "Mortgage.TDepositorAccNumType",
+            "number": "34.1233214",
+            "section": 100000
+    },
+    "depositorAccNum": {
+        "TYPE_NAME": "Mortgage.TDepositorAccNumType",
+            "number": "10.3214125",
+            "section": 100000
+    }
+}
+}
