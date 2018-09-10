@@ -27,7 +27,7 @@ module.exports = class MortgageParserJsonix {
                 ret.deponentAccount = u.value.depositoryAccounting.depositorAccNum;
                 ret.cadastralNumber = u.value.pledges.pledge[0].objectDescription.object.cadastralNumber;
                 return ret;
-                }
+            }
 
         } catch (e) {
             return ret.errors.push(e);
@@ -176,7 +176,7 @@ module.exports = class MortgageParserJsonix {
                 }
             };
 
-            ret.value = this.getMarshaller().marshalString(response);
+            ret.value = '<?xml version="1.0" encoding="UTF-8"?>' + this.getMarshaller().marshalString(response);
         } catch (e) {
             return ret.errors.push(e);
         }
@@ -206,7 +206,7 @@ module.exports = class MortgageParserJsonix {
                 }
             };
 
-            ret.value = this.getMarshaller().marshalString(response);
+            ret.value = '<?xml version="1.0" encoding="UTF-8"?>' + this.getMarshaller().marshalString(response);
         } catch (e) {
             return ret.errors.push(e);
         }
@@ -235,7 +235,7 @@ module.exports = class MortgageParserJsonix {
                 }
             };
 
-            ret.value = this.getMarshaller().marshalString(response);
+            ret.value = '<?xml version="1.0" encoding="UTF-8"?>' + this.getMarshaller().marshalString(response);
         } catch (e) {
             return ret.errors.push(e);
         }
@@ -265,7 +265,7 @@ module.exports = class MortgageParserJsonix {
                 }
             };
 
-            ret.value = this.getMarshaller().marshalString(response);
+            ret.value = '<?xml version="1.0" encoding="UTF-8"?>' + this.getMarshaller().marshalString(response);
         } catch (e) {
             return ret.errors.push(e);
         }
@@ -288,8 +288,9 @@ module.exports = class MortgageParserJsonix {
                                 status: response_args['status'],
                                 comment: response_args['comment'],
                                 mortgageNumber: response_args['mortgageNumber'],
-                                'req:firstOwners': {
-                                    'subj:FirstOwner': [{
+                                firstOwners: {
+                                    firstOwner: [{
+                                        id: '1',
                                         person: {
                                             otherInfo: {
                                                 email: response_args['email']
@@ -298,24 +299,25 @@ module.exports = class MortgageParserJsonix {
                                             firstname: response_args['firstname'],
                                             birthDate: response_args['birthDate'],
                                             birthPlace: response_args['birthPlace'],
-                                            idDocument: [{
-                                                'docs:DocumentTypes': {
-                                                    documentTypeCode: response_args['documentTypeCode']
-                                                },
-                                                'docs:Number': response_args['passport_number'],
-                                                'docs:Series': response_args['passport_series']
-                                            }]
+                                            idDocument: {
+                                                id: "Паспорт гражданина РФ",
+                                                documentTypes:
+                                                    [{documentTypeCode: response_args['documentTypeCode']}],
+                                                number: response_args['passport_number'],
+                                                series: response_args['passport_series']
+                                            }
                                         },
                                         firstOwnerKind: response_args['firstOwnerKind']
                                     }]
-                                },
+
+                                }
                             }
                         }
                     }
                 }
             };
 
-            ret.value = this.getMarshaller().marshalString(response);
+            ret.value = '<?xml version="1.0" encoding="UTF-8"?>' + this.getMarshaller().marshalString(response);
         }
         catch
             (e) {
