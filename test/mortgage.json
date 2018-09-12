@@ -261,7 +261,7 @@
                     "number": "123",
                     "issueDate": {
                         "year": 2018,
-                        "month": 1,
+                        "month": 1000,
                         "day": 1,
                         "hour": null,
                         "minute": null,
@@ -736,7 +736,7 @@
                 "regNumber": "88-16/54786-44416/2018-249",
                 "regDate": {
                     "year": 2018,
-                    "month": 5,
+                    "month": 6,
                     "day": 29,
                     "hour": null,
                     "minute": null,

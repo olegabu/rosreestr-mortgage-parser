@@ -1,6 +1,6 @@
 
 {
-    "id":"http://rosreestr.ru/services/v0.1/commonsMortgage/TRequest#",
+    "$id":"http://rosreestr.ru/services/v0.1/commonsMortgage/TRequest#",
     "definitions":{
         "TRequest":{
             "type":"object",

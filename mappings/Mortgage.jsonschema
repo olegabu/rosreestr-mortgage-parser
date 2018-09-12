@@ -1,6 +1,6 @@
 
 {
-    "id":"http://rosreestr.ru/services/v0.1/commonsMortgage/electronicMortgage#",
+    "$id":"http://rosreestr.ru/services/v0.1/commonsMortgage/electronicMortgage#",
     "definitions":{
         "TRepresentativeDocument":{
             "allOf":[

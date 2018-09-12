@@ -1,6 +1,6 @@
 
 {
-    "id":"urn://x-artefacts-rosreestr-gov-ru/virtual-services/electronic-mortgage/1.0.0#",
+    "$id":"urn://x-artefacts-rosreestr-gov-ru/virtual-services/electronic-mortgage/1.0.0#",
     "definitions":{
         "TIdDocumentRestr":{
             "allOf":[
